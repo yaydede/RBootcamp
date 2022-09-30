@@ -6,7 +6,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of RBootcamp is to create
+The goal of RBootcamp is to create an environment for MBAN students to
+learn R
 
 ## Installation
 
