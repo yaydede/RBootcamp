@@ -3,7 +3,7 @@ Title: MBAN R Bootcamp Package
 Version: 0.0.0.9000
 Authors@R: 
     person("Yigit", "Aydede", , "yigit.aydede@smu.ca", role = c("aut", "cre"))
-Description: Access to Data.
+Description: Data, Tutorials, and other materials.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
@@ -14,3 +14,5 @@ Depends:
 LazyData: true
 Imports: 
     tibble
+Suggests: 
+    learnr

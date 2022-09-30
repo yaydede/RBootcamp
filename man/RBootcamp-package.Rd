@@ -6,7 +6,7 @@
 \alias{RBootcamp-package}
 \title{RBootcamp: MBAN R Bootcamp Package}
 \description{
-Access to Data.
+Data, Tutorials, and other materials.
 }
 \author{
 \strong{Maintainer}: Yigit Aydede \email{yigit.aydede@smu.ca}
