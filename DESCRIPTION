@@ -2,10 +2,12 @@ Package: RBootcamp
 Title: MBAN R Bootcamp Package
 Version: 0.0.0.9000
 Authors@R: 
-    person("Yigit", "Aydede", , "yigit.aydede@smu.ca", role = c("aut", "cre"))
+    person(given = "Yigit",
+           family = "Aydede",
+           role = c("aut", "cre"),
+           email = "yigit.aydede@smu.ca")
 Description: Data, Tutorials, and other materials.
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
