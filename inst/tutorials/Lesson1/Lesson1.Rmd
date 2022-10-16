@@ -1,5 +1,6 @@
 ---
 title: "Ch's 1&2 - Getting to know R and RStudio & Vectors"
+author: "**Yigit Aydede - RBootcamp - 2022**"
 output:
   learnr::tutorial:
     progressive: true
