@@ -1,20 +1,56 @@
 ---
-title: "My Title"
-output: learnr::tutorial
+title: "Ch's 1&2 - Getting to know R and RStudio & Vectors"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
 runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
 library(learnr)
-knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(nycflights13)
+library(Lahman)
+tutorial_options(
+  exercise.timelimit = 60,
+  # A simple checker function that just returns the message in the check chunk
+  exercise.checker = function(check_code, ...) {
+    list(
+      message = eval(parse(text = check_code)),
+      correct = logical(0),
+      type = "info",
+      location = "append"
+    )
+  }
+)
+knitr::opts_chunk$set(error = TRUE)
 ```
 
 
-## Topic 1
 
-### Exercise 
+## Set up
 
-*Here's a simple exercise with an empty code chunk provided for entering the answer.*
+Create a new RStudio Project (select `File –> New Project` on the main menu). Create the Project in a new directory by selecting ‘New Directory’ and then select `New Project`. Give the Project a proper name in the `Directory name:`  Choose where you would like to create this Project directory. This will be your main RStudio Project file and directory which you will be using throughout this Rbootcamp.
+
+## Script
+
+Now create a new R script inside this Project from the main menu. Before you start putting codes, save this script. Call this script `exercise_1`. Remember, files names should be free of spaces. Check RStudio to see whether your file has been saved in the correct location.
+  
+At the top of your script you should include some information (metadata) to help your collaborators (and you) about the script by using `#` at the beginning of every line.
+
+Practice the following codes in the script. 
+
+1. Write `plot(1:10)` the execute it.
+2. Display the help file for the function `mean`.
+3. Create a variable called `my_first` and assign it the value 42.  Do you see in the ‘Environment’ tab in the top right window?
+4. Create a variable called `my_second` and assign it the value 43.
+5. Assign 45 to `my_first`.  Did value change?
+6. Assign `my_first` to `my_second`.
+7. Remove `my_second`.
+8. Save R script.  Check it if it's saved or not.
+
+## Calculator
 
 Write the R code required to add two plus two:
 
@@ -22,53 +58,224 @@ Write the R code required to add two plus two:
 
 ```
 
-### Exercise with Code
+Calculate $e^x \cos (x)$ at $x=3,3.1,3.2$
 
-*Here's an exercise with some prepopulated code as well as `exercise.lines = 5` to provide a bit more initial room to work.*
+```{r expo, exercise=TRUE}
 
-Now write a function that adds any two numbers and then call it:
+```
 
-```{r add-function, exercise=TRUE, exercise.lines = 5}
-add <- function() {
+Find the natural log, log to the base 10, log to the base 2, square root and the natural antilog of 12.43. 
+
+```{r log, exercise=TRUE}
+
+```
+
+## Vectors
+
+Many operations in R make heavy use of vectors. Possibly the most common way to create a vector in R is using the `c()` **function**, which is short for “combine.” As the name suggests, it combines a list of elements separated by commas.
+
+### Built-in functions
+
+The base installation of R comes with many functions.  However, the power of R by comes from thousands of packages freely available. Moreover, once we get a bit more experience with using R you may want to define your own functions to perform tasks that are specific to your goals (more about this in Chapter 7).
+
+The first function we will learn about is the `c()` function, which is short for concatenate and we use it to join together a series of values and store them in a data structure called a vector (more on vectors in Chapter 3).
+
+Create a text vector called `Months` with names of the 12 months of the year.
+
+```{r exp0, exercise=TRUE, exercise.eval=FALSE}
+
+```
+
+Now suppose we have 
+
+```{r}
+weight <- c(69, 62, 57, 59, 59, 64, 56, 66, 67, 66)
+height <- c(112, 102, 83, 84, 99, 90, 77, 112, 133, 112, 110)
+age <- c(12, 11, 13, 13, 13, 10, 11, 12, 14, 10, 11)
+names <- c("a", "b", "c", "d", "e", "f", "g", "h", "i", "n")
+```
+
+```{r exp1-setup}
+weight <- c(69, 62, 57, 59, 59, 64, 56, 66, 67, 66)
+height <- c(112, 102, 83, 84, 99, 90, 77, 112, 133, 112)
+age <- c(12, 11, 13, 13, 13, 10, 11, 12, 14, 10, 11)
+names <- c("a", "b", "c", "d", "e", "f", "g", "h", "i", "n")
+```
+
+1. Calculate the body mass index (BMI) for each child. $\text{BMI} = weight/height^2$.
+2. Combine `weight` and `height` into vector `x_com`,
+3. Combine `eight`, `height`, and `names` into vector `x_all`,
+4. Add `age` to `weight` into vector `x_add`
+
+```{r exp1, exercise=TRUE, exercise.eval=FALSE}
+
+```
+
+Using `height`, calculate the mean, variance, standard deviation and number of elements in our vector. 
+
+```{r exp2, exercise=TRUE, exercise.eval=FALSE}
+
+```
+
+### Patterns
+
+Create a vector of the values of $e^x \cos (x)$ at $x=3,3.1,3.2, \ldots, 6$
+
+```{r exp3, exercise=TRUE}
+
+```
+
+Create a vector $(1,2,3, \ldots, 19,20)$ and assign it to `z`
+
+```{r exp4, exercise=TRUE}
+
+```
+
+Create a vector $(4,6,3,4,6,3, \ldots, 4,6,3)$ where there are 10 occurrences of 4. Assign it to `z`
+
+```{r exp5, exercise=TRUE}
+
+```
+
+Calculate the following: $\sum_{i=10}^{100}\left(i^{3}+4 i^{2}\right)$ and assign it to `z`. 
+
+```{r exp6, exercise=TRUE}
+
+```
+
+### Character
+
+Concatenate it into a single sentence
+```{r exp7, exercise=TRUE}
+wr <- c("we have", "dogs", "cats", "and, donkey")
+```
+
+Use `paste()` to create the following character vectors of length 30 : ("label 1", "label 2", "label 30"). Note that there is a single space between label and the number following and you need to create fist the character vecrtor.
+
+```{r exp8, exercise=TRUE}
+
+```
+
+### Sort, rank & order
+
+The following lines created two vectors of random integers which are chosen with replacement from the integers $0, 1, … , 999$. Both vectors have length 250.
+
+```{r}
+set.seed(50)
+xVec <- sample(0:999, 250, replace=T)
+yVec <- sample(0:999, 250, replace=T)
+```
+
+```{r exp9-setup}
+set.seed(50)
+xVec <- sample(0:999, 250, replace=T)
+yVec <- sample(0:999, 250, replace=T)
+```
+
+1. Sort the numbers in vector `xVec` by decreasing order
+2. Find the order of values in vector `yVec`
+
+```{r exp9, exercise=TRUE}
+
+```
+
+### Decriptives
+
+Let's have 1000 values drawn from a normal distribution:
+
+```{r}
+set.seed(123)
+h <- rnorm(1000)
+```
+
+```{r exp10-setup}
+set.seed(123)
+h <- rnorm(1000, mean = 5, sd = 3)
+```
+
+1. Find its summary statistics
+2. What's the minimum and maximum values?
+3. Make it standard normal distribution:  subtract its mean from each value and divide them with the standard error
+
+```{r exp10, exercise=TRUE}
+
+```
+
+### Subsetting
+
+If you want to extract particular elements from a vector, the extracted elements will give you a new vector. This process is called vector subsetting
+
+1. Create a text vector called Months with names of the 12 months of the year.
+2. Create a numeric vector "Summer", with Calendar month index positions for the summer months (inclusive, 4 total)
+3. Use vector indexing to extract the text values of Months, indexed by Summer
+
+```{r exp11, exercise=TRUE}
+
+```
+
+Let's have a simple vector with 10 values:
+
+```{r}
+set.seed(122)
+h <- sample(1:10, replace = TRUE)
+```
+
+```{r exp12-setup}
+set.seed(12)
+h <- sample(1:10, replace = TRUE)
+```
+
+1. Extract 1, 5, and 7th elements in `h` and assign it to `a`
+2. Find the values larger than 2 and assign it to a new vector `y`
+3. Subtract the elements whose values are 5 and assign the remaining vector to `b`
+4. Replace 2's with zero assign the new vector to `d`
+5. Which element is maximum?
+6. Which element is minimum?
+7. Change 2's in `h` by multipying them with 0.7
+
+```{r exp12, exercise=TRUE}
+
+```
+
+We have again the same two vectors:
+
+```{r}
+set.seed(50)
+xVec <- sample(0:999, 250, replace=T)
+yVec <- sample(0:999, 250, replace=T)
+```
+
+```{r exp13-setup}
+set.seed(50)
+xVec <- sample(0:999, 250, replace=T)
+yVec <- sample(0:999, 250, replace=T)
+```
+
+Sort the numbers in the vector `xVec` in the order of increasing values in `yVec`
+
+```{r exp13, exercise=TRUE}
+
+```
   
-}
+### Missing values
+
+You have a vector called `x`, without calling it:
+
+```{r exp14-setup}
+set.seed(150)
+x <- sample(0:999, 1000, replace=TRUE)
+NAs <- sample(1:900, 200, replace = FALSE)
+x[NAs] <- NA
 ```
 
-## Topic 2
+1. Do you have any NA's in `x?  Write a code! 
+2. How many NA's do you have?  Write a code!
+3. Which values are NA's?
+4. Calculate the mean of `x`
+5. Remove NA's from `x`
 
-### Exercise with Hint
 
-*Here's an exercise where the chunk is pre-evaulated via the `exercise.eval` option (so the user can see the default output we'd like them to customize). We also add a "hint" to the correct solution via the chunk immediate below labeled `print-limit-hint`.*
+```{r exp14, exercise=TRUE}
 
-Modify the following code to limit the number of rows printed to 5:
-
-```{r print-limit, exercise=TRUE, exercise.eval=TRUE}
-mtcars
 ```
 
-```{r print-limit-hint}
-head(mtcars)
-```
-
-### Quiz
-
-*You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
-
-Some questions to verify that you understand the purposes of various base and recommended R packages:
-
-```{r quiz}
-quiz(
-  question("Which package contains functions for installing other R packages?",
-    answer("base"),
-    answer("tools"),
-    answer("utils", correct = TRUE),
-    answer("codetools")
-  ),
-  question("Which of the R packages listed below are used to create plots?",
-    answer("lattice", correct = TRUE),
-    answer("tools"),
-    answer("stats"),
-    answer("grid", correct = TRUE)
-  )
-)
-```
