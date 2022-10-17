@@ -1,0 +1,144 @@
+---
+title: "Ch's 3 - Other R Objects"
+author: "**Yigit Aydede - RBootcamp - 2022**"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(nycflights13)
+library(Lahman)
+tutorial_options(
+  exercise.timelimit = 60,
+  # A simple checker function that just returns the message in the check chunk
+  exercise.checker = function(check_code, ...) {
+    list(
+      message = eval(parse(text = check_code)),
+      correct = logical(0),
+      type = "info",
+      location = "append"
+    )
+  }
+)
+knitr::opts_chunk$set(error = TRUE)
+```
+
+
+## Creating a matrix
+
+R stores matrices (and arrays) in a similar way as vectors, but with the attribute called dimension. A matrix is an array that has two dimensions. Data in a matrix are organized into rows and columns. 
+
+1. Create 3 vectors each has 5 numbers randomly selected from 1, 2,. . . ,10.  Name each vector properly
+2. Create row matrix from these 3 vectors, called it `A`
+3. Create column matrix from these 3 vectors, called it `B`
+4. Calculate means of each row and column of `A`.  Assign them a vector, respectively.
+5. Assign `V1, V2, ...` to `B` as column names, check it    
+
+```{r m1, exercise=TRUE}
+
+```
+
+## Subsetting matrix
+
+1. Create a 5x5 matrix, `X` sampled from 1:10 with replacement (`set.seed(50)`)
+2. Create another matrix from `X` by selecting the 2nd and the 5th rows.  Check it
+3. What are the numbers in row 2 and columns 3 and 5
+
+```{r m3, exercise=TRUE}
+
+```
+
+1. What are the numbers in a row when the number in column 3 is 1?
+2. Change 10's to 0's
+3. Change 0's in the 5th column to 11
+
+```{r m4-setup}
+set.seed(50)
+X <- matrix(sample(1:10, 25, replace = T), 5,5)
+```
+
+```{r m4, exercise=TRUE}
+
+```
+
+1. Find the index (row, column) where 1 is located in `X`.  Hint use `which()`
+2. Multiply it with 0.5
+
+```{r m5-setup}
+set.seed(50)
+X <- matrix(sample(1:10, 25, replace = T), 5,5)
+```
+
+```{r m5, exercise=TRUE}
+
+```
+
+Create a 6 × 10 matrix of random integers chosen from 1, 2,. . . ,10.  Call it `aMat` (with `set.seed(75)`)
+  
+1. Find the number of entries in each row which are greater than 4. You can use `apply()` function. 
+2. Which rows contain exactly two occurrences of the number seven? 
+
+
+```{r m6, exercise=TRUE}
+
+```
+
+
+
+
+
+
+*Here's an exercise with some prepopulated code as well as `exercise.lines = 5` to provide a bit more initial room to work.*
+
+Now write a function that adds any two numbers and then call it:
+
+```{r add-function, exercise=TRUE, exercise.lines = 5}
+add <- function() {
+  
+}
+```
+
+## Topic 2
+
+### Exercise with Hint
+
+*Here's an exercise where the chunk is pre-evaluated via the `exercise.eval` option (so the user can see the default output we'd like them to customize). We also add a "hint" to the correct solution via the chunk immediate below labeled `print-limit-hint`.*
+
+Modify the following code to limit the number of rows printed to 5:
+
+```{r print-limit, exercise=TRUE, exercise.eval=TRUE}
+mtcars
+```
+
+```{r print-limit-hint}
+head(mtcars)
+```
+
+### Quiz
+
+*You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
+
+Some questions to verify that you understand the purposes of various base and recommended R packages:
+
+```{r quiz}
+quiz(
+  question("Which package contains functions for installing other R packages?",
+    answer("base"),
+    answer("tools"),
+    answer("utils", correct = TRUE),
+    answer("codetools")
+  ),
+  question("Which of the R packages listed below are used to create plots?",
+    answer("lattice", correct = TRUE),
+    answer("tools"),
+    answer("stats"),
+    answer("grid", correct = TRUE)
+  )
+)
+```
+

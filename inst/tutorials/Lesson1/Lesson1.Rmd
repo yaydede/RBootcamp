@@ -71,11 +71,9 @@ Find the natural log, log to the base 10, log to the base 2, square root and the
 
 ```
 
-## Vectors
+## Vectors (Built-in functions)
 
 Many operations in R make heavy use of vectors. Possibly the most common way to create a vector in R is using the `c()` **function**, which is short for “combine.” As the name suggests, it combines a list of elements separated by commas.
-
-### Built-in functions
 
 The base installation of R comes with many functions.  However, the power of R by comes from thousands of packages freely available. Moreover, once we get a bit more experience with using R you may want to define your own functions to perform tasks that are specific to your goals (more about this in Chapter 7).
 
@@ -118,7 +116,7 @@ Using `height`, calculate the mean, variance, standard deviation and number of e
 
 ```
 
-### Patterns
+## Patterns
 
 Create a vector of the values of $e^x \cos (x)$ at $x=3,3.1,3.2, \ldots, 6$
 
@@ -144,7 +142,7 @@ Calculate the following: $\sum_{i=10}^{100}\left(i^{3}+4 i^{2}\right)$ and assig
 
 ```
 
-### Character
+## Character
 
 Concatenate it into a single sentence
 ```{r exp7, exercise=TRUE}
@@ -157,7 +155,7 @@ Use `paste()` to create the following character vectors of length 30 : ("label 1
 
 ```
 
-### Sort, rank & order
+## Sort, rank & order
 
 The following lines created two vectors of random integers which are chosen with replacement from the integers $0, 1, … , 999$. Both vectors have length 250.
 
@@ -180,7 +178,7 @@ yVec <- sample(0:999, 250, replace=T)
 
 ```
 
-### Decriptives
+## Decriptives
 
 Let's have 1000 values drawn from a normal distribution:
 
@@ -202,7 +200,7 @@ h <- rnorm(1000, mean = 5, sd = 3)
 
 ```
 
-### Subsetting
+## Subsetting
 
 If you want to extract particular elements from a vector, the extracted elements will give you a new vector. This process is called vector subsetting
 
@@ -258,7 +256,7 @@ Sort the numbers in the vector `xVec` in the order of increasing values in `yVec
 
 ```
   
-### Missing values
+## Missing values
 
 You have a vector called `x`, without calling it:
 
