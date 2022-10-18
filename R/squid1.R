@@ -1,0 +1,22 @@
+#' Data of the seasonal patterns of investment in somatic and reproductive tissues in the long finned squid Loligo forbesi caught in Scottish waters
+#'
+#' These data were originally collected as part of a study published in (Smith JM et al. 2005) Seasonal patterns of investment in reproductive and somatic tissues in the squid Loligo forbesi, Aquatic Living Resources. 18, 341–351.
+#'
+#' @format A dataframe with 519 rows and 13 variables:
+#' \describe{
+#'   \item{Year}{int Year - recorded}
+#'   \item{Month}{int Month - recorded} 
+#'   \item{sample.no}{int Sample no}
+#'   \item{specimen}{int unique specimen code}
+#'   \item{weight}{dbl weigth}
+#'   \item{sex}{int sex determined (sex - only female squid are included here)}
+#'   \item{maturity.stage}{int a categorical measure of maturity ranging from 1 to 5 with 1 = immature, 5 = mature}
+#'   \item{DML}{int the dorsal mantle length}
+#'   \item{eviscerate.weight}{the mantle weight measured without internal organs}
+#'   \item{dig.weight}{dbl The weight nidamental gland -the accessory reproductive organ }
+#'   \item{nid.lengtht}{dbl The lengtht nidamental gland -the accessory reproductive organ}
+#'   \item{dig.weight}{dbl The digestive gland weight to assess nutritional status of the individual}
+#'   \item{ovary.weight}{dbl The gonads' weights}
+#' }
+#' @source \url{https://alexd106.github.io/BI5009/data.html}
+"squid1"

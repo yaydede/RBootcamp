@@ -1,5 +1,5 @@
 ---
-title: "Ch's 3 - Other R Objects: Matrix, Array, List, Data Frame"
+title: "Chapter 3 - Other R Objects: Matrix & Dataframe"
 author: "**Yigit Aydede - RBootcamp - 2022**"
 output:
   learnr::tutorial:
@@ -84,11 +84,6 @@ Create a 6 × 10 matrix of random integers chosen from 1, 2,. . . ,10 with repla
 1. Find the number of entries in each row which are greater than 4. You can use `apply()` function. 
 2. Which rows contain exactly two occurrences of 7? 
 
-```{r m6-setup}
-library(RBootcamp)
-```
-
-
 ```{r m6, exercise=TRUE}
 
 ```
@@ -103,56 +98,44 @@ Use `str()`, `dim()`, `head()`, and `summary()` functions to examine the data
 
 ```
 
+Extract all the elements of the first 8 rows and the last 4 columns of the `whale` dataframe 
 
+```{r m8, exercise=TRUE}
 
-
-
-*Here's an exercise with some prepopulated code as well as `exercise.lines = 5` to provide a bit more initial room to work.*
-
-Now write a function that adds any two numbers and then call it:
-
-```{r add-function, exercise=TRUE, exercise.lines = 5}
-add <- function() {
-  
-}
 ```
 
-## Topic 2
+Extract rows 9, 11, 25 and all columns except the last column. 
 
-### Exercise with Hint
+```{r m9, exercise=TRUE}
 
-*Here's an exercise where the chunk is pre-evaluated via the `exercise.eval` option (so the user can see the default output we'd like them to customize). We also add a "hint" to the correct solution via the chunk immediate below labeled `print-limit-hint`.*
-
-Modify the following code to limit the number of rows printed to 5:
-
-```{r print-limit, exercise=TRUE, exercise.eval=TRUE}
-mtcars
 ```
 
-```{r print-limit-hint}
-head(mtcars)
+Now, we will extract data based on the following criteria:
+
+1. at `depth` less than 1000m
+2. `gradient` steeper than 150 degrees
+3. all the observations less than the mean `depth`
+3. `water.noise` level of 'low'
+4. `water.noise` level of 'high' in the month of 'May'
+5. `month` of 'October', `water.noise` level of 'low' and `gradient` greater than the median value. Hint use `median`()`
+6. all observations from between `latitude`s 60.0 and 61.0 and `longitude`s -6.0 and -4.0
+7. all rows that do not have a `water.noise` level of 'medium'
+
+```{r m10, exercise=TRUE}
+
 ```
 
-### Quiz
+There are of course many other approaches. One such approach is to use the `subset()` function (see `?subset`)..  Here is an example for #5 given above:
 
-*You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
-
-Some questions to verify that you understand the purposes of various base and recommended R packages:
-
-```{r quiz}
-quiz(
-  question("Which package contains functions for installing other R packages?",
-    answer("base"),
-    answer("tools"),
-    answer("utils", correct = TRUE),
-    answer("codetools")
-  ),
-  question("Which of the R packages listed below are used to create plots?",
-    answer("lattice", correct = TRUE),
-    answer("tools"),
-    answer("stats"),
-    answer("grid", correct = TRUE)
-  )
-)
+```{r m11, exercise=TRUE}
+subset(whale, month == "October" & water.noise == "low" & gradient > median(gradient))
 ```
+
+Use `subset()` to extract data collected in 'October' from `latitude`s greater than 61 degrees but only include the columns `month`, `latitude`, `longitude` and `number.whales`.
+
+```{r m12, exercise=TRUE}
+
+```
+
+This is enough for now.  We will see more applications on data frames in Chapters 6 and 7.  
 
