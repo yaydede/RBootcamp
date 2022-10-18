@@ -1,0 +1,17 @@
+#' Data of on whales collected by research cruises 
+#'
+#' These data were collected during two research cruises in the North Atlantic in May and October 2003. During these two months the research vessel visited multiple stations (areas) and marine mammal observers recorded the number of whales at each of these stations. 
+#' Data files is obtained from <https://alexd106.github.io/BI5009/index.html>
+#'
+#' @format A tibble with 100 rows and 8 variables:
+#' \describe{
+#'   \item{Month}{chr Month: May & October} 
+#'   \item{time.at.station}{dbl The time the vessel spent at each station}
+#'   \item{water.noise}{chr the ambient level of sub-surface noise with a hydrophone and categorised this variable into ‘low’, ‘medium’ or ‘high’}
+#'   \item{number.whales}{dbl number of whales observed}
+#'   \item{latitude}{dbl latitude}
+#'   \item{depth}{dbl water debt}
+#'   \item{gradient}{dbl gradient of the seabed}
+#' }
+#' @source \url{https://alexd106.github.io/BI5009/data.html}
+"whale"

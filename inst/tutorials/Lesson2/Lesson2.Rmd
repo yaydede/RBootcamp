@@ -1,5 +1,5 @@
 ---
-title: "Ch's 3 - Other R Objects"
+title: "Ch's 3 - Other R Objects: Matrix, Array, List, Data Frame"
 author: "**Yigit Aydede - RBootcamp - 2022**"
 output:
   learnr::tutorial:
@@ -13,8 +13,9 @@ library(learnr)
 library(tidyverse)
 library(nycflights13)
 library(Lahman)
+library(RBootcamp)
 tutorial_options(
-  exercise.timelimit = 60,
+  exercise.timelimit = 600,
   # A simple checker function that just returns the message in the check chunk
   exercise.checker = function(check_code, ...) {
     list(
@@ -78,16 +79,29 @@ X <- matrix(sample(1:10, 25, replace = T), 5,5)
 
 ```
 
-Create a 6 × 10 matrix of random integers chosen from 1, 2,. . . ,10.  Call it `aMat` (with `set.seed(75)`)
+Create a 6 × 10 matrix of random integers chosen from 1, 2,. . . ,10 with replacement.  Call it `aMat` (with `set.seed(75)`)
   
 1. Find the number of entries in each row which are greater than 4. You can use `apply()` function. 
-2. Which rows contain exactly two occurrences of the number seven? 
+2. Which rows contain exactly two occurrences of 7? 
+
+```{r m6-setup}
+library(RBootcamp)
+```
 
 
 ```{r m6, exercise=TRUE}
 
 ```
 
+## Dataframes
+
+Dataframes are the most common way to store and interact with data. Data sets for statistical analysis are typically stored in dataframes in R. Unlike a matrix, a data frame can have different data types for each elements (columns).  We will use `whale` in your `RBootcamp`.  To see the description of the data call `?whale` in the console.
+
+Use `str()`, `dim()`, `head()`, and `summary()` functions to examine the data
+
+```{r m7, exercise=TRUE}
+
+```
 
 
 
