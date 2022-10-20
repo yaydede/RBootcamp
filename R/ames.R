@@ -1,0 +1,6 @@
+#' The Ames Iowa Housing data from the AmesHousing package
+#'
+#' @format A dataframe with 2930 rows and 81 variables:
+#' 
+#' @source \url{http://jse.amstat.org/v19n3/decock/DataDocumentation.txt}
+"ames"

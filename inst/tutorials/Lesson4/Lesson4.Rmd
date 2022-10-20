@@ -1,0 +1,170 @@
+---
+title: "Ch's 6 - Data Management"
+author: "**Yigit Aydede - RBootcamp - 2022**"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(nycflights13)
+library(Lahman)
+library(RBootcamp)
+library(ggplot2)
+tutorial_options(
+  exercise.timelimit = 600,
+  # A simple checker function that just returns the message in the check chunk
+  exercise.checker = function(check_code, ...) {
+    list(
+      message = eval(parse(text = check_code)),
+      correct = logical(0),
+      type = "info",
+      location = "append"
+    )
+  }
+)
+knitr::opts_chunk$set(error = TRUE)
+```
+
+## `dplyr`
+
+`dplyr` is a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges:
+
+`mutate()` adds new variables that are functions of existing variables
+`select()` picks variables based on their names.
+`filter()` picks cases based on their values.
+`summarise()` reduces multiple values down to a single summary.
+`arrange()` changes the ordering of the rows.
+
+See <https://dplyr.tidyverse.org> for more details.
+
+## `filter()`
+Use `ames` and see its details at `?ames`.  Explore the data using `glimps()`
+
+```{r m1, exercise=TRUE}
+
+```
+
+Create a new dataframe named `amdf1` that contains 1 or 2-story houses that are built before year 2000 (not including 2000), sold on or after year 2009.
+
+```{r m2, exercise=TRUE}
+amdf1 <- filter(ames, Year_Built < 2000,
+                Year_Sold >= 2009,
+                House_Style == "Two_Story" | House_Style == "One_Story")
+```
+
+Find all houses that are sold in 2007, remodeled in 2006, and with with 2 or 3 bedrooms.  Create `amdf2`
+
+```{r m3, exercise=TRUE}
+amdf2 <- filter(ames, Year_Remod_Add < 2006,
+                Year_Sold == 2007,
+                TotRms_AbvGrd == 3 | TotRms_AbvGrd == 2)
+```
+
+
+## `arrange()`
+
+Find the top 10 2-story houses built in 2009 with the highest sale price.  Store these 10 observations in `amdf3`.  Hint use `%>%`
+
+```{r m3a, exercise=TRUE}
+temp <- ames %>%
+  filter(Year_Built == 2006, House_Style == "Two_Story") %>%
+  arrange(desc(Sale_Price))
+
+amdf3 <- temp[1:10,]                
+```
+
+Represent the distribution of kitchen quality with a bar chart (use `ggplot2`) among all houses built in 2008 by the ascending order of sold year. Combine all operations by using the pipe operator.
+
+```{r m4, exercise=TRUE}
+ames %>%
+  filter(Year_Built == 2008) %>%
+  arrange(Year_Sold) %>%
+  ggplot(mapping = aes(x = Gr_Liv_Area, y = Sale_Price)) + 
+  geom_point()
+```
+
+Represent the distribution of kitchen quality with a bar chart (use `ggplot2`) among all houses built in 2008 by the ascending order of sold year. Combine all operations by using the pipe operator.
+
+```{r m5, exercise=TRUE}
+ames %>%
+  filter(Year_Built == 2008) %>%
+  arrange(Year_Sold) %>%
+  ggplot(mapping = aes(x = Kitchen_Qual)) + 
+  geom_bar()
+```
+
+Use `subset()` find all houses that are sold in 2007, remodeled in 2006, and with with 2 or 3 bedrooms.
+
+```{r m6, exercise=TRUE}
+subset(ames, Year_Sold == 2007  | Year_Remod_Add < 2006 &
+       TotRms_AbvGrd == 3 | TotRms_AbvGrd == 2)
+```
+
+## `select()`
+
+Select all the variables with names ending with "Qual".
+
+```{r m7, exercise=TRUE}
+head(select(ames, ends_with("Qual"))) 
+```
+
+Select all the variables with names that contain with "mo".
+
+```{r m8, exercise=TRUE}
+head(select(ames, contains("mo"))) 
+```
+
+Do not use `dplyr` and try to answer the previous question by using `greb()`
+
+```{r m9, exercise=TRUE}
+ind <- grep("mo", colnames(ames))
+head(ames[,ind])
+```
+
+## `mutate()`, `group_by()` & `summarize()`
+
+Summarize the following values for 2-story & 1-story houses built between 2007 and 2009 with the highest sale price.  
+ 
+1. Number of houses
+2. Average number of rooms
+3. The mean value of the top 10 sale price 
+
+```{r m10, exercise=TRUE}
+ames %>%
+  filter(Year_Built >= 2007 & Year_Built <= 2009, 
+         House_Style == "Two_Story" | House_Style == "One_Story") %>%
+  arrange(desc(Sale_Price)) %>%
+  summarize(n_houses = n(),
+            ave_n_rooms = mean(TotRms_AbvGrd),
+            ave_price = mean(Sale_Price[1:10])) 
+```
+
+Do the same summary by kitchen quality
+
+```{r m11, exercise=TRUE}
+ames %>%
+  filter(Year_Built >= 2007 & Year_Built <= 2009, 
+         House_Style == "Two_Story" | House_Style == "One_Story") %>%
+  arrange(desc(Sale_Price)) %>%
+  group_by(Kitchen_Qual) %>%
+  summarize(n_houses = n(),
+            ave_n_rooms = mean(TotRms_AbvGrd),
+            ave_price = mean(Sale_Price[1:10])) 
+```
+
+Add a variable, `ave_lot`, that reflects average lot area by house style in a new data.frame `dff`. 
+
+```{r m12, exercise=TRUE}
+dff <- ames %>%
+  group_by(House_Style) %>%
+  mutate(ave_lot = mean(Lot_Area))
+```
+
+
+
+

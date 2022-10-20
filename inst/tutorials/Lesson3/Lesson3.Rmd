@@ -1,0 +1,102 @@
+---
+title: "Ch's 4 & 5 - Reading/Writing files - Data Visulization"
+author: "**Yigit Aydede - RBootcamp - 2022**"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(nycflights13)
+library(Lahman)
+library(RBootcamp)
+library(ggplot2)
+tutorial_options(
+  exercise.timelimit = 600,
+  # A simple checker function that just returns the message in the check chunk
+  exercise.checker = function(check_code, ...) {
+    list(
+      message = eval(parse(text = check_code)),
+      correct = logical(0),
+      type = "info",
+      location = "append"
+    )
+  }
+)
+knitr::opts_chunk$set(error = TRUE)
+```
+
+
+## Reading files
+
+Execute the following actions in a new R Script 
+  
+1. Go to this [page](https://catalog.data.gov/dataset?res_format=CSV&organization=city-of-new-york) and download a CSV file that contains information about School Bus Delays (Report October_2021_1173B_21-994). Assign it to `data1`
+2. Save it to your project under `Data` folder. 
+3. Write the file your saved in Data folder, write it as `data2.csv`
+
+## Plotting
+
+Use `squid1` and see its details at `?squid1`.  Explore the data
+
+```{r m1, exercise=TRUE}
+
+```
+
+Provide a visual correlation matrix 
+
+```{r m2, exercise=TRUE}
+
+```
+
+Plot `weight` (on the Y axis) vs `DML`.  Make the plot "nice"
+
+```{r m3, exercise=TRUE}
+
+```
+
+How would you describe this relationship? Is it linear? Try transforming the weight variable with either a natural log 
+
+```{r m4, exercise=TRUE}
+
+```
+
+Plot two figures `weight` vs `DML` AND `ovary.weight` next to each other
+
+```{r m5, exercise=TRUE}
+
+```
+
+We have the following histograms for  `DML`, `weight`, `nid.length` and `ovary.weight`. Note that you can export your plot(s) as pdf, jpeg, png file(s) to the output directory by using `pdf()`, `jpeg()`, `png()`.  Check it if it's saved to your assigned path.  Remove the lines so that you can print tehm on the screen.  Make the plot "nice"
+
+```{r m6, exercise=TRUE}
+pdf('~/Dropbox/Documents/Courses/MBAN/RBootcamps/ex4_hist.pdf') # Change it
+par(mfrow = c(2,2))
+hist(squid1$DML)
+hist(squid1$weight)
+hist(squid1$eviscerate.weight)
+hist(squid1$ovary.weight)
+dev.off()
+```
+
+Create a pairs plot for the variables: `DML`, `weight`, `eviscerate.weight`, `ovary.weight`, `nid.length`, and `nid.weight` and save it as png.
+
+```{r m7, exercise=TRUE}
+
+```
+
+## `ggplot()`
+
+We will not have exercises for `ggplot` as it's vast and covering a few examples would not be useful.  However, we will use a simple "builder" for `ggplot` graphs   
+
+Download R package called `esquisse`. This package was designed to help users explore and extract data quickly and a brilliant feature of this package is the `ggplot2 builder` add-in.  This add-in opens a GUI interface within RStudio that allows you to interactively explore and visualize your data using the `ggplot2` package. Provide it with a data frame and you can effortlessly create bar graphs, scatter plots, histograms, boxplots and much more.  If you want to export to PowerPoint, you can  also need to install the packages `officer` and `rvg`
+
+Use `ggplot2 builder` in add-in and experiemtn multiple plots by using the package `AmesHousing
+
+```{r m8, exercise=TRUE}
+df <- AmesHousing::make_ames()
+```
