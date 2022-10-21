@@ -1,0 +1,376 @@
+---
+title: "Chapter 7 - Programming Basics"
+author: "**Yigit Aydede - RBootcamp - 2022**"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(nycflights13)
+library(Lahman)
+library(RBootcamp)
+library(ggplot2)
+library(datasets)
+tutorial_options(
+  exercise.timelimit = 600,
+  # A simple checker function that just returns the message in the check chunk
+  exercise.checker = function(check_code, ...) {
+    list(
+      message = eval(parse(text = check_code)),
+      correct = logical(0),
+      type = "info",
+      location = "append"
+    )
+  }
+)
+knitr::opts_chunk$set(error = TRUE)
+```
+
+## `if/else` or `ifelse()`
+
+Create a simple `if/else` statement will take a single input `x`. If the input x is TRUE, the function will print one sentence. If the input `x` is FALSE, it will return a different sentence:
+
+```{r m1, exercise=TRUE}
+x <- FALSE # check it with "TRUE" too
+if(x == TRUE) { 
+  cat("x is TRUE")
+} else {
+  cat("x is FALSE")
+}
+```
+
+Check whether `x` is an even number or an odd number, and print out the corresponding messages.
+
+```{r m2, exercise=TRUE}
+x <- 3
+if(x %% 2 == 0) { 
+  cat("x is an even number")
+} else {
+  cat("x is an odd number")
+}
+```
+
+Try to have it with `ifelse()`
+
+```{r m3, exercise=TRUE}
+x <- 3 #check it with 4 too
+ifelse(x%%2, "even", "odd")
+```
+
+Take the `sqrt` of the following vector by skipping (-) numbers.   
+
+```{r}
+set.seed(2)
+d <- sample(-10:10, 10, replace = TRUE)
+d
+```
+
+```{r m4-setup}
+set.seed(2)
+d <- sample(-10:10, 10, replace = TRUE)
+```
+
+```{r m4, exercise=TRUE, warning=FALSE}
+ifelse(d >= 0, sqrt(d), d)
+```
+
+Why `ifelse()`?  Try to run it with `if/else`.  
+
+```{r m5-setup}
+set.seed(2)
+d <- sample(-10:10, 10, replace = TRUE)
+```
+
+```{r m5, exercise=TRUE}
+if (d > 0){
+  sqrt(d)
+}else{
+  d
+}
+```
+
+You get the error because `if` can only evaluate a logical vector of length 1.  In other words, `if` statement is not vectorized. For vectorized `if` statements you should use `ifelse()`. 
+
+Now use the same vector, $d$, and apply `sqrt()` if the number is larger than 0, if not take the square of the number. 
+
+```{r m6-setup}
+set.seed(2)
+d <- sample(-10:10, 10, replace = TRUE)
+```
+
+```{r m6, exercise=TRUE, warning=FALSE}
+ifelse(d > 0 , sqrt(d), d^2)
+```
+
+It works with `ifelse()` but we cannot use it effectively for multiple nested conditions.
+
+## Loops
+
+Run the following code that applies `sqrt()` if the number is larger than 0, takes the square of the number if less than -5, otherwise keep the numbers as they are.
+
+```{r m7, exercise=TRUE}
+x <- -10:10
+if(x > 0){
+  sqrt(x)
+}else if (x < -5) {
+  x^2
+}else{
+  x
+}  
+```
+
+Again, `x` is a vector, and `if/else` doesn't like vectorized operations.  One possible solution is to have a `for()` loop:
+
+```{r m9, exercise=TRUE}
+x <- -10:10
+y <- c()
+
+for(i in 1:length(x)){
+  if(x[i] > 0){
+    y[i] <- sqrt(x[i])
+  }else if(x[i] < -5){
+    y[i] <- x[i]^2
+  }else{
+    y[i] <- x[i]
+  }
+}
+y
+```
+
+You have the following matrix. Create a code that prints how many numbers less than 6 there are in each row. If there is no number less than 6 print “Row 1 has no 6”. Hint use `any()` in the condition. 
+
+```{r m10-setup}
+set.seed(123)
+A <- matrix(sample(1:10, 25, replace = TRUE), 5, 5)
+A
+```
+
+```{r}
+set.seed(123)
+A <- matrix(sample(1:10, 25, replace = TRUE), 5, 5)
+A
+```
+
+```{r m10, exercise=TRUE}
+
+for(i in 1:nrow(A)){
+  if(any(A[i,] == 6)) {
+    print(paste("row ", i, " has ",  sum(A[i,] == 6)))
+  }else{
+    print(paste("row ", i, " has no 6"))
+  }
+}
+```
+
+We use the same matrix `A` for the following examples. The first example is for a simple operations. It multiplies each row (1x2, 2x3, 3x4, 4x5) and creates a new 4x5 matrix, `B`:
+
+```{r m11-setup}
+set.seed(123)
+A <- matrix(sample(1:10, 25, replace = TRUE), 5, 5)
+A
+```
+
+```{r m11, exercise=TRUE}
+n <- nrow(A) -1
+B <- matrix(0, n, ncol(A)) # You need to initiate the container
+
+for(i in 1:n){
+  B[i,] <- A[i,]*A[i+1, ] 
+}
+B
+```
+
+We can also use a double loop.  Multiply subsequent rows only if the number in the next row is larger in each column and assign them to a new 4x5 matrix `D`: 
+
+```{r m12-setup}
+set.seed(123)
+A <- matrix(sample(1:10, 25, replace = TRUE), 5, 5)
+A
+```
+
+```{r m12, exercise=TRUE}
+n <- nrow(A) -1
+D <- matrix(0, n, ncol(A))
+
+for(j in 1:ncol(A)){ # This loop runs by columns
+  for (i in 1:n){ # This loop runs by rows
+    if(A[i,j]>A[i+1,j]){
+      D[i,j] <- A[i,j]*A[i+1,j]
+    }else{
+      D[i,j] <- A[i,j]
+    }  
+  }
+}
+D
+```
+
+An integer (`int`), character (`chr`), or a numerical (`num`) variable could be an indicator variable.  For example, if an integer (or numerical) variable has less than a certain threshold (like 10 unique numbers), it might be considered an indicator variable.   Write a code that looks each variable in `mtcar` (`datasets`) and identifies each indicator variable and convert it to a factor variable in a loop if the variable has 10 or less unique numbers.
+
+```{r}
+str(mtcars)
+```
+
+```{r m13, exercise=TRUE}
+df <- mtcars
+
+# work on df in your loop
+
+for(i in 1:ncol(df)){
+  if(length(unique(df[,i])) < 10){df[,i] <- as.factor(df[,i])}
+}
+str(df)
+```
+
+## `apply()` family
+
+We have already seen `apply()` on matrices.  We cannot use them in dataframes.  Instead, we can use `lapply()`
+
+Here is an example on `ames`:
+
+```{r m14, exercise=TRUE, warning=FALSE}
+lapply(ames, mean)
+```
+
+`NA`s for factor variables.  `lapply()` returns a list.  We can use `sapply()` that the results will be vectorized:
+
+```{r m15, exercise=TRUE, warning=FALSE}
+sapply(ames, mean)
+```
+
+The exercises below are advance!  Don't get frustrated.  You will get help ...
+
+1. Now use `sapply` to identify unique values in `mtcars`. Assign it to `col_names` Hint: `unique()`
+2. Use which to identify those whose values less than 7
+3. Convert them to factor in `mtcars`, assign the new dataframe to `df3`
+
+```{r m16, exercise=TRUE}
+col_names <- sapply(mtcars, function(x) length(unique(x)))
+col_names
+
+ind <- which(col_names < 7)
+ind
+
+df3 <- mtcars
+df3[,ind] <- lapply(df3[, ind], factor)
+```
+
+Now, convert those factor variables to character:
+
+```{r m17-setup}
+df3 <- mtcars
+col_names <- sapply(mtcars, function(x) length(unique(x)))
+col_names
+
+ind <- which(col_names < 7)
+ind
+
+df3 <- mtcars
+df3[,ind] <- lapply(df3[, ind], factor)
+```
+
+
+```{r m17, exercise=TRUE}
+ind <- sapply(df3, is.factor)
+
+lapply(df3[,ind], as.character)
+
+df3[, sapply(df3, is.factor)] <- lapply(df3[,ind], as.character)
+str(df3)
+```
+
+## Functions
+
+Functions have the following structure:
+
+`Name_of_Function <- function(argument1, argument2, ...) {expression}`.  Once you define the function, you can call it by `Name_of_Function(argument1, argument2)`
+
+Remember, we had `if/else` statement to check whether `x` is an even number or an odd number, and print out the corresponding messages.  Let's have a function (`fnc_1`) that works for any input.  Then try it for 5 and 4:
+
+```{r m18, exercise=TRUE}
+my_1 <- function(x){
+  if(x %% 2 == 0) { 
+    cat("x is an even number")
+  } else {
+    cat("x is an odd number")
+  } 
+}
+
+my_1(3)
+my_1(4)
+```
+
+Write a function to convert Fahrenheit (`F`) to Centigrade ($C = (F - 32) * 5/9$). Call it `FtoC`.  Get your function to print out your result in the following format: “Fahrenheit : value of F is equivalent to C.”
+
+```{r m19, exercise=TRUE}
+FtoC1 <- function(f) {
+    val <- (f - 32) * 5/9
+    print(paste("Fahrenheit:", round(f, digits = 3),
+                "is equivalent to",
+                round(val, digits = 3), "C",  sep = " "), quote = FALSE)  
+}
+
+# Other alternative 
+
+FtoC2 <- function(f) {
+    val <- (f - 32) * 5/9  #calculation
+    cat("Fahrenheit: ", round(f, digits = 3), " is equivalent to ",
+        round(val, digits = 3))
+}
+```
+
+Write a function (`sumfun`) to calculate the mean, median, and range of a vector, print these values out with appropriate labels. Also get the function to plot a histogram (as a proportion) of the values and add a density curve. Then, try it with a vector of 100 observations drawn from a normal distribution with mean 35 and standard deviation of 15. 
+
+```{r m20, exercise=TRUE}
+sumfun <- function(dat){
+    mymean <- round(mean(dat), 4)        
+    mymedian <- round(median(dat), 4)    
+    mymin <- round(min(dat), 4)          
+    mymax <- round(max(dat), 4)         
+    print(paste("mean:", mymean, sep = " "), quote = FALSE)    
+    print(paste("median:", mymedian, sep = " "), quote = FALSE)    
+    print(paste("range:", "from:", mymin, "to", mymax, sep = " "), quote = FALSE) 
+    dens <- density(dat)                          
+    hist(dat, main = "", freq = FALSE)  
+    lines(dens, lty = 1, col = "red")             
+}
+
+# use the function
+x <- rnorm(100, 35, 15)  # create some norm dist data mean 35, sd = 15
+sumfun(x)
+```
+
+Write a function (`newmedian`) to calculate the median value of a vector of numbers (don't use `median()`). Note that, with vectors of an even sample size, you need to take the average of the two central numbers. Test your function on vectors with both odd and even sample sizes.
+
+```{r m21, exercise=TRUE}
+newmedian <- function(x){
+    n <- length(x)
+    if (n %% 2 == 1)      # odd numbers
+      sort(x)[(n + 1)/2] 
+    else {                # even numbers
+      middletwo <- sort(x)[(n/2) + 0:1]   #find the two middle numbers
+      mean(middletwo)
+      }
+}
+
+# use the function
+x<- sample(1:50, 10, replace = TRUE )
+
+# our function
+newmedian(x)
+
+# R median function
+median(x)
+```
+
+## `source()`
+
+1. Open up a new R script, copy paste `newmedian()` on it, and save it as `myfunctions`.  Close it.  Clean the Environment.
+2. Open up a new R script and copy paste your `sumfun()` on it.  Change `median()` function to `newmedian()` 
+
+Use `source()` on the script to be able to reach your `newmedian()` function
+

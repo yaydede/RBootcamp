@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="Yigit Aydede - RBootcamp - 2022" />
+
+
+<meta name="progressive" content="true" />
+<meta name="allow-skip" content="true" />
+<meta name="learnr-version-prerender" content="0.10.7.9000" />
+
+<title>Chapter 7 - Programming Basics</title>
+
+<!-- header-includes START -->
+<!-- HEAD_CONTENT -->
+<!-- header-includes END -->
+<!-- HEAD_CONTENT -->
+
+<!-- highlightjs -->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+<!-- taken from https://github.com/rstudio/rmarkdown/blob/de8a9c38618903627ca509f5401d50a0876079f7/inst/rmd/h/default.html#L293-L343 -->
+<!-- tabsets -->
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+<!-- end tabsets -->
+
+
+</head>
+
+<body>
+<a class='sr-only sr-only-focusable visually-hidden-focusable' href='#learnr-tutorial-content'>Skip to Tutorial Content</a>
+
+
+
+<div class="pageContent band">
+<main class="bandContent page">
+
+<article class="topics" id="learnr-tutorial-content">
+
+<div id="section-ifelse-or-ifelse" class="section level2">
+<h2><code>if/else</code> or <code>ifelse()</code></h2>
+<p>Create a simple <code>if/else</code> statement will take a single
+input <code>x</code>. If the input x is TRUE, the function will print
+one sentence. If the input <code>x</code> is FALSE, it will return a
+different sentence:</p>
+<div class="tutorial-exercise" data-label="m1" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>x &lt;- FALSE # check it with &quot;TRUE&quot; too
+if(x == TRUE) { 
+  cat(&quot;x is TRUE&quot;)
+} else {
+  cat(&quot;x is FALSE&quot;)
+}</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p>Check whether <code>x</code> is an even number or an odd number, and
+print out the corresponding messages.</p>
+<div class="tutorial-exercise" data-label="m2" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>x &lt;- 3
+if(x %% 2 == 0) { 
+  cat(&quot;x is an even number&quot;)
+} else {
+  cat(&quot;x is an odd number&quot;)
+}</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p>Try to have it with <code>ifelse()</code></p>
+<div class="tutorial-exercise" data-label="m3" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>x &lt;- 3 #check it with 4 too
+ifelse(x%%2, &quot;even&quot;, &quot;odd&quot;)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p>Take the <code>sqrt</code> of the following vector by skipping (-)
+numbers.</p>
+<pre class="r"><code>set.seed(2)
+d &lt;- sample(-10:10, 10, replace = TRUE)
+d</code></pre>
+<pre><code>##  [1] 10  4 -5 -5 -3  6  6  1 -2  7</code></pre>
+<div class="tutorial-exercise" data-label="m4" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>ifelse(d &gt;= 0, sqrt(d), d)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p>Why <code>ifelse()</code>? Try to run it with
+<code>if/else</code>.</p>
+<div class="tutorial-exercise" data-label="m5" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>if (d &gt; 0){
+  sqrt(d)
+}else{
+  d
+}</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p>You get the error because <code>if</code> can only evaluate a logical
+vector of length 1. In other words, <code>if</code> statement is not
+vectorized. For vectorized <code>if</code> statements you should use
+<code>ifelse()</code>.</p>
+<p>Now use the same vector, <span class="math inline">\(d\)</span>, and
+apply <code>sqrt()</code> if the number is larger than 0, if not take
+the square of the number.</p>
+<div class="tutorial-exercise" data-label="m6" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>ifelse(d &gt; 0 , sqrt(d), d^2)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p>It works with <code>ifelse()</code> but we cannot use it effectively
+for multiple nested conditions.</p>
+</div>
+<div id="section-loops" class="section level2">
+<h2>Loops</h2>
+<p>Run the following code that applies <code>sqrt()</code> if the number
+is larger than 0, takes the square of the number if less than -5,
+otherwise keep the numbers as they are.</p>
+<div class="tutorial-exercise" data-label="m7" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>x &lt;- -10:10
+if(x &gt; 0){
+  sqrt(x)
+}else if (x &lt; -5) {
+  x^2
+}else{
+  x
+}  </code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p>Again, <code>x</code> is a vector, and <code>if/else</code> doesn’t
+like vectorized operations. One possible solution is to have a
+<code>for()</code> loop:</p>
+<div class="tutorial-exercise" data-label="m9" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>x &lt;- -10:10
+y &lt;- c()
+
+for(i in 1:length(x)){
+  if(x[i] &gt; 0){
+    y[i] &lt;- sqrt(x[i])
+  }else if(x[i] &lt; -5){
+    y[i] &lt;- x[i]^2
+  }else{
+    y[i] &lt;- x[i]
+  }
+}
+y</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p>You have the following matrix. Create a code that prints how many
+numbers less than 6 there are in each row. If there is no number less
+than 6 print “Row 1 has no 6”. Hint use <code>any()</code> in the
+condition.</p>
+<pre class="r"><code>set.seed(123)
+A &lt;- matrix(sample(1:10, 25, replace = TRUE), 5, 5)
+A</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    3    5    5    3    9
+## [2,]    3    4    3    8    3
+## [3,]   10    6    9   10    4
+## [4,]    2    9    9    7    1
+## [5,]    6   10    9   10    7</code></pre>
+<div class="tutorial-exercise" data-label="m10" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>for(i in 1:nrow(A)){
+  if(any(A[i,] == 6)) {
+    print(paste(&quot;row &quot;, i, &quot; has &quot;,  sum(A[i,] == 6)))
+  }else{
+    print(paste(&quot;row &quot;, i, &quot; has no 6&quot;))
+  }
+}</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p>We use the same matrix <code>A</code> for the following examples. The
+first example is for a simple operations. It multiplies each row (1x2,
+2x3, 3x4, 4x5) and creates a new 4x5 matrix, <code>B</code>:</p>
+<div class="tutorial-exercise" data-label="m11" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>n &lt;- nrow(A) -1
+B &lt;- matrix(0, n, ncol(A)) # You need to initiate the container
+
+for(i in 1:n){
+  B[i,] &lt;- A[i,]*A[i+1, ] 
+}
+B</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p>We can also use a double loop. Multiply subsequent rows only if the
+number in the next row is larger in each column and assign them to a new
+4x5 matrix <code>D</code>:</p>
+<div class="tutorial-exercise" data-label="m12" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>n &lt;- nrow(A) -1
+D &lt;- matrix(0, n, ncol(A))
+
+for(j in 1:ncol(A)){ # This loop runs by columns
+  for (i in 1:n){ # This loop runs by rows
+    if(A[i,j]&gt;A[i+1,j]){
+      D[i,j] &lt;- A[i,j]*A[i+1,j]
+    }else{
+      D[i,j] &lt;- A[i,j]
+    }  
+  }
+}
+D</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p>An integer (<code>int</code>), character (<code>chr</code>), or a
+numerical (<code>num</code>) variable could be an indicator variable.
+For example, if an integer (or numerical) variable has less than a
+certain threshold (like 10 unique numbers), it might be considered an
+indicator variable. Write a code that looks each variable in
+<code>mtcar</code> (<code>datasets</code>) and identifies each indicator
+variable and convert it to a factor variable in a loop if the variable
+has 10 or less unique numbers.</p>
+<pre class="r"><code>str(mtcars)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    32 obs. of  11 variables:
+##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+##  $ disp: num  160 160 108 258 360 ...
+##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
+<div class="tutorial-exercise" data-label="m13" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>df &lt;- mtcars
+
+# work on df in your loop
+
+for(i in 1:ncol(df)){
+  if(length(unique(df[,i])) &lt; 10){df[,i] &lt;- as.factor(df[,i])}
+}
+str(df)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+</div>
+<div id="section-apply-family" class="section level2">
+<h2><code>apply()</code> family</h2>
+<p>We have already seen <code>apply()</code> on matrices. We cannot use
+them in dataframes. Instead, we can use <code>lapply()</code></p>
+<p>Here is an example on <code>ames</code>:</p>
+<div class="tutorial-exercise" data-label="m14" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>lapply(ames, mean)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p><code>NA</code>s for factor variables. <code>lapply()</code> returns
+a list. We can use <code>sapply()</code> that the results will be
+vectorized:</p>
+<div class="tutorial-exercise" data-label="m15" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>sapply(ames, mean)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p>The exercises below are advance! Don’t get frustrated. You will get
+help …</p>
+<ol style="list-style-type: decimal">
+<li>Now use <code>sapply</code> to identify unique values in
+<code>mtcars</code>. Assign it to <code>col_names</code> Hint:
+<code>unique()</code></li>
+<li>Use which to identify those whose values less than 7</li>
+<li>Convert them to factor in <code>mtcars</code>, assign the new
+dataframe to <code>df3</code></li>
+</ol>
+<div class="tutorial-exercise" data-label="m16" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>col_names &lt;- sapply(mtcars, function(x) length(unique(x)))
+col_names
+
+ind &lt;- which(col_names &lt; 7)
+ind
+
+df3 &lt;- mtcars
+df3[,ind] &lt;- lapply(df3[, ind], factor)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p>Now, convert those factor variables to character:</p>
+<div class="tutorial-exercise" data-label="m17" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>ind &lt;- sapply(df3, is.factor)
+
+lapply(df3[,ind], as.character)
+
+df3[, sapply(df3, is.factor)] &lt;- lapply(df3[,ind], as.character)
+str(df3)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+</div>
+<div id="section-functions" class="section level2">
+<h2>Functions</h2>
+<p>Functions have the following structure:</p>
+<p><code>Name_of_Function &lt;- function(argument1, argument2, ...) {expression}</code>.
+Once you define the function, you can call it by
+<code>Name_of_Function(argument1, argument2)</code></p>
+<p>Remember, we had <code>if/else</code> statement to check whether
+<code>x</code> is an even number or an odd number, and print out the
+corresponding messages. Let’s have a function (<code>fnc_1</code>) that
+works for any input. Then try it for 5 and 4:</p>
+<div class="tutorial-exercise" data-label="m18" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>my_1 &lt;- function(x){
+  if(x %% 2 == 0) { 
+    cat(&quot;x is an even number&quot;)
+  } else {
+    cat(&quot;x is an odd number&quot;)
+  } 
+}
+
+my_1(3)
+my_1(4)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p>Write a function to convert Fahrenheit (<code>F</code>) to Centigrade
+(<span class="math inline">\(C = (F - 32) * 5/9\)</span>). Call it
+<code>FtoC</code>. Get your function to print out your result in the
+following format: “Fahrenheit : value of F is equivalent to C.”</p>
+<div class="tutorial-exercise" data-label="m19" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>FtoC1 &lt;- function(f) {
+    val &lt;- (f - 32) * 5/9
+    print(paste(&quot;Fahrenheit:&quot;, round(f, digits = 3),
+                &quot;is equivalent to&quot;,
+                round(val, digits = 3), &quot;C&quot;,  sep = &quot; &quot;), quote = FALSE)  
+}
+
+# Other alternative 
+
+FtoC2 &lt;- function(f) {
+    val &lt;- (f - 32) * 5/9  #calculation
+    cat(&quot;Fahrenheit: &quot;, round(f, digits = 3), &quot; is equivalent to &quot;,
+        round(val, digits = 3))
+}</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p>Write a function (<code>sumfun</code>) to calculate the mean, median,
+and range of a vector, print these values out with appropriate labels.
+Also get the function to plot a histogram (as a proportion) of the
+values and add a density curve. Then, try it with a vector of 100
+observations drawn from a normal distribution with mean 35 and standard
+deviation of 15.</p>
+<div class="tutorial-exercise" data-label="m20" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>sumfun &lt;- function(dat){
+    mymean &lt;- round(mean(dat), 4)        
+    mymedian &lt;- round(median(dat), 4)    
+    mymin &lt;- round(min(dat), 4)          
+    mymax &lt;- round(max(dat), 4)         
+    print(paste(&quot;mean:&quot;, mymean, sep = &quot; &quot;), quote = FALSE)    
+    print(paste(&quot;median:&quot;, mymedian, sep = &quot; &quot;), quote = FALSE)    
+    print(paste(&quot;range:&quot;, &quot;from:&quot;, mymin, &quot;to&quot;, mymax, sep = &quot; &quot;), quote = FALSE) 
+    dens &lt;- density(dat)                          
+    hist(dat, main = &quot;&quot;, freq = FALSE)  
+    lines(dens, lty = 1, col = &quot;red&quot;)             
+}
+
+# use the function
+x &lt;- rnorm(100, 35, 15)  # create some norm dist data mean 35, sd = 15
+sumfun(x)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<p>Write a function (<code>newmedian</code>) to calculate the median
+value of a vector of numbers (don’t use <code>median()</code>). Note
+that, with vectors of an even sample size, you need to take the average
+of the two central numbers. Test your function on vectors with both odd
+and even sample sizes.</p>
+<div class="tutorial-exercise" data-label="m21" data-completion="1"
+data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>newmedian &lt;- function(x){
+    n &lt;- length(x)
+    if (n %% 2 == 1)      # odd numbers
+      sort(x)[(n + 1)/2] 
+    else {                # even numbers
+      middletwo &lt;- sort(x)[(n/2) + 0:1]   #find the two middle numbers
+      mean(middletwo)
+      }
+}
+
+# use the function
+x&lt;- sample(1:50, 10, replace = TRUE )
+
+# our function
+newmedian(x)
+
+# R median function
+median(x)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+</div>
+<div id="section-source" class="section level2">
+<h2><code>source()</code></h2>
+<ol style="list-style-type: decimal">
+<li>Open up a new R script, copy paste <code>newmedian()</code> on it,
+and save it as <code>myfunctions</code>. Close it. Clean the
+Environment.</li>
+<li>Open up a new R script and copy paste your <code>sumfun()</code> on
+it. Change <code>median()</code> function to
+<code>newmedian()</code></li>
+</ol>
+<p>Use <code>source()</code> on the script to be able to reach your
+<code>newmedian()</code> function</p>
+<p>
+<script type="application/shiny-prerendered" data-context="server-start">
+library(learnr)
+library(tidyverse)
+library(nycflights13)
+library(Lahman)
+library(RBootcamp)
+library(ggplot2)
+library(datasets)
+tutorial_options(
+  exercise.timelimit = 600,
+  # A simple checker function that just returns the message in the check chunk
+  exercise.checker = function(check_code, ...) {
+    list(
+      message = eval(parse(text = check_code)),
+      correct = logical(0),
+      type = "info",
+      location = "append"
+    )
+  }
+)
+knitr::opts_chunk$set(error = TRUE)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::register_http_handlers(session, metadata = NULL)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::prepare_tutorial_state(session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::i18n_observe_tutorial_language(input, session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+session$onSessionEnded(function() {
+        learnr:::event_trigger(session, "session_stop")
+      })
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m1-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m1-code-editor`)), session)
+output$`tutorial-exercise-m1-output` <- renderUI({
+  `tutorial-exercise-m1-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m1", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = NULL, chunks = list(
+    list(label = "m1", code = "x <- FALSE # check it with \"TRUE\" too\nif(x == TRUE) { \n  cat(\"x is TRUE\")\n} else {\n  cat(\"x is FALSE\")\n}", 
+        opts = list(label = "\"m1\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "Lesson5_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m1", exercise = TRUE, code = c("x <- FALSE # check it with \"TRUE\" too", 
+        "if(x == TRUE) { ", "  cat(\"x is TRUE\")", "} else {", 
+        "  cat(\"x is FALSE\")", "}"), out.width.px = 624, out.height.px = 384, 
+        params.src = "m1, exercise=TRUE", fig.num = 0, exercise.df_print = "paged"), 
+    engine = "r", version = "4"), class = c("r", "tutorial_exercise"
+)))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m2-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m2-code-editor`)), session)
+output$`tutorial-exercise-m2-output` <- renderUI({
+  `tutorial-exercise-m2-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m2", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = NULL, chunks = list(
+    list(label = "m2", code = "x <- 3\nif(x %% 2 == 0) { \n  cat(\"x is an even number\")\n} else {\n  cat(\"x is an odd number\")\n}", 
+        opts = list(label = "\"m2\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "Lesson5_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m2", exercise = TRUE, code = c("x <- 3", "if(x %% 2 == 0) { ", 
+        "  cat(\"x is an even number\")", "} else {", "  cat(\"x is an odd number\")", 
+        "}"), out.width.px = 624, out.height.px = 384, params.src = "m2, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m3-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m3-code-editor`)), session)
+output$`tutorial-exercise-m3-output` <- renderUI({
+  `tutorial-exercise-m3-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m3", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = NULL, chunks = list(
+    list(label = "m3", code = "x <- 3 #check it with 4 too\nifelse(x%%2, \"even\", \"odd\")", 
+        opts = list(label = "\"m3\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "Lesson5_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m3", exercise = TRUE, code = c("x <- 3 #check it with 4 too", 
+        "ifelse(x%%2, \"even\", \"odd\")"), out.width.px = 624, 
+        out.height.px = 384, params.src = "m3, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m4-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m4-code-editor`)), session)
+output$`tutorial-exercise-m4-output` <- renderUI({
+  `tutorial-exercise-m4-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m4", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = "set.seed(2)\nd <- sample(-10:10, 10, replace = TRUE)", 
+    chunks = list(list(label = "m4-setup", code = "set.seed(2)\nd <- sample(-10:10, 10, replace = TRUE)", 
+        opts = list(label = "\"m4-setup\""), engine = "r"), list(
+        label = "m4", code = "ifelse(d >= 0, sqrt(d), d)", opts = list(
+            label = "\"m4\"", exercise = "TRUE", warning = "FALSE"), 
+        engine = "r")), code_check = NULL, error_check = NULL, 
+    check = NULL, solution = NULL, tests = NULL, options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
+        strip.white = TRUE, cache = 0, cache.path = "Lesson5_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = FALSE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m4", exercise = TRUE, code = "ifelse(d >= 0, sqrt(d), d)", 
+        out.width.px = 624, out.height.px = 384, params.src = "m4, exercise=TRUE, warning=FALSE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m5-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m5-code-editor`)), session)
+output$`tutorial-exercise-m5-output` <- renderUI({
+  `tutorial-exercise-m5-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m5", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = "set.seed(2)\nd <- sample(-10:10, 10, replace = TRUE)", 
+    chunks = list(list(label = "m5-setup", code = "set.seed(2)\nd <- sample(-10:10, 10, replace = TRUE)", 
+        opts = list(label = "\"m5-setup\""), engine = "r"), list(
+        label = "m5", code = "if (d > 0){\n  sqrt(d)\n}else{\n  d\n}", 
+        opts = list(label = "\"m5\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "Lesson5_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m5", exercise = TRUE, code = c("if (d > 0){", 
+        "  sqrt(d)", "}else{", "  d", "}"), out.width.px = 624, 
+        out.height.px = 384, params.src = "m5, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m6-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m6-code-editor`)), session)
+output$`tutorial-exercise-m6-output` <- renderUI({
+  `tutorial-exercise-m6-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m6", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = "set.seed(2)\nd <- sample(-10:10, 10, replace = TRUE)", 
+    chunks = list(list(label = "m6-setup", code = "set.seed(2)\nd <- sample(-10:10, 10, replace = TRUE)", 
+        opts = list(label = "\"m6-setup\""), engine = "r"), list(
+        label = "m6", code = "ifelse(d > 0 , sqrt(d), d^2)", 
+        opts = list(label = "\"m6\"", exercise = "TRUE", warning = "FALSE"), 
+        engine = "r")), code_check = NULL, error_check = NULL, 
+    check = NULL, solution = NULL, tests = NULL, options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
+        strip.white = TRUE, cache = 0, cache.path = "Lesson5_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = FALSE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m6", exercise = TRUE, code = "ifelse(d > 0 , sqrt(d), d^2)", 
+        out.width.px = 624, out.height.px = 384, params.src = "m6, exercise=TRUE, warning=FALSE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m7-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m7-code-editor`)), session)
+output$`tutorial-exercise-m7-output` <- renderUI({
+  `tutorial-exercise-m7-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m7", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = NULL, chunks = list(
+    list(label = "m7", code = "x <- -10:10\nif(x > 0){\n  sqrt(x)\n}else if (x < -5) {\n  x^2\n}else{\n  x\n}  ", 
+        opts = list(label = "\"m7\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "Lesson5_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m7", exercise = TRUE, code = c("x <- -10:10", 
+        "if(x > 0){", "  sqrt(x)", "}else if (x < -5) {", "  x^2", 
+        "}else{", "  x", "}  "), out.width.px = 624, out.height.px = 384, 
+        params.src = "m7, exercise=TRUE", fig.num = 0, exercise.df_print = "paged"), 
+    engine = "r", version = "4"), class = c("r", "tutorial_exercise"
+)))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m9-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m9-code-editor`)), session)
+output$`tutorial-exercise-m9-output` <- renderUI({
+  `tutorial-exercise-m9-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m9", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = NULL, chunks = list(
+    list(label = "m9", code = "x <- -10:10\ny <- c()\n\nfor(i in 1:length(x)){\n  if(x[i] > 0){\n    y[i] <- sqrt(x[i])\n  }else if(x[i] < -5){\n    y[i] <- x[i]^2\n  }else{\n    y[i] <- x[i]\n  }\n}\ny", 
+        opts = list(label = "\"m9\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "Lesson5_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m9", exercise = TRUE, code = c("x <- -10:10", 
+        "y <- c()", "", "for(i in 1:length(x)){", "  if(x[i] > 0){", 
+        "    y[i] <- sqrt(x[i])", "  }else if(x[i] < -5){", "    y[i] <- x[i]^2", 
+        "  }else{", "    y[i] <- x[i]", "  }", "}", "y"), out.width.px = 624, 
+        out.height.px = 384, params.src = "m9, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m10-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m10-code-editor`)), session)
+output$`tutorial-exercise-m10-output` <- renderUI({
+  `tutorial-exercise-m10-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m10", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = "set.seed(123)\nA <- matrix(sample(1:10, 25, replace = TRUE), 5, 5)\nA", 
+    chunks = list(list(label = "m10-setup", code = "set.seed(123)\nA <- matrix(sample(1:10, 25, replace = TRUE), 5, 5)\nA", 
+        opts = list(label = "\"m10-setup\""), engine = "r"), 
+        list(label = "m10", code = "\nfor(i in 1:nrow(A)){\n  if(any(A[i,] == 6)) {\n    print(paste(\"row \", i, \" has \",  sum(A[i,] == 6)))\n  }else{\n    print(paste(\"row \", i, \" has no 6\"))\n  }\n}", 
+            opts = list(label = "\"m10\"", exercise = "TRUE"), 
+            engine = "r")), code_check = NULL, error_check = NULL, 
+    check = NULL, solution = NULL, tests = NULL, options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
+        strip.white = TRUE, cache = 0, cache.path = "Lesson5_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m10", exercise = TRUE, code = c("", "for(i in 1:nrow(A)){", 
+        "  if(any(A[i,] == 6)) {", "    print(paste(\"row \", i, \" has \",  sum(A[i,] == 6)))", 
+        "  }else{", "    print(paste(\"row \", i, \" has no 6\"))", 
+        "  }", "}"), out.width.px = 624, out.height.px = 384, 
+        params.src = "m10, exercise=TRUE", fig.num = 0, exercise.df_print = "paged"), 
+    engine = "r", version = "4"), class = c("r", "tutorial_exercise"
+)))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m11-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m11-code-editor`)), session)
+output$`tutorial-exercise-m11-output` <- renderUI({
+  `tutorial-exercise-m11-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m11", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = "set.seed(123)\nA <- matrix(sample(1:10, 25, replace = TRUE), 5, 5)\nA", 
+    chunks = list(list(label = "m11-setup", code = "set.seed(123)\nA <- matrix(sample(1:10, 25, replace = TRUE), 5, 5)\nA", 
+        opts = list(label = "\"m11-setup\""), engine = "r"), 
+        list(label = "m11", code = "n <- nrow(A) -1\nB <- matrix(0, n, ncol(A)) # You need to initiate the container\n\nfor(i in 1:n){\n  B[i,] <- A[i,]*A[i+1, ] \n}\nB", 
+            opts = list(label = "\"m11\"", exercise = "TRUE"), 
+            engine = "r")), code_check = NULL, error_check = NULL, 
+    check = NULL, solution = NULL, tests = NULL, options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
+        strip.white = TRUE, cache = 0, cache.path = "Lesson5_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m11", exercise = TRUE, code = c("n <- nrow(A) -1", 
+        "B <- matrix(0, n, ncol(A)) # You need to initiate the container", 
+        "", "for(i in 1:n){", "  B[i,] <- A[i,]*A[i+1, ] ", "}", 
+        "B"), out.width.px = 624, out.height.px = 384, params.src = "m11, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m12-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m12-code-editor`)), session)
+output$`tutorial-exercise-m12-output` <- renderUI({
+  `tutorial-exercise-m12-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m12", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = "set.seed(123)\nA <- matrix(sample(1:10, 25, replace = TRUE), 5, 5)\nA", 
+    chunks = list(list(label = "m12-setup", code = "set.seed(123)\nA <- matrix(sample(1:10, 25, replace = TRUE), 5, 5)\nA", 
+        opts = list(label = "\"m12-setup\""), engine = "r"), 
+        list(label = "m12", code = "n <- nrow(A) -1\nD <- matrix(0, n, ncol(A))\n\nfor(j in 1:ncol(A)){ # This loop runs by columns\n  for (i in 1:n){ # This loop runs by rows\n    if(A[i,j]>A[i+1,j]){\n      D[i,j] <- A[i,j]*A[i+1,j]\n    }else{\n      D[i,j] <- A[i,j]\n    }  \n  }\n}\nD", 
+            opts = list(label = "\"m12\"", exercise = "TRUE"), 
+            engine = "r")), code_check = NULL, error_check = NULL, 
+    check = NULL, solution = NULL, tests = NULL, options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
+        strip.white = TRUE, cache = 0, cache.path = "Lesson5_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m12", exercise = TRUE, code = c("n <- nrow(A) -1", 
+        "D <- matrix(0, n, ncol(A))", "", "for(j in 1:ncol(A)){ # This loop runs by columns", 
+        "  for (i in 1:n){ # This loop runs by rows", "    if(A[i,j]>A[i+1,j]){", 
+        "      D[i,j] <- A[i,j]*A[i+1,j]", "    }else{", "      D[i,j] <- A[i,j]", 
+        "    }  ", "  }", "}", "D"), out.width.px = 624, out.height.px = 384, 
+        params.src = "m12, exercise=TRUE", fig.num = 0, exercise.df_print = "paged"), 
+    engine = "r", version = "4"), class = c("r", "tutorial_exercise"
+)))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m13-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m13-code-editor`)), session)
+output$`tutorial-exercise-m13-output` <- renderUI({
+  `tutorial-exercise-m13-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m13", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = NULL, chunks = list(
+    list(label = "m13", code = "df <- mtcars\n\n# work on df in your loop\n\nfor(i in 1:ncol(df)){\n  if(length(unique(df[,i])) < 10){df[,i] <- as.factor(df[,i])}\n}\nstr(df)", 
+        opts = list(label = "\"m13\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "Lesson5_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m13", exercise = TRUE, code = c("df <- mtcars", 
+        "", "# work on df in your loop", "", "for(i in 1:ncol(df)){", 
+        "  if(length(unique(df[,i])) < 10){df[,i] <- as.factor(df[,i])}", 
+        "}", "str(df)"), out.width.px = 624, out.height.px = 384, 
+        params.src = "m13, exercise=TRUE", fig.num = 0, exercise.df_print = "paged"), 
+    engine = "r", version = "4"), class = c("r", "tutorial_exercise"
+)))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m14-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m14-code-editor`)), session)
+output$`tutorial-exercise-m14-output` <- renderUI({
+  `tutorial-exercise-m14-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m14", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = NULL, chunks = list(
+    list(label = "m14", code = "lapply(ames, mean)", opts = list(
+        label = "\"m14\"", exercise = "TRUE", warning = "FALSE"), 
+        engine = "r")), code_check = NULL, error_check = NULL, 
+    check = NULL, solution = NULL, tests = NULL, options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
+        strip.white = TRUE, cache = 0, cache.path = "Lesson5_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = FALSE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m14", exercise = TRUE, code = "lapply(ames, mean)", 
+        out.width.px = 624, out.height.px = 384, params.src = "m14, exercise=TRUE, warning=FALSE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m15-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m15-code-editor`)), session)
+output$`tutorial-exercise-m15-output` <- renderUI({
+  `tutorial-exercise-m15-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m15", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = NULL, chunks = list(
+    list(label = "m15", code = "sapply(ames, mean)", opts = list(
+        label = "\"m15\"", exercise = "TRUE", warning = "FALSE"), 
+        engine = "r")), code_check = NULL, error_check = NULL, 
+    check = NULL, solution = NULL, tests = NULL, options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
+        strip.white = TRUE, cache = 0, cache.path = "Lesson5_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = FALSE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m15", exercise = TRUE, code = "sapply(ames, mean)", 
+        out.width.px = 624, out.height.px = 384, params.src = "m15, exercise=TRUE, warning=FALSE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m16-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m16-code-editor`)), session)
+output$`tutorial-exercise-m16-output` <- renderUI({
+  `tutorial-exercise-m16-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m16", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = NULL, chunks = list(
+    list(label = "m16", code = "col_names <- sapply(mtcars, function(x) length(unique(x)))\ncol_names\n\nind <- which(col_names < 7)\nind\n\ndf3 <- mtcars\ndf3[,ind] <- lapply(df3[, ind], factor)", 
+        opts = list(label = "\"m16\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "Lesson5_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m16", exercise = TRUE, code = c("col_names <- sapply(mtcars, function(x) length(unique(x)))", 
+        "col_names", "", "ind <- which(col_names < 7)", "ind", 
+        "", "df3 <- mtcars", "df3[,ind] <- lapply(df3[, ind], factor)"
+        ), out.width.px = 624, out.height.px = 384, params.src = "m16, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m17-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m17-code-editor`)), session)
+output$`tutorial-exercise-m17-output` <- renderUI({
+  `tutorial-exercise-m17-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m17", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = "df3 <- mtcars\ncol_names <- sapply(mtcars, function(x) length(unique(x)))\ncol_names\n\nind <- which(col_names < 7)\nind\n\ndf3 <- mtcars\ndf3[,ind] <- lapply(df3[, ind], factor)", 
+    chunks = list(list(label = "m17-setup", code = "df3 <- mtcars\ncol_names <- sapply(mtcars, function(x) length(unique(x)))\ncol_names\n\nind <- which(col_names < 7)\nind\n\ndf3 <- mtcars\ndf3[,ind] <- lapply(df3[, ind], factor)", 
+        opts = list(label = "\"m17-setup\""), engine = "r"), 
+        list(label = "m17", code = "ind <- sapply(df3, is.factor)\n\nlapply(df3[,ind], as.character)\n\ndf3[, sapply(df3, is.factor)] <- lapply(df3[,ind], as.character)\nstr(df3)", 
+            opts = list(label = "\"m17\"", exercise = "TRUE"), 
+            engine = "r")), code_check = NULL, error_check = NULL, 
+    check = NULL, solution = NULL, tests = NULL, options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
+        strip.white = TRUE, cache = 0, cache.path = "Lesson5_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m17", exercise = TRUE, code = c("ind <- sapply(df3, is.factor)", 
+        "", "lapply(df3[,ind], as.character)", "", "df3[, sapply(df3, is.factor)] <- lapply(df3[,ind], as.character)", 
+        "str(df3)"), out.width.px = 624, out.height.px = 384, 
+        params.src = "m17, exercise=TRUE", fig.num = 0, exercise.df_print = "paged"), 
+    engine = "r", version = "4"), class = c("r", "tutorial_exercise"
+)))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m18-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m18-code-editor`)), session)
+output$`tutorial-exercise-m18-output` <- renderUI({
+  `tutorial-exercise-m18-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m18", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = NULL, chunks = list(
+    list(label = "m18", code = "my_1 <- function(x){\n  if(x %% 2 == 0) { \n    cat(\"x is an even number\")\n  } else {\n    cat(\"x is an odd number\")\n  } \n}\n\nmy_1(3)\nmy_1(4)", 
+        opts = list(label = "\"m18\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "Lesson5_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m18", exercise = TRUE, code = c("my_1 <- function(x){", 
+        "  if(x %% 2 == 0) { ", "    cat(\"x is an even number\")", 
+        "  } else {", "    cat(\"x is an odd number\")", "  } ", 
+        "}", "", "my_1(3)", "my_1(4)"), out.width.px = 624, out.height.px = 384, 
+        params.src = "m18, exercise=TRUE", fig.num = 0, exercise.df_print = "paged"), 
+    engine = "r", version = "4"), class = c("r", "tutorial_exercise"
+)))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m19-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m19-code-editor`)), session)
+output$`tutorial-exercise-m19-output` <- renderUI({
+  `tutorial-exercise-m19-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m19", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = NULL, chunks = list(
+    list(label = "m19", code = "FtoC1 <- function(f) {\n    val <- (f - 32) * 5/9\n    print(paste(\"Fahrenheit:\", round(f, digits = 3),\n                \"is equivalent to\",\n                round(val, digits = 3), \"C\",  sep = \" \"), quote = FALSE)  \n}\n\n# Other alternative \n\nFtoC2 <- function(f) {\n    val <- (f - 32) * 5/9  #calculation\n    cat(\"Fahrenheit: \", round(f, digits = 3), \" is equivalent to \",\n        round(val, digits = 3))\n}", 
+        opts = list(label = "\"m19\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "Lesson5_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m19", exercise = TRUE, code = c("FtoC1 <- function(f) {", 
+        "    val <- (f - 32) * 5/9", "    print(paste(\"Fahrenheit:\", round(f, digits = 3),", 
+        "                \"is equivalent to\",", "                round(val, digits = 3), \"C\",  sep = \" \"), quote = FALSE)  ", 
+        "}", "", "# Other alternative ", "", "FtoC2 <- function(f) {", 
+        "    val <- (f - 32) * 5/9  #calculation", "    cat(\"Fahrenheit: \", round(f, digits = 3), \" is equivalent to \",", 
+        "        round(val, digits = 3))", "}"), out.width.px = 624, 
+        out.height.px = 384, params.src = "m19, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m20-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m20-code-editor`)), session)
+output$`tutorial-exercise-m20-output` <- renderUI({
+  `tutorial-exercise-m20-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m20", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = NULL, chunks = list(
+    list(label = "m20", code = "sumfun <- function(dat){\n    mymean <- round(mean(dat), 4)        \n    mymedian <- round(median(dat), 4)    \n    mymin <- round(min(dat), 4)          \n    mymax <- round(max(dat), 4)         \n    print(paste(\"mean:\", mymean, sep = \" \"), quote = FALSE)    \n    print(paste(\"median:\", mymedian, sep = \" \"), quote = FALSE)    \n    print(paste(\"range:\", \"from:\", mymin, \"to\", mymax, sep = \" \"), quote = FALSE) \n    dens <- density(dat)                          \n    hist(dat, main = \"\", freq = FALSE)  \n    lines(dens, lty = 1, col = \"red\")             \n}\n\n# use the function\nx <- rnorm(100, 35, 15)  # create some norm dist data mean 35, sd = 15\nsumfun(x)", 
+        opts = list(label = "\"m20\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "Lesson5_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m20", exercise = TRUE, code = c("sumfun <- function(dat){", 
+        "    mymean <- round(mean(dat), 4)        ", "    mymedian <- round(median(dat), 4)    ", 
+        "    mymin <- round(min(dat), 4)          ", "    mymax <- round(max(dat), 4)         ", 
+        "    print(paste(\"mean:\", mymean, sep = \" \"), quote = FALSE)    ", 
+        "    print(paste(\"median:\", mymedian, sep = \" \"), quote = FALSE)    ", 
+        "    print(paste(\"range:\", \"from:\", mymin, \"to\", mymax, sep = \" \"), quote = FALSE) ", 
+        "    dens <- density(dat)                          ", 
+        "    hist(dat, main = \"\", freq = FALSE)  ", "    lines(dens, lty = 1, col = \"red\")             ", 
+        "}", "", "# use the function", "x <- rnorm(100, 35, 15)  # create some norm dist data mean 35, sd = 15", 
+        "sumfun(x)"), out.width.px = 624, out.height.px = 384, 
+        params.src = "m20, exercise=TRUE", fig.num = 0, exercise.df_print = "paged"), 
+    engine = "r", version = "4"), class = c("r", "tutorial_exercise"
+)))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-m21-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-m21-code-editor`)), session)
+output$`tutorial-exercise-m21-output` <- renderUI({
+  `tutorial-exercise-m21-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "m21", global_setup = structure(c("library(learnr)", 
+"library(tidyverse)", "library(nycflights13)", "library(Lahman)", 
+"library(RBootcamp)", "library(ggplot2)", "library(datasets)", 
+"tutorial_options(", "  exercise.timelimit = 600,", "  # A simple checker function that just returns the message in the check chunk", 
+"  exercise.checker = function(check_code, ...) {", "    list(", 
+"      message = eval(parse(text = check_code)),", "      correct = logical(0),", 
+"      type = \"info\",", "      location = \"append\"", "    )", 
+"  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
+    label = "setup", include = FALSE)), setup = NULL, chunks = list(
+    list(label = "m21", code = "newmedian <- function(x){\n    n <- length(x)\n    if (n %% 2 == 1)      # odd numbers\n      sort(x)[(n + 1)/2] \n    else {                # even numbers\n      middletwo <- sort(x)[(n/2) + 0:1]   #find the two middle numbers\n      mean(middletwo)\n      }\n}\n\n# use the function\nx<- sample(1:50, 10, replace = TRUE )\n\n# our function\nnewmedian(x)\n\n# R median function\nmedian(x)", 
+        opts = list(label = "\"m21\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "Lesson5_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "Lesson5_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = TRUE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
+        label = "m21", exercise = TRUE, code = c("newmedian <- function(x){", 
+        "    n <- length(x)", "    if (n %% 2 == 1)      # odd numbers", 
+        "      sort(x)[(n + 1)/2] ", "    else {                # even numbers", 
+        "      middletwo <- sort(x)[(n/2) + 0:1]   #find the two middle numbers", 
+        "      mean(middletwo)", "      }", "}", "", "# use the function", 
+        "x<- sample(1:50, 10, replace = TRUE )", "", "# our function", 
+        "newmedian(x)", "", "# R median function", "median(x)"
+        ), out.width.px = 624, out.height.px = 384, params.src = "m21, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+</p>
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["header-attrs"]},{"type":"character","attributes":{},"value":["2.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pandoc"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["header-attrs.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.14"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"character","attributes":{},"value":["<style>h1 {font-size: 34px;}\n       h1.title {font-size: 38px;}\n       h2 {font-size: 30px;}\n       h3 {font-size: 24px;}\n       h4 {font-size: 18px;}\n       h5 {font-size: 16px;}\n       h6 {font-size: 12px;}\n       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}\n       pre:not([class]) { background-color: white }<\/style>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.14"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.14"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.14"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.7.9000"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["i18n"]},{"type":"character","attributes":{},"value":["21.6.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/i18n"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["i18next.min.js","tutorial-i18n-init.js"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["<script id=\"i18n-cstm-trns\" type=\"application/json\">{\"language\":\"en\",\"resources\":{\"en\":{\"translation\":{\"button\":{\"runcode\":\"Run Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Hint\",\"hint_plural\":\"Hints\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Next Hint\",\"hintprev\":\"Previous Hint\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copy to Clipboard\",\"startover\":\"Start Over\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continue\",\"submitanswer\":\"Submit Answer\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Previous Topic\",\"nexttopic\":\"Next Topic\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Try Again\"},\"text\":{\"startover\":\"Start Over\",\"areyousure\":\"Are you sure you want to start over? (all exercise progress will be reset)\",\"youmustcomplete\":\"You must complete the\",\"exercise\":\"exercise\",\"exercise_plural\":\"exercises\",\"inthissection\":\"in this section before continuing.\",\"code\":\"Code\",\"enginecap\":\"{{engine}} $t(text.code)\",\"quiz\":\"Quiz\",\"blank\":\"blank\",\"blank_plural\":\"blanks\",\"exercisecontainsblank\":\"This exercise contains {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Please replace {{blank}} with valid code.\",\"unparsable\":\"It looks like this might not be valid R code. R cannot determine how to turn your text into a complete command. You may have forgotten to fill in a blank, to remove an underscore, to include a comma between arguments, or to close an opening <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> or <code>{<\\/code> with a matching <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> or <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>It looks like your R code contains specially formatted quotation marks or &quot;curly&quot; quotes (<code>{{character}}<\\/code>) around character strings, making your code invalid. R requires character values to be contained in straight quotation marks (<code>&quot;<\\/code> or <code>'<\\/code>).<\\/p> {{code}} <p>Don't worry, this is a common source of errors when you copy code from another app that applies its own formatting to text. You can try replacing the code on that line with the following. There may be other places that need to be fixed, too.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>It looks like your R code contains an unexpected special character (<code>{{character}}<\\/code>) that makes your code invalid.<\\/p> {{code}} <p>Sometimes your code may contain a special character that looks like a regular character, especially if you copy and paste the code from another app. Try deleting the special character from your code and retyping it manually.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>It looks like your R code contains an unexpected special character (<code>{{character}}<\\/code>) that makes your code invalid.<\\/p> {{code}} <p>Sometimes your code may contain a special character that looks like a regular character, especially if you copy and paste the code from another app. You can try replacing the code on that line with the following. There may be other places that need to be fixed, too.<\\/p> {{suggestion}}\\n\",\"and\":\"and\",\"or\":\"or\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"fr\":{\"translation\":{\"button\":{\"runcode\":\"Lancer le Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Indication\",\"hint_plural\":\"Indications\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Indication Suivante\",\"hintprev\":\"Indication Précédente\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copier dans le Presse-papier\",\"startover\":\"Recommencer\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuer\",\"submitanswer\":\"Soumettre\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Chapitre Précédent\",\"nexttopic\":\"Chapitre Suivant\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Réessayer\"},\"text\":{\"startover\":\"Recommencer\",\"areyousure\":\"Êtes-vous certains de vouloir recommencer? (La progression sera remise à zéro)\",\"youmustcomplete\":\"Vous devez d'abord compléter\",\"exercise\":\"l'exercice\",\"exercise_plural\":\"des exercices\",\"inthissection\":\"de cette section avec de continuer.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"et\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"es\":{\"translation\":{\"button\":{\"runcode\":\"Ejecutar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Pista\",\"hint_plural\":\"Pistas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Siguiente pista\",\"hintprev\":\"Pista anterior\",\"solution\":\"Solución\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar al portapapeles\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar respuesta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tema anterior\",\"nexttopic\":\"Tema siguiente\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Volver a intentar\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"¿De verdad quieres empezar de nuevo? (todo el progreso del ejercicio se perderá)\",\"youmustcomplete\":\"Debes completar\",\"exercise\":\"el ejercicio\",\"exercise_plural\":\"los ejercicios\",\"inthissection\":\"en esta sección antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Cuestionario\",\"and\":\"y\",\"or\":\"o\",\"oxfordcomma\":\"\"}}},\"pt\":{\"translation\":{\"button\":{\"runcode\":\"Executar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Dica\",\"hint_plural\":\"Dicas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Próxima dica\",\"hintprev\":\"Dica anterior\",\"solution\":\"Solução\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar para a área de transferência\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar resposta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tópico anterior\",\"nexttopic\":\"Próximo tópico\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tentar novamente\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"Tem certeza que deseja começar novamente? (todo o progresso feito será perdido)\",\"youmustcomplete\":\"Você deve completar\",\"exercise\":\"o exercício\",\"exercise_plural\":\"os exercícios\",\"inthissection\":\"nesta seção antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"e\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"tr\":{\"translation\":{\"button\":{\"runcode\":\"Çalıştırma Kodu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Ipucu\",\"hint_plural\":\"İpuçları\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Sonraki İpucu\",\"hintprev\":\"Önceki İpucu\",\"solution\":\"Çözüm\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Pano'ya Kopyala\",\"startover\":\"Baştan Başlamak\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Devam et\",\"submitanswer\":\"Cevabı onayla\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Önceki Konu\",\"nexttopic\":\"Sonraki Konu\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tekrar Deneyin\"},\"text\":{\"startover\":\"Baştan Başlamak\",\"areyousure\":\"Baştan başlamak istediğinizden emin misiniz? (tüm egzersiz ilerlemesi kaybolacak)\",\"youmustcomplete\":\"Tamamlamalısın\",\"exercise\":\"egzersiz\",\"exercise_plural\":\"egzersizler\",\"inthissection\":\"devam etmeden önce bu bölümde\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Sınav\",\"oxfordcomma\":\"\"}}},\"emo\":{\"translation\":{\"button\":{\"runcode\":\"🏃\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"💡\",\"hint_plural\":\"$t(button.hint)\",\"hinttitle\":\"$t(button.hint)\",\"solution\":\"🎯\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"📋\",\"startover\":\"⏮\",\"startovertitle\":\"Start Over\",\"continue\":\"✅\",\"submitanswer\":\"🆗\",\"submitanswertitle\":\"Submit Answer\",\"previoustopic\":\"⬅\",\"nexttopic\":\"➡\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"🔁\"},\"text\":{\"startover\":\"⏮\",\"areyousure\":\"🤔\",\"youmustcomplete\":\"⚠️ 👉 🧑‍💻\",\"exercise\":\"\",\"exercise_plural\":\"\",\"inthissection\":\"\",\"code\":\"💻\",\"enginecap\":\"$t(text.code) {{engine}}\",\"oxfordcomma\":\"\"}}},\"eu\":{\"translation\":{\"button\":{\"runcode\":\"Kodea egikaritu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Laguntza\",\"hint_plural\":\"Laguntza\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Aurreko laguntza\",\"hintprev\":\"Hurrengo laguntza\",\"solution\":\"Ebazpena\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Arbelean kopiatu\",\"startover\":\"Berrabiarazi\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Jarraitu\",\"submitanswer\":\"Erantzuna bidali\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Aurreko atala\",\"nexttopic\":\"Hurrengo atala\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Berriro saiatu\"},\"text\":{\"startover\":\"Berrabiarazi\",\"areyousure\":\"Berriro hasi nahi duzu? (egindako lana galdu egingo da)\",\"youmustcomplete\":\"Aurrera egin baino lehen atal honetako\",\"exercise\":\"ariketa egin behar duzu.\",\"exercise_plural\":\"ariketak egin behar dituzu.\",\"inthissection\":\"\",\"code\":\"Kodea\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Galdetegia\",\"oxfordcomma\":\"\"}}},\"de\":{\"translation\":{\"button\":{\"runcode\":\"Code ausführen\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Tipp\",\"hint_plural\":\"Tipps\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Nächster Tipp\",\"hintprev\":\"Vorheriger Tipp\",\"solution\":\"Lösung\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"In die Zwischenablage kopieren\",\"startover\":\"Neustart\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Weiter\",\"submitanswer\":\"Antwort einreichen\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Vorheriges Kapitel\",\"nexttopic\":\"Nächstes Kapitel\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Nochmal versuchen\"},\"text\":{\"startover\":\"Neustart\",\"areyousure\":\"Bist du sicher, dass du neustarten willst? (der gesamte Lernfortschritt wird gelöscht)\",\"youmustcomplete\":\"Vervollstädinge\",\"exercise\":\"die Übung\",\"exercise_plural\":\"die Übungen\",\"inthissection\":\"in diesem Kapitel, bevor du fortfährst.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"blank\":\"Lücke\",\"blank_plural\":\"Lücken\",\"pleasereplaceblank\":\"Bitte ersetze {{blank}} mit gültigem Code.\",\"unparsable\":\"Dies scheint kein gültiger R Code zu sein. R kann deinen Text nicht in einen gültigen Befehl übersetzen. Du hast vielleicht vergessen, die Lücke zu füllen, einen Unterstrich zu entfernen, ein Komma zwischen Argumente zu setzen oder ein eröffnendes <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> oder <code>{<\\/code> mit einem zugehörigen <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> oder <code>}<\\/code> zu schließen.\\n\",\"and\":\"und\",\"or\":\"oder\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"ko\":{\"translation\":{\"button\":{\"runcode\":\"코드 실행\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"힌트\",\"hint_plural\":\"힌트들\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"다음 힌트\",\"hintprev\":\"이전 힌트\",\"solution\":\"솔루션\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"클립보드에 복사\",\"startover\":\"재학습\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"다음 학습으로\",\"submitanswer\":\"정답 제출\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"이전 토픽\",\"nexttopic\":\"다음 토픽\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"재시도\"},\"text\":{\"startover\":\"재학습\",\"areyousure\":\"다시 시작 하시겠습니까? (모든 예제의 진행 정보가 재설정됩니다)\",\"youmustcomplete\":\"당신은 완료해야 합니다\",\"exercise\":\"연습문제\",\"exercise_plural\":\"연습문제들\",\"inthissection\":\"이 섹션을 실행하기 전에\",\"code\":\"코드\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"퀴즈\",\"blank\":\"공백\",\"blank_plural\":\"공백들\",\"exercisecontainsblank\":\"이 연습문제에는 {{count}}개의 $t(text.blank)이 포함되어 있습니다.\",\"pleasereplaceblank\":\"{{blank}}를 유효한 코드로 바꾸십시오.\",\"unparsable\":\"이것은 유효한 R 코드가 아닐 수 있습니다. R은 텍스트를 완전한 명령으로 변환하는 방법을 결정할 수 없습니다. 당신은 공백이나 밑줄을 대체하여 채우기, 인수를 컴마로 구분하기, 또는 <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> , <code>{<\\/code>로 시작하는 구문을 닫는 <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code>, <code>}<\\/code>을 잊었을 수도 있습니다.\\n\",\"and\":\"그리고\",\"or\":\"혹은\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}},\"zh\":{\"translation\":{\"button\":{\"runcode\":\"运行代码\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"提示\",\"hint_plural\":\"提示\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"下一个提示\",\"hintprev\":\"上一个提示\",\"solution\":\"答案\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"复制到剪切板\",\"startover\":\"重新开始\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"继续\",\"submitanswer\":\"提交答案\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"上一专题\",\"nexttopic\":\"下一专题\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"再试一次\"},\"text\":{\"startover\":\"重置\",\"areyousure\":\"你确定要重新开始吗? (所有当前进度将被重置)\",\"youmustcomplete\":\"你必须完成\",\"exercise\":\"练习\",\"exercise_plural\":\"练习\",\"inthissection\":\"在进行本节之前\",\"code\":\"代码\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"测试\",\"blank\":\"空\",\"blank_plural\":\"空\",\"exercisecontainsblank\":\"本练习包含{{count}}个$t(text.blank)\",\"pleasereplaceblank\":\"请在{{blank}}内填写恰当的代码\",\"unparsable\":\"这似乎不是有效的R代码。 R不知道如何将您的文本转换为完整的命令。 您是否忘了填空，忘了删除下划线，忘了在参数之间包含逗号，或者是忘了用<code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code>,<code>}<\\/code>来封闭<code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code>。 or <code>{<\\/code>。\\n\",\"unparsablequotes\":\"<p>您的R代码中似乎含有特殊格式的引号，或者弯引号(<code>{{character}}<\\/code>) 在字符串前后，在R中字符串应该被直引号(<code>&quot;<\\/code> 或者 <code>'<\\/code>)包裹。<\\/p> {{code}} <p>别担心，该错误经常在复制粘贴包含格式的代码时遇到， 您可以尝试将该行中的代码替换为以下代码，也许还有其他地方需要修改。<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>您的代码中似乎包含有异常字符(<code>{{character}}<\\/code>),导致代码无效。<\\/p> {{code}} <p>有时候你的代码可能含有看似正常字符的特殊字符，特别是当你复制粘贴其他来源代码的时候。 请试着删除这些特殊字符,重新输入<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>您的代码中似乎包含有异常字符(<code>{{character}}<\\/code>),导致代码无效。<\\/p> {{code}} <p>有时候你的代码可能含有看似正常字符的特殊字符，特别是当你复制粘贴其他来源代码的时候。 请试着删除这些特殊字符,重新输入<\\/p>\\n\",\"and\":\"且\",\"or\":\"或\",\"listcomma\":\",\",\"oxfordcomma\":\",\"}}},\"pl\":{\"translation\":{\"button\":{\"runcode\":\"Uruchom kod\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Podpowiedź\",\"hint_plural\":\"Podpowiedzi\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Następna podpowiedź\",\"hintprev\":\"Poprzednia podpowiedź\",\"solution\":\"Rozwiązanie\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Kopiuj do schowka\",\"startover\":\"Zacznij od początku\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Kontynuuj\",\"submitanswer\":\"Wyślij\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Poprzednia sekcja\",\"nexttopic\":\"Następna sekcja\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Spróbuj ponownie\"},\"text\":{\"startover\":\"Zacznij od początku\",\"areyousure\":\"Czy na pewno chcesz zacząć od początku? (cały postęp w zadaniu zostanie utracony)\",\"youmustcomplete\":\"Musisz ukończyć\",\"exercise\":\"ćwiczenie\",\"exercise_plural\":\"ćwiczenia\",\"inthissection\":\"w tej sekcji przed kontynuowaniem\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"blank\":\"luka\",\"blank_plural\":\"luk(i)\",\"exercisecontainsblank\":\"To ćwiczenie zawiera {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Proszę uzupełnić {{blank}} prawidłowym kodem.\",\"unparsable\":\"Wygląda na to, że może to nie być prawidłowy kod R. R nie jest w stanie przetworzyć Twojego tekstu na polecenie. Mogłeś(-aś) zapomnieć wypełnić luki, usunąć podkreślnik, umieścić przecinka między argumentami, lub zamknąć znak <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> lub <code>{<\\/code> odpowiadającym <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> lub <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>Wygląda na to, że Twój kod zawiera szczególnie sformatowane cudzysłowy lub cudzysłowy typograficzne (<code>{{character}}<\\/code>) przy ciągach znaków, co sprawia, że kod jest niepoprawny. R wymaga cudzysłowów prostych (<code>&quot;<\\/code> albo <code>'<\\/code>).<\\/p> {{code}} <p>Nie martw się, to powszechne źródło błędów, gdy kopiuje się kod z innego programu, który sam formatuje teskt. Możesz spróbować zastąpić swój kod następującym kodem. Mogą być też inne miejsca, które wymagają poprawienia.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>Wygląda na to, że Twój kod zawiera niespodziewany znak specjalny (<code>{{character}}<\\/code>), co sprawia, że kod jest niepoprawny.<\\/p> {{code}} <p>Czasami Twój kod może zawierać znak specjalny, który wygląda jak zwykły znak, zwłaszcza jeśli kopiujesz kod z innego programu. Spróbuj usunąć znak specjalny i wpisać do ponownie ręcznie.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>Wygląda na to, że Twój kod zawiera niespodziewany znak specjalny (<code>{{character}}<\\/code>), co sprawia, że kod jest niepoprawny.<\\/p> {{code}} <p>Czasami Twój kod może zawierać znak specjalny, który wygląda jak zwykły znak, zwłaszcza jeśli kopiujesz kod z innego programu. Możesz spróbować zastąpić swój kod następującym kodem. Mogą być też inne miejsca, które wymagają poprawienia.<\\/p> {{suggestion}}\\n\",\"and\":\"i\",\"or\":\"lub\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}}}}<\/script>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.10.7.9000"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.14"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.14"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["5.1.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.css","css/v4-shims.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.14"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["5.5.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.7.9000"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.4.14"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.7.9000"]}]}]}
+</script>
+<!--/html_preserve-->
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="execution_dependencies">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]}},"value":[{"type":"character","attributes":{},"value":["assertthat","backports","base","broom","bslib","cachem","cellranger","checkmate","cli","colorspace","compiler","crayon","curl","datasets","DBI","dbplyr","digest","dplyr","ellipsis","evaluate","fansi","fastmap","forcats","fs","gargle","generics","ggplot2","glue","googledrive","googlesheets4","graphics","grDevices","grid","gtable","haven","hms","htmltools","htmlwidgets","httpuv","httr","jquerylib","jsonlite","knitr","Lahman","later","learnr","lifecycle","lubridate","magrittr","markdown","methods","mime","modelr","munsell","nycflights13","pillar","pkgconfig","promises","purrr","R6","RBootcamp","Rcpp","readr","readxl","reprex","rlang","rmarkdown","rprojroot","rstudioapi","rvest","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","tools","tzdb","utf8","utils","vctrs","withr","xfun","xml2","xtable","yaml"]},{"type":"character","attributes":{},"value":["0.2.1","1.4.1","4.2.0","1.0.0","0.4.0","1.0.6","1.1.0","2.1.0","3.4.1","2.0-3","4.2.0","1.5.1","4.3.2","4.2.0","1.1.3","2.2.1","0.6.29","1.0.10","0.3.2","0.16","1.0.3","1.1.0","0.5.1","1.5.2","1.2.0","0.1.3","3.3.6","1.6.2","2.0.0","1.0.1","4.2.0","4.2.0","4.2.0","0.3.1","2.5.0","1.1.1","0.5.3","1.5.4","1.6.5","1.4.3","0.1.4","1.8.0","1.39","10.0-1","1.3.0","0.10.7.9000","1.0.3","1.8.0","2.0.3","1.1","4.2.0","0.12","0.1.8","0.5.0","1.0.2","1.8.1","2.0.3","1.2.0.1","0.3.4","2.5.1","0.0.0.9000","1.0.9","2.1.2","1.4.0","2.0.1","1.0.6","2.14","2.0.3","0.13","1.0.2","0.4.2","1.2.1","1.7.2","4.2.0","1.7.8","1.4.0","3.1.8","1.2.0","1.1.2","1.3.2","4.2.0","0.3.0","1.2.2","4.2.0","0.4.2","2.5.0","0.32","1.3.3","1.8-4","2.3.5"]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+
+</article> <!-- topics -->
+
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h1 class="title toc-ignore" style="display:none;">Chapter 7 -
+Programming Basics</h1>
+<h4 class="author"><em><strong>Yigit Aydede - RBootcamp -
+2022</strong></em></h4>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</main> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+<!-- Build Tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("section-TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<script>
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+</body>
+
+</html>
