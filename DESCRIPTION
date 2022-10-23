@@ -1,5 +1,5 @@
 Package: RBootcamp
-Title: MBAN R Bootcamp Package
+Title: Package for R Bootcamp Book - https://yaydede.github.io/Bootcamp_book/
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Yigit",
