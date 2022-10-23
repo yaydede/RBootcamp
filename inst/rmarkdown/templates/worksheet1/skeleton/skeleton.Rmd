@@ -1,5 +1,5 @@
 ---
-title: "RBootcamp - R Markdown"
+title: "R Markdown Example - Rbootcamp"
 date: "2016-08-25"
 output:
   html_document: default
@@ -75,10 +75,12 @@ Lists
 Links and images
 ------------------------------------------------------------
 
-<http://example.com>
-
-[linked phrase](http://example.com)
-
+<https://www.bbc.com>
+  
+ or
+   
+[BBC](https://www.bbc.com)
+  
 ![optional caption text](https://cdn.mathpix.com/snip/images/WfsHlEqKfIPddupsMYsoRVc1rAXeoIrDr1vzW8lO8_s.original.fullsize.png)
 
 Tables 
@@ -89,9 +91,12 @@ First Header  | Second Header
 Content Cell  | Content Cell
 Content Cell  | Content Cell
 
-### Math
+> Block quate bla bla Block quate bla bla Block quate bla bla Block quate bla bla Block quate bla bla Block quate bla bla Block quate bla bla Block quate bla bla Block quate bla bla Block quate bla bla Block quate bla bla 
 
-Use [matpix](https://mathpix.com/ocr?gclid=CjwKCAjwzNOaBhAcEiwAD7Tb6KAkAbvn2Zh6JXprqSGQObd4Od3KbtOKK_D-fSiFbrEtdC5lr6OP5hoCDdIQAvD_BwE)
+
+## Math
+
+Use [mathpix](https://mathpix.com/ocr?gclid=CjwKCAjwzNOaBhAcEiwAD7Tb6KAkAbvn2Zh6JXprqSGQObd4Od3KbtOKK_D-fSiFbrEtdC5lr6OP5hoCDdIQAvD_BwE)
 
 $$
 \mathbf{H}(\widehat{\theta})=\left[\begin{array}{cccc}
@@ -101,3 +106,19 @@ $$
 \left.\frac{\partial^2 \ell}{\partial \theta_k \partial \theta_1}\right|_{\theta=\hat{\theta}} & \left.\frac{\partial^2 \ell}{\partial \theta_k \partial \theta_2}\right|_{\theta=\widehat{\theta}} & \cdots & \left.\frac{\partial^2 \ell}{\partial \theta_k^2}\right|_{\theta=\widehat{\theta}}
 \end{array}\right],
 $$
+
+## Tables
+
+```{r}
+mtcars[1:5, ]
+```
+
+```{r}
+knitr::kable(
+  mtcars[1:5, ], 
+  caption = "A knitr kable."
+)
+```
+
+See this link for more details: <https://r4ds.had.co.nz/r-markdown.html>
+
