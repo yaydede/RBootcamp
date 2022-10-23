@@ -367,10 +367,47 @@ newmedian(x)
 median(x)
 ```
 
+
 ## `source()`
 
-1. Open up a new R script, copy paste `newmedian()` on it, and save it as `myfunctions`.  Close it.  Clean the Environment.
-2. Open up a new R script and copy paste your `sumfun()` on it.  Change `median()` function to `newmedian()` 
+1. Open up a new R script, write a function (`odds.ratio`) that takes in a 2x2 confusion table and calculates the odds ratio and a 95% confidence interval. The estimated odd ratio is calculated as $\widehat{O R}=(a \cdot d) /(b \cdot c)$, and an (approximate) $95 \%$ confidence interval is given by $\widehat{O R} e^{\pm 1.96 * \sqrt{1 / a+1 / b+1 / c+1 / d}}$.
 
-Use `source()` on the script to be able to reach your `newmedian()` function
+```{r, echo=FALSE}
+con <- matrix(c("a", "b", "c", "d"), 2,2)
+colnames(con) <- c("Yes - Actual", "No - Actual")
+rownames(con) <- c("Yes - Test", "No - Test")
+con
+```
+
+Try it with the following confusion table.  
+
+```{r}
+Confusion = matrix(c(992, 2260, 165, 1017), nrow = 2, ncol = 2,
+                  byrow = TRUE, dimnames = list("Hypertension" = c("Yes", "No"),
+                                                "CVD" = c("Yes", "No")))
+Confusion
+```
+
+```{r m22-setup}
+Confusion = matrix(c(992, 2260, 165, 1017), nrow = 2, ncol = 2,
+                  byrow = TRUE, dimnames = list("Hypertension" = c("Yes", "No"),
+                                                "CVD" = c("Yes", "No")))
+```
+
+```{r m22, exercise=TRUE}
+odds.ratio = function(table) {
+  or = (table[1,1] * table[2,2]) / (table[1,2] * table[2,1])
+  SE.logor = sqrt(1/table[1,1] + 1/table[1,2] + 1/table[2,1] + 1/table[2,2])
+  zcrit = 1.96
+  ci.lower = or*exp(-zcrit * SE.logor)
+  ci.upper = or*exp(zcrit * SE.logor)
+  return(list("Odds_Ratio" = or, "CI.lower" = ci.lower, "CI.Upper" = ci.upper))
+}
+
+odds.ratio(Confusion)
+```
+
+2. Save `Confusion` and `odd.ratio` in two separate scripts.  Then **Clear Environment**
+
+3. Use the R script that has `Confusion` table to calculate odds ratio and CI by using the function saved in the other script
 

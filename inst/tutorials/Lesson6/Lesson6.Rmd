@@ -1,0 +1,195 @@
+---
+title: "Chapter 8 - Simulation in R"
+author: "**Yigit Aydede - RBootcamp - 2022**"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(nycflights13)
+library(Lahman)
+library(RBootcamp)
+library(ggplot2)
+library(datasets)
+tutorial_options(
+  exercise.timelimit = 600,
+  # A simple checker function that just returns the message in the check chunk
+  exercise.checker = function(check_code, ...) {
+    list(
+      message = eval(parse(text = check_code)),
+      correct = logical(0),
+      type = "info",
+      location = "append"
+    )
+  }
+)
+knitr::opts_chunk$set(error = TRUE)
+```
+
+## Shuffling
+
+Shuffling means reordering or rearranging the data. We can shuffle the rows in the dataframe by using `sample()` function. By providing indexing to the dataframe the required task can be easily achieved.
+
+Shuffle the data `ames` using `set.seed(321)` and assign it to `df1`.
+
+```{r m1, exercise=TRUE}
+head(ames[1:10,1:4])
+
+set.seed(321)
+ind <- sample(nrow(ames), nrow(ames))
+df1 <- ames[ind, ]
+
+head(df1[1:10,1:4])
+```
+
+## Split
+
+Create two subsets from `ames`, training (`train`) and test (`test`) sets, with 80%-20% split (`set.seed(345)`). Don't forget to shuffle. Check their dimensions.
+
+```{r m2, exercise=TRUE}
+set.seed(345)
+ind <- sample(nrow(ames), nrow(ames)*.80)
+train <- ames[ind,]
+test <- ames[-ind,]
+dim(train)
+dim(test)
+```
+
+## k-fold CV
+
+The k-fold cross-validation is a mix of the random sampling method and the hold-out method. It first divides the dataset into 
+k-folds of equal sizes. 
+
+Create a loop that splits `ames` 10 parts with the same number of shuffled rows (10%). Contain them in a list called `CV`. Hint: You need to initialize an empty list before the loop. Check Google.
+
+```{r m3, exercise=TRUE}
+ind <- sample(nrow(ames), nrow(ames))
+k = 10 #fold
+lim = round(nrow(ames)/k)
+
+CV <- vector(mode = "list", length = k)
+
+for(i in 1:k){
+  tmp <- ind[((i-1)*lim+1):(i*lim)]
+  CV[[i]] <- ames[tmp, ]
+}  
+
+```
+
+Now split `ames` 11 parts with (almost) the same number of shuffled rows. Contain them in list called `CV2`. Hint: You need to adjust the code above, otherwise you may miss some observations. Why?
+
+```{r}
+nrow(ames)/11
+round(nrow(ames)/11)
+round(nrow(ames)/11)*11
+```
+
+So last 4 observations will be missed. With this data it wouldn't be a big deal, but when the number of observations is low, then missing them would be a problem.
+
+Hint: use `if/else`
+
+```{r m4, exercise=TRUE}
+ind <- sample(nrow(ames), nrow(ames))
+k = 11 #fold
+lim = round(nrow(ames)/k)
+
+CV2 <- vector(mode = "list", length = k)
+
+for(i in 1:k){
+  if(i < k){tmp <- ind[((i-1)*lim+1):(i*lim)]
+  }else{tmp <- ind[((i-1)*lim+1):nrow(ames)]}
+  
+  CV2[[i]] <- ames[tmp, ]
+}  
+
+sum(sapply(CV2, function(x) nrow(x)))
+```
+
+## Using 10-fold CV
+
+Now use the same loop and create temporary 10% test and 90% train sets with rotation from `ames`. Here is the picture for 5-k:
+
+![](https://cdn.mathpix.com/snip/images/cocR_SUuixbyWAQJBQig72z2I_Ot_jnP0nTbAL36hgU.original.fullsize.png)
+
+You do not need to save the sets.
+
+```{r m5, exercise=TRUE}
+ind <- sample(nrow(ames), nrow(ames))
+k = 11 #fold
+lim = round(nrow(ames)/k)
+
+for(i in 1:k){
+  if(i < k){tmp <- ind[((i-1)*lim+1):(i*lim)]
+  }else{tmp <- ind[((i-1)*lim+1):nrow(ames)]}
+  
+  test <- ames[tmp, ]
+  train <- ames[-tmp, ]
+}  
+```
+
+## Using `test` & `train`
+
+Calculate the average `Sale_Price` using test and train sets in the 10-fold loop and save the results.  
+
+```{r m6, exercise=TRUE}
+ind <- sample(nrow(ames), nrow(ames))
+k = 10 #fold
+lim = round(nrow(ames)/k)
+tr <- c()
+ts <- c()
+
+for(i in 1:k){
+  if(i < k){tmp <- ind[((i-1)*lim+1):(i*lim)]
+  }else{tmp <- ind[((i-1)*lim+1):nrow(ames)]}
+  
+  test <- ames[tmp, ]
+  train <- ames[-tmp, ]
+  
+  tr[i] <- mean(train$Sale_Price)
+  ts[i] <- mean(test$Sale_Price)
+} 
+
+tr
+ts
+```
+
+## Bootstrapping
+
+Create a vector, `bexam`, with 1000 numbers drawn from a standard normal distribution. Create a bootstrapping sample from `bexam` and identify the number of unique observations in it.  Try multiple times.
+
+```{r m7, exercise=TRUE}
+bexam <- rnorm(1000)
+
+x <- sample(bexam, replace = TRUE)
+length(unique(x))
+```
+
+Since Bootstrap randomly selects samples from the original dataset **with replacement**, some data points in the original dataset may not show up in the Bootstrapped datasets.  These data points are called out-of-bag samples (OOB).  And our example shows that the size of OOOB is about 35% 
+
+Calculate the average `Sale_Price` using test and train sets in 10 bootstrap loops and save the results.
+
+```{r m8, exercise=TRUE}
+k = 10 #fold
+lim = round(nrow(ames)/k)
+tr <- c()
+ts <- c()
+
+for(i in 1:10){
+  ind <- sample(nrow(ames), nrow(ames), replace = TRUE)
+  uind <- unique(ind)
+  
+  test <- ames[uind, ]
+  train <- ames[-uind, ]
+  
+  tr[i] <- mean(train$Sale_Price)
+  ts[i] <- mean(test$Sale_Price)
+} 
+
+tr
+ts
+```
