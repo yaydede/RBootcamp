@@ -117,7 +117,7 @@ the attribute called dimension. A matrix is an array that has two
 dimensions. Data in a matrix are organized into rows and columns.</p>
 <ol style="list-style-type: decimal">
 <li>Create 3 vectors each has 5 numbers randomly selected from 1, 2,…
-,10. Name each vector properly</li>
+,10. Name each vector properly.</li>
 <li>Create row matrix from these 3 vectors, called it
 <code>A</code></li>
 <li>Create column matrix from these 3 vectors, called it
@@ -129,22 +129,59 @@ check it</li>
 </ol>
 <div class="tutorial-exercise" data-label="m1" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>#1
+x &lt;- sample(1:10, 5)
+y &lt;- sample(1:10, 5)
+z &lt;- sample(1:10, 5)
+
+#2
+A &lt;- rbind(x, y, z)
+A
+
+#3
+B &lt;- cbind(x, y, z)
+B
+
+#4
+m &lt;- colMeans(A)
+r &lt;- rowMeans(A)
+m
+r
+
+#5
+colnames(B) &lt;- c(&quot;V1&quot;, &quot;V2&quot;, &quot;V3&quot;)
+B</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 </div>
 <div id="section-subsetting-matrix" class="section level2">
 <h2>Subsetting matrix</h2>
 <ol style="list-style-type: decimal">
-<li>Create a 5x5 matrix, <code>X</code> sampled from 1:10 with
+<li>Create a 5x5 matrix, <code>X</code>, sampled from 1:10 with
 replacement (<code>set.seed(50)</code>)</li>
 <li>Create a 5x2 matrix, <code>Y</code> by selecting the 2nd and the 5th
 rows from <code>X</code>.</li>
-<li>What are the numbers in row 2 and columns 3 and 5</li>
+<li>What are the numbers in row 2 and columns 3 and 5 in
+<code>X</code></li>
 <li>Select the 2nd column from <code>X</code> as a matrix, which is
 called a “column vector” in linear algebra</li>
 </ol>
 <div class="tutorial-exercise" data-label="m3" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>#1
+set.seed(50)
+X &lt;- matrix(sample(1:10, 25, replace = TRUE), 5, 5)
+X
+
+#2
+Y &lt;- cbind(X[2,], X[5,])
+Y
+
+#3
+X[2, c(3,5)]
+
+#4
+X[, 2, drop = FALSE]</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <ol style="list-style-type: decimal">
@@ -154,6 +191,16 @@ data-diagnostics="1" data-startover="1" data-lines="0">
 </ol>
 <div class="tutorial-exercise" data-label="m4" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>#1
+X[X[,3]==1,]
+
+#2
+X[X==10] &lt;- 0
+X
+
+#3
+X[X[,5]==0, 5] &lt;- 11
+X</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <ol style="list-style-type: decimal">
@@ -163,6 +210,13 @@ Hint use <code>which()</code></li>
 </ol>
 <div class="tutorial-exercise" data-label="m5" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>#1
+ind &lt;- which(X == 2, arr.ind = TRUE)
+ind
+
+#2
+X[ind] &lt;- X[ind]*0.75
+X</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Create a 6 × 10 matrix of random integers chosen from 1, 2,. . . ,10
@@ -175,6 +229,15 @@ can use <code>apply()</code> function.</li>
 </ol>
 <div class="tutorial-exercise" data-label="m6" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>set.seed(75)
+aMat &lt;- matrix( sample(10, size=60, replace=T), nr=6)
+aMat
+
+#1
+apply(aMat, 1, function(x) sum(x&gt;4))
+
+#2
+which(apply(aMat, 1, function(x) sum(x==7)==2))</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Write a script to find row and column index of each maximum and
@@ -189,6 +252,8 @@ M</code></pre>
 ## [4,]    4    8   10    4</code></pre>
 <div class="tutorial-exercise" data-label="m6b" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>which(M == max(M), arr.ind=TRUE)
+which(M == min(M), arr.ind=TRUE)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 </div>
@@ -204,18 +269,26 @@ elements (columns). We will use <code>whale</code> in your
 <code>summary()</code> functions to examine the data</p>
 <div class="tutorial-exercise" data-label="m7" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>str(whale)
+dim(whale)
+head(whale)
+summary(whale)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Extract all the elements of the first 8 rows and the last 4 columns
 of the <code>whale</code> dataframe</p>
 <div class="tutorial-exercise" data-label="m8" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>nc &lt;- ncol(whale)
+rm &lt;- nc - 4
+whale[1:8, rm:nc]</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Extract rows 9, 11, 25 and all columns except for the last
 column.</p>
 <div class="tutorial-exercise" data-label="m9" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>whale[c(9, 11, 25), -ncol(whale)]</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Now, we will extract data based on the following criteria, save the
@@ -236,14 +309,38 @@ results:</p>
 </ol>
 <div class="tutorial-exercise" data-label="m10" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>#1
+whaled &lt;- whale[whale$depth &gt; 1000, ]
+#2
+whaleg &lt;- whale[whale$gradient &gt; 150, ]
+#3
+whaleall &lt;- whale[whale$depth &gt; mean(whale$depth), ]
+#4
+whalelow &lt;- whale[whale$water.noise == &quot;low&quot;, ]
+#5
+whalehmay &lt;- whale[whale$water.noise == &quot;high&quot; &amp; whale$month == &quot;May&quot;, ]
+#6
+whalesub &lt;- whale[whale$month == &quot;October&quot;
+                  &amp; whale$water.noise == &quot;low&quot;
+                  &amp; whale$gradient &gt; median(whale$gradient), ]
+
+whalelatlong &lt;- whale[whale$latitude &gt; 60
+                        &amp; whale$latitude &lt; 61
+                        &amp; whale$longitude &gt; -6
+                        &amp; whale$longitude &lt; -4, ]
+
+whalenomed &lt;- whale[whale$water.noise != &quot;medium&quot;, ]</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<p>There are of course many other approaches. One such approach is to
-use the <code>subset()</code> function (see <code>?subset</code>). Here
-is an example for #5 given above:</p>
+<p>There are of course many other approaches to handle these selection
+operations. One such approach is to use the <code>subset()</code>
+function (see <code>?subset</code>). Here is an example for #5 given
+above:</p>
 <div class="tutorial-exercise" data-label="m11" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>subset(whale, month == &quot;October&quot; &amp; water.noise == &quot;low&quot; &amp; gradient &gt; median(gradient))</code></pre>
+<pre class="text"><code>subset(whale, month == &quot;October&quot;
+       &amp; water.noise == &quot;low&quot;
+       &amp; gradient &gt; median(gradient))</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Use <code>subset()</code> to extract data collected in “October” from
@@ -252,6 +349,8 @@ columns <code>month</code>, <code>latitude</code>,
 <code>longitude</code> and <code>number.whales</code>.</p>
 <div class="tutorial-exercise" data-label="m12" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>subset(whale, month == &quot;October&quot; &amp; latitude &gt; 61,
+       select = c(&quot;month&quot;, &quot;latitude&quot;, &quot;longitude&quot;, &quot;number.whales&quot;))</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>
@@ -314,17 +413,17 @@ learnr:::store_exercise_cache(structure(list(label = "m1", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m1", code = "", opts = list(label = "\"m1\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m1", code = "#1\nx <- sample(1:10, 5)\ny <- sample(1:10, 5)\nz <- sample(1:10, 5)\n\n#2\nA <- rbind(x, y, z)\nA\n\n#3\nB <- cbind(x, y, z)\nB\n\n#4\nm <- colMeans(A)\nr <- rowMeans(A)\nm\nr\n\n#5\ncolnames(B) <- c(\"V1\", \"V2\", \"V3\")\nB\n", 
+        opts = list(label = "\"m1\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson2_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson2A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson2_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson2A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -334,9 +433,13 @@ learnr:::store_exercise_cache(structure(list(label = "m1", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m1", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m1, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m1", exercise = TRUE, code = c("#1", "x <- sample(1:10, 5)", 
+        "y <- sample(1:10, 5)", "z <- sample(1:10, 5)", "", "#2", 
+        "A <- rbind(x, y, z)", "A", "", "#3", "B <- cbind(x, y, z)", 
+        "B", "", "#4", "m <- colMeans(A)", "r <- rowMeans(A)", 
+        "m", "r", "", "#5", "colnames(B) <- c(\"V1\", \"V2\", \"V3\")", 
+        "B", ""), out.width.px = 624, out.height.px = 384, params.src = "m1, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -358,17 +461,17 @@ learnr:::store_exercise_cache(structure(list(label = "m3", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m3", code = "", opts = list(label = "\"m3\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m3", code = "#1\nset.seed(50)\nX <- matrix(sample(1:10, 25, replace = TRUE), 5, 5)\nX\n\n#2\nY <- cbind(X[2,], X[5,])\nY\n\n#3\nX[2, c(3,5)]\n\n#4\nX[, 2, drop = FALSE]", 
+        opts = list(label = "\"m3\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson2_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson2A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson2_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson2A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -378,9 +481,12 @@ learnr:::store_exercise_cache(structure(list(label = "m3", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m3", exercise = TRUE, code = "", out.width.px = 624, 
+        label = "m3", exercise = TRUE, code = c("#1", "set.seed(50)", 
+        "X <- matrix(sample(1:10, 25, replace = TRUE), 5, 5)", 
+        "X", "", "#2", "Y <- cbind(X[2,], X[5,])", "Y", "", "#3", 
+        "X[2, c(3,5)]", "", "#4", "X[, 2, drop = FALSE]"), out.width.px = 624, 
         out.height.px = 384, params.src = "m3, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -404,17 +510,17 @@ learnr:::store_exercise_cache(structure(list(label = "m4", global_setup = struct
     label = "setup", include = FALSE)), setup = "set.seed(50)\nX <- matrix(sample(1:10, 25, replace = T), 5,5)", 
     chunks = list(list(label = "m4-setup", code = "set.seed(50)\nX <- matrix(sample(1:10, 25, replace = T), 5,5)", 
         opts = list(label = "\"m4-setup\""), engine = "r"), list(
-        label = "m4", code = "", opts = list(label = "\"m4\"", 
-            exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        label = "m4", code = "#1\nX[X[,3]==1,]\n\n#2\nX[X==10] <- 0\nX\n\n#3\nX[X[,5]==0, 5] <- 11\nX", 
+        opts = list(label = "\"m4\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson2_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson2A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson2_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson2A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -424,9 +530,10 @@ learnr:::store_exercise_cache(structure(list(label = "m4", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m4", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m4, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m4", exercise = TRUE, code = c("#1", "X[X[,3]==1,]", 
+        "", "#2", "X[X==10] <- 0", "X", "", "#3", "X[X[,5]==0, 5] <- 11", 
+        "X"), out.width.px = 624, out.height.px = 384, params.src = "m4, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -450,17 +557,17 @@ learnr:::store_exercise_cache(structure(list(label = "m5", global_setup = struct
     label = "setup", include = FALSE)), setup = "set.seed(50)\nX <- matrix(sample(1:10, 25, replace = T), 5,5)", 
     chunks = list(list(label = "m5-setup", code = "set.seed(50)\nX <- matrix(sample(1:10, 25, replace = T), 5,5)", 
         opts = list(label = "\"m5-setup\""), engine = "r"), list(
-        label = "m5", code = "", opts = list(label = "\"m5\"", 
-            exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        label = "m5", code = "#1\nind <- which(X == 2, arr.ind = TRUE)\nind\n\n#2\nX[ind] <- X[ind]*0.75\nX", 
+        opts = list(label = "\"m5\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson2_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson2A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson2_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson2A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -470,9 +577,10 @@ learnr:::store_exercise_cache(structure(list(label = "m5", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m5", exercise = TRUE, code = "", out.width.px = 624, 
+        label = "m5", exercise = TRUE, code = c("#1", "ind <- which(X == 2, arr.ind = TRUE)", 
+        "ind", "", "#2", "X[ind] <- X[ind]*0.75", "X"), out.width.px = 624, 
         out.height.px = 384, params.src = "m5, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -494,17 +602,17 @@ learnr:::store_exercise_cache(structure(list(label = "m6", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m6", code = "", opts = list(label = "\"m6\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m6", code = "set.seed(75)\naMat <- matrix( sample(10, size=60, replace=T), nr=6)\naMat\n\n#1\napply(aMat, 1, function(x) sum(x>4))\n\n#2\nwhich(apply(aMat, 1, function(x) sum(x==7)==2))", 
+        opts = list(label = "\"m6\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson2_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson2A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson2_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson2A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -514,9 +622,12 @@ learnr:::store_exercise_cache(structure(list(label = "m6", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m6", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m6, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m6", exercise = TRUE, code = c("set.seed(75)", 
+        "aMat <- matrix( sample(10, size=60, replace=T), nr=6)", 
+        "aMat", "", "#1", "apply(aMat, 1, function(x) sum(x>4))", 
+        "", "#2", "which(apply(aMat, 1, function(x) sum(x==7)==2))"
+        ), out.width.px = 624, out.height.px = 384, params.src = "m6, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -538,17 +649,17 @@ learnr:::store_exercise_cache(structure(list(label = "m6b", global_setup = struc
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m6b", code = "", opts = list(label = "\"m6b\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m6b", code = "which(M == max(M), arr.ind=TRUE)\nwhich(M == min(M), arr.ind=TRUE)", 
+        opts = list(label = "\"m6b\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson2_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson2A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson2_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson2A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -558,9 +669,10 @@ learnr:::store_exercise_cache(structure(list(label = "m6b", global_setup = struc
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m6b", exercise = TRUE, code = "", out.width.px = 624, 
+        label = "m6b", exercise = TRUE, code = c("which(M == max(M), arr.ind=TRUE)", 
+        "which(M == min(M), arr.ind=TRUE)"), out.width.px = 624, 
         out.height.px = 384, params.src = "m6b, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -582,17 +694,17 @@ learnr:::store_exercise_cache(structure(list(label = "m7", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m7", code = "", opts = list(label = "\"m7\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m7", code = "str(whale)\ndim(whale)\nhead(whale)\nsummary(whale)", 
+        opts = list(label = "\"m7\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson2_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson2A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson2_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson2A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -602,9 +714,10 @@ learnr:::store_exercise_cache(structure(list(label = "m7", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m7", exercise = TRUE, code = "", out.width.px = 624, 
+        label = "m7", exercise = TRUE, code = c("str(whale)", 
+        "dim(whale)", "head(whale)", "summary(whale)"), out.width.px = 624, 
         out.height.px = 384, params.src = "m7, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -626,17 +739,17 @@ learnr:::store_exercise_cache(structure(list(label = "m8", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m8", code = "", opts = list(label = "\"m8\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m8", code = "nc <- ncol(whale)\nrm <- nc - 4\nwhale[1:8, rm:nc]", 
+        opts = list(label = "\"m8\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson2_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson2A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson2_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson2A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -646,9 +759,10 @@ learnr:::store_exercise_cache(structure(list(label = "m8", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m8", exercise = TRUE, code = "", out.width.px = 624, 
+        label = "m8", exercise = TRUE, code = c("nc <- ncol(whale)", 
+        "rm <- nc - 4", "whale[1:8, rm:nc]"), out.width.px = 624, 
         out.height.px = 384, params.src = "m8, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -670,17 +784,17 @@ learnr:::store_exercise_cache(structure(list(label = "m9", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m9", code = "", opts = list(label = "\"m9\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m9", code = "whale[c(9, 11, 25), -ncol(whale)]", 
+        opts = list(label = "\"m9\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson2_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson2A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson2_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson2A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -690,9 +804,9 @@ learnr:::store_exercise_cache(structure(list(label = "m9", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m9", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m9, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m9", exercise = TRUE, code = "whale[c(9, 11, 25), -ncol(whale)]", 
+        out.width.px = 624, out.height.px = 384, params.src = "m9, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -714,17 +828,17 @@ learnr:::store_exercise_cache(structure(list(label = "m10", global_setup = struc
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m10", code = "", opts = list(label = "\"m10\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m10", code = "#1\nwhaled <- whale[whale$depth > 1000, ]\n#2\nwhaleg <- whale[whale$gradient > 150, ]\n#3\nwhaleall <- whale[whale$depth > mean(whale$depth), ]\n#4\nwhalelow <- whale[whale$water.noise == \"low\", ]\n#5\nwhalehmay <- whale[whale$water.noise == \"high\" & whale$month == \"May\", ]\n#6\nwhalesub <- whale[whale$month == \"October\"\n                  & whale$water.noise == \"low\"\n                  & whale$gradient > median(whale$gradient), ]\n\nwhalelatlong <- whale[whale$latitude > 60\n                        & whale$latitude < 61\n                        & whale$longitude > -6\n                        & whale$longitude < -4, ]\n\nwhalenomed <- whale[whale$water.noise != \"medium\", ]", 
+        opts = list(label = "\"m10\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson2_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson2A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson2_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson2A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -734,9 +848,18 @@ learnr:::store_exercise_cache(structure(list(label = "m10", global_setup = struc
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m10", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m10, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m10", exercise = TRUE, code = c("#1", "whaled <- whale[whale$depth > 1000, ]", 
+        "#2", "whaleg <- whale[whale$gradient > 150, ]", "#3", 
+        "whaleall <- whale[whale$depth > mean(whale$depth), ]", 
+        "#4", "whalelow <- whale[whale$water.noise == \"low\", ]", 
+        "#5", "whalehmay <- whale[whale$water.noise == \"high\" & whale$month == \"May\", ]", 
+        "#6", "whalesub <- whale[whale$month == \"October\"", 
+        "                  & whale$water.noise == \"low\"", "                  & whale$gradient > median(whale$gradient), ]", 
+        "", "whalelatlong <- whale[whale$latitude > 60", "                        & whale$latitude < 61", 
+        "                        & whale$longitude > -6", "                        & whale$longitude < -4, ]", 
+        "", "whalenomed <- whale[whale$water.noise != \"medium\", ]"
+        ), out.width.px = 624, out.height.px = 384, params.src = "m10, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -758,17 +881,17 @@ learnr:::store_exercise_cache(structure(list(label = "m11", global_setup = struc
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m11", code = "subset(whale, month == \"October\" & water.noise == \"low\" & gradient > median(gradient))", 
+    list(label = "m11", code = "subset(whale, month == \"October\"\n       & water.noise == \"low\"\n       & gradient > median(gradient))", 
         opts = list(label = "\"m11\"", exercise = "TRUE"), engine = "r")), 
     code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
     tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson2_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson2A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson2_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson2A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -778,8 +901,9 @@ learnr:::store_exercise_cache(structure(list(label = "m11", global_setup = struc
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m11", exercise = TRUE, code = "subset(whale, month == \"October\" & water.noise == \"low\" & gradient > median(gradient))", 
-        out.width.px = 624, out.height.px = 384, params.src = "m11, exercise=TRUE", 
+        label = "m11", exercise = TRUE, code = c("subset(whale, month == \"October\"", 
+        "       & water.noise == \"low\"", "       & gradient > median(gradient))"
+        ), out.width.px = 624, out.height.px = 384, params.src = "m11, exercise=TRUE", 
         fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
@@ -802,17 +926,17 @@ learnr:::store_exercise_cache(structure(list(label = "m12", global_setup = struc
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m12", code = "", opts = list(label = "\"m12\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m12", code = "subset(whale, month == \"October\" & latitude > 61,\n       select = c(\"month\", \"latitude\", \"longitude\", \"number.whales\"))", 
+        opts = list(label = "\"m12\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson2_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson2A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson2_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson2A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -822,9 +946,10 @@ learnr:::store_exercise_cache(structure(list(label = "m12", global_setup = struc
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m12", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m12, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m12", exercise = TRUE, code = c("subset(whale, month == \"October\" & latitude > 61,", 
+        "       select = c(\"month\", \"latitude\", \"longitude\", \"number.whales\"))"
+        ), out.width.px = 624, out.height.px = 384, params.src = "m12, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
 </p>

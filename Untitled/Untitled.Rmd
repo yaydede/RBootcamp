@@ -1,0 +1,124 @@
+---
+title: "R Markdown Example - Rbootcamp"
+date: "2016-08-25"
+output:
+  html_document: default
+  output_format: default
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+```
+
+The diamonds dataset is a dataset that comes built-in with the `ggplot2` package in R. It contains measurements on 10 different variables (like price, color, clarity, etc.) for 53,940 different diamonds. 
+
+# Example
+
+```{r}
+smaller <- diamonds %>% 
+  filter(carat <= 2.5)
+smaller
+```
+
+We have data about `r nrow(diamonds)` diamonds. Only `r nrow(diamonds) - nrow(smaller)` are larger than
+2.5 carats. The distribution of the remainder is shown below:
+
+```{r, echo = TRUE}
+smaller %>% 
+  ggplot(aes(carat)) + 
+  geom_freqpoly(binwidth = 0.01)
+```
+
+# Format
+
+It contains three important types of content:
+  
+- An (optional) YAML header surrounded by `---`s. 
+- Chunks of R code surrounded by ```. 
+- Text mixed with simple text formatting like # heading and _italics_. 
+
+
+Text formatting 
+------------------------------------------------------------
+
+*italic*  or _italic_
+**bold**   __bold__
+`code`
+superscript^2^ and subscript~2~
+
+Headings
+------------------------------------------------------------
+
+# 1st Level Header
+
+## 2nd Level Header
+
+### 3rd Level Header
+
+Lists
+------------------------------------------------------------
+
+*   Bulleted list item 1
+
+*   Item 2
+
+    * Item 2a
+
+    * Item 2b
+
+1.  Numbered list item 1
+
+1.  Item 2. The numbers are incremented automatically in the output.
+
+Links and images
+------------------------------------------------------------
+
+<https://www.bbc.com>
+  
+ or
+   
+[BBC](https://www.bbc.com)
+  
+![optional caption text](https://cdn.mathpix.com/snip/images/WfsHlEqKfIPddupsMYsoRVc1rAXeoIrDr1vzW8lO8_s.original.fullsize.png)
+
+Tables 
+------------------------------------------------------------
+
+First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell
+
+> Block quate bla bla Block quate bla bla Block quate bla bla Block quate bla bla Block quate bla bla Block quate bla bla Block quate bla bla Block quate bla bla Block quate bla bla Block quate bla bla Block quate bla bla 
+
+
+## Math
+
+Use [mathpix](https://mathpix.com/ocr?gclid=CjwKCAjwzNOaBhAcEiwAD7Tb6KAkAbvn2Zh6JXprqSGQObd4Od3KbtOKK_D-fSiFbrEtdC5lr6OP5hoCDdIQAvD_BwE)
+
+$$
+\mathbf{H}(\widehat{\theta})=\left[\begin{array}{cccc}
+\left.\frac{\partial^2 \ell}{\partial \theta_1^2}\right|_{\theta=\widehat{\theta}} & \left.\frac{\partial^2 \ell}{\partial \theta_1 \partial \theta_2}\right|_{\theta=\widehat{\theta}} & \cdots & \left.\frac{\partial^2 \ell}{\partial \theta_1 \partial \theta_k}\right|_{\theta=\widehat{\theta}} \\
+\left.\frac{\partial^2 \ell}{\partial \theta_2 \partial \theta_1}\right|_{\theta=\widehat{\theta}} & \left.\frac{\partial^2 \ell}{\partial \theta_2^2}\right|_{\theta=\widehat{\theta}} & \cdots & \left.\frac{\partial^2 \ell}{\partial \theta_2 \partial \theta_k}\right|_{\theta=\widehat{\theta}} \\
+\vdots & \vdots & \ddots & \vdots \\
+\left.\frac{\partial^2 \ell}{\partial \theta_k \partial \theta_1}\right|_{\theta=\hat{\theta}} & \left.\frac{\partial^2 \ell}{\partial \theta_k \partial \theta_2}\right|_{\theta=\widehat{\theta}} & \cdots & \left.\frac{\partial^2 \ell}{\partial \theta_k^2}\right|_{\theta=\widehat{\theta}}
+\end{array}\right],
+$$
+
+## Tables
+
+```{r}
+mtcars[1:5, ]
+```
+
+```{r}
+knitr::kable(
+  mtcars[1:5, ], 
+  caption = "A knitr kable."
+)
+```
+
+See this link for more details: <https://r4ds.had.co.nz/r-markdown.html>
+

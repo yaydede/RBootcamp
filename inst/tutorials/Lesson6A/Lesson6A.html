@@ -117,6 +117,7 @@ bullet. Write an R script which simulates the game of Russian Roulette,
 returning “CLICK” 5 out of 6 times, and “BANG” 1 out of 6 times.</p>
 <div class="tutorial-exercise" data-label="m0" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>sample(c(&quot;BANG&quot;, &quot;click&quot;), size=1, prob=c(1/6, 5/6))</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 </div>
@@ -130,6 +131,13 @@ achieved.</p>
 and assign it to <code>df1</code>.</p>
 <div class="tutorial-exercise" data-label="m1" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>head(ames[1:10,1:4])
+
+set.seed(321)
+ind &lt;- sample(nrow(ames), nrow(ames))
+df1 &lt;- ames[ind, ]
+
+head(df1[1:10,1:4])</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 </div>
@@ -141,6 +149,12 @@ split (<code>set.seed(345)</code>). Don’t forget to shuffle. Check their
 dimensions.</p>
 <div class="tutorial-exercise" data-label="m2" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>set.seed(345)
+ind &lt;- sample(nrow(ames), nrow(ames)*.80)
+train &lt;- ames[ind,]
+test &lt;- ames[-ind,]
+dim(train)
+dim(test)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 </div>
@@ -155,6 +169,16 @@ number of shuffled rows (10%). Contain them in a list called
 loop. Check Google.</p>
 <div class="tutorial-exercise" data-label="m3" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>ind &lt;- sample(nrow(ames), nrow(ames))
+k = 10 #fold
+lim = round(nrow(ames)/k)
+
+CV &lt;- vector(mode = &quot;list&quot;, length = k)
+
+for(i in 1:k){
+  tmp &lt;- ind[((i-1)*lim+1):(i*lim)]
+  CV[[i]] &lt;- ames[tmp, ]
+}  </code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Now split <code>ames</code> 11 parts with (almost) the same number of
@@ -173,6 +197,20 @@ them would be a problem.</p>
 <p>Hint: use <code>if/else</code></p>
 <div class="tutorial-exercise" data-label="m4" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>ind &lt;- sample(nrow(ames), nrow(ames))
+k = 11 #fold
+lim = round(nrow(ames)/k)
+
+CV2 &lt;- vector(mode = &quot;list&quot;, length = k)
+
+for(i in 1:k){
+  if(i &lt; k){tmp &lt;- ind[((i-1)*lim+1):(i*lim)]
+  }else{tmp &lt;- ind[((i-1)*lim+1):nrow(ames)]}
+  
+  CV2[[i]] &lt;- ames[tmp, ]
+}  
+
+sum(sapply(CV2, function(x) nrow(x)))</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 </div>
@@ -186,6 +224,17 @@ src="https://cdn.mathpix.com/snip/images/cocR_SUuixbyWAQJBQig72z2I_Ot_jnP0nTbAL3
 <p>You do not need to save the sets.</p>
 <div class="tutorial-exercise" data-label="m5" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>ind &lt;- sample(nrow(ames), nrow(ames))
+k = 11 #fold
+lim = round(nrow(ames)/k)
+
+for(i in 1:k){
+  if(i &lt; k){tmp &lt;- ind[((i-1)*lim+1):(i*lim)]
+  }else{tmp &lt;- ind[((i-1)*lim+1):nrow(ames)]}
+  
+  test &lt;- ames[tmp, ]
+  train &lt;- ames[-tmp, ]
+}  </code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 </div>
@@ -195,6 +244,25 @@ data-diagnostics="1" data-startover="1" data-lines="0">
 sets in the 10-fold loop and save the results.</p>
 <div class="tutorial-exercise" data-label="m6" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>ind &lt;- sample(nrow(ames), nrow(ames))
+k = 10 #fold
+lim = round(nrow(ames)/k)
+tr &lt;- c()
+ts &lt;- c()
+
+for(i in 1:k){
+  if(i &lt; k){tmp &lt;- ind[((i-1)*lim+1):(i*lim)]
+  }else{tmp &lt;- ind[((i-1)*lim+1):nrow(ames)]}
+  
+  test &lt;- ames[tmp, ]
+  train &lt;- ames[-tmp, ]
+  
+  tr[i] &lt;- mean(train$Sale_Price)
+  ts[i] &lt;- mean(test$Sale_Price)
+} 
+
+tr
+ts</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 </div>
@@ -206,6 +274,10 @@ standard normal distribution. Create a bootstrapping sample from
 Try multiple times.</p>
 <div class="tutorial-exercise" data-label="m7" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>bexam &lt;- rnorm(1000)
+
+x &lt;- sample(bexam, replace = TRUE)
+length(unique(x))</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Since Bootstrap randomly selects samples from the original dataset
@@ -217,6 +289,24 @@ of OOOB is about 35%</p>
 sets in 10 bootstrap loops and save the results.</p>
 <div class="tutorial-exercise" data-label="m8" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>k = 10 #fold
+lim = round(nrow(ames)/k)
+tr &lt;- c()
+ts &lt;- c()
+
+for(i in 1:10){
+  ind &lt;- sample(nrow(ames), nrow(ames), replace = TRUE)
+  uind &lt;- unique(ind)
+  
+  test &lt;- ames[uind, ]
+  train &lt;- ames[-uind, ]
+  
+  tr[i] &lt;- mean(train$Sale_Price)
+  ts[i] &lt;- mean(test$Sale_Price)
+} 
+
+tr
+ts</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>
@@ -281,17 +371,17 @@ learnr:::store_exercise_cache(structure(list(label = "m0", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m0", code = "", opts = list(label = "\"m0\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m0", code = "sample(c(\"BANG\", \"click\"), size=1, prob=c(1/6, 5/6))", 
+        opts = list(label = "\"m0\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson6_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson6A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson6_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson6A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -301,9 +391,9 @@ learnr:::store_exercise_cache(structure(list(label = "m0", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m0", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m0, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m0", exercise = TRUE, code = "sample(c(\"BANG\", \"click\"), size=1, prob=c(1/6, 5/6))", 
+        out.width.px = 624, out.height.px = 384, params.src = "m0, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -325,17 +415,17 @@ learnr:::store_exercise_cache(structure(list(label = "m1", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m1", code = "", opts = list(label = "\"m1\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m1", code = "head(ames[1:10,1:4])\n\nset.seed(321)\nind <- sample(nrow(ames), nrow(ames))\ndf1 <- ames[ind, ]\n\nhead(df1[1:10,1:4])", 
+        opts = list(label = "\"m1\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson6_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson6A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson6_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson6A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -345,9 +435,11 @@ learnr:::store_exercise_cache(structure(list(label = "m1", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m1", exercise = TRUE, code = "", out.width.px = 624, 
+        label = "m1", exercise = TRUE, code = c("head(ames[1:10,1:4])", 
+        "", "set.seed(321)", "ind <- sample(nrow(ames), nrow(ames))", 
+        "df1 <- ames[ind, ]", "", "head(df1[1:10,1:4])"), out.width.px = 624, 
         out.height.px = 384, params.src = "m1, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -369,17 +461,17 @@ learnr:::store_exercise_cache(structure(list(label = "m2", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m2", code = "", opts = list(label = "\"m2\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m2", code = "set.seed(345)\nind <- sample(nrow(ames), nrow(ames)*.80)\ntrain <- ames[ind,]\ntest <- ames[-ind,]\ndim(train)\ndim(test)", 
+        opts = list(label = "\"m2\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson6_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson6A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson6_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson6A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -389,9 +481,11 @@ learnr:::store_exercise_cache(structure(list(label = "m2", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m2", exercise = TRUE, code = "", out.width.px = 624, 
+        label = "m2", exercise = TRUE, code = c("set.seed(345)", 
+        "ind <- sample(nrow(ames), nrow(ames)*.80)", "train <- ames[ind,]", 
+        "test <- ames[-ind,]", "dim(train)", "dim(test)"), out.width.px = 624, 
         out.height.px = 384, params.src = "m2, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -413,17 +507,17 @@ learnr:::store_exercise_cache(structure(list(label = "m3", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m3", code = "\n", opts = list(label = "\"m3\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m3", code = "ind <- sample(nrow(ames), nrow(ames))\nk = 10 #fold\nlim = round(nrow(ames)/k)\n\nCV <- vector(mode = \"list\", length = k)\n\nfor(i in 1:k){\n  tmp <- ind[((i-1)*lim+1):(i*lim)]\n  CV[[i]] <- ames[tmp, ]\n}  \n", 
+        opts = list(label = "\"m3\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson6_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson6A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson6_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson6A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -433,9 +527,12 @@ learnr:::store_exercise_cache(structure(list(label = "m3", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m3", exercise = TRUE, code = c("", ""), out.width.px = 624, 
+        label = "m3", exercise = TRUE, code = c("ind <- sample(nrow(ames), nrow(ames))", 
+        "k = 10 #fold", "lim = round(nrow(ames)/k)", "", "CV <- vector(mode = \"list\", length = k)", 
+        "", "for(i in 1:k){", "  tmp <- ind[((i-1)*lim+1):(i*lim)]", 
+        "  CV[[i]] <- ames[tmp, ]", "}  ", ""), out.width.px = 624, 
         out.height.px = 384, params.src = "m3, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -457,17 +554,17 @@ learnr:::store_exercise_cache(structure(list(label = "m4", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m4", code = "", opts = list(label = "\"m4\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m4", code = "ind <- sample(nrow(ames), nrow(ames))\nk = 11 #fold\nlim = round(nrow(ames)/k)\n\nCV2 <- vector(mode = \"list\", length = k)\n\nfor(i in 1:k){\n  if(i < k){tmp <- ind[((i-1)*lim+1):(i*lim)]\n  }else{tmp <- ind[((i-1)*lim+1):nrow(ames)]}\n  \n  CV2[[i]] <- ames[tmp, ]\n}  \n\nsum(sapply(CV2, function(x) nrow(x)))", 
+        opts = list(label = "\"m4\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson6_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson6A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson6_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson6A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -477,9 +574,13 @@ learnr:::store_exercise_cache(structure(list(label = "m4", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m4", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m4, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m4", exercise = TRUE, code = c("ind <- sample(nrow(ames), nrow(ames))", 
+        "k = 11 #fold", "lim = round(nrow(ames)/k)", "", "CV2 <- vector(mode = \"list\", length = k)", 
+        "", "for(i in 1:k){", "  if(i < k){tmp <- ind[((i-1)*lim+1):(i*lim)]", 
+        "  }else{tmp <- ind[((i-1)*lim+1):nrow(ames)]}", "  ", 
+        "  CV2[[i]] <- ames[tmp, ]", "}  ", "", "sum(sapply(CV2, function(x) nrow(x)))"
+        ), out.width.px = 624, out.height.px = 384, params.src = "m4, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -501,17 +602,17 @@ learnr:::store_exercise_cache(structure(list(label = "m5", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m5", code = "", opts = list(label = "\"m5\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m5", code = "ind <- sample(nrow(ames), nrow(ames))\nk = 11 #fold\nlim = round(nrow(ames)/k)\n\nfor(i in 1:k){\n  if(i < k){tmp <- ind[((i-1)*lim+1):(i*lim)]\n  }else{tmp <- ind[((i-1)*lim+1):nrow(ames)]}\n  \n  test <- ames[tmp, ]\n  train <- ames[-tmp, ]\n}  ", 
+        opts = list(label = "\"m5\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson6_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson6A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson6_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson6A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -521,9 +622,12 @@ learnr:::store_exercise_cache(structure(list(label = "m5", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m5", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m5, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m5", exercise = TRUE, code = c("ind <- sample(nrow(ames), nrow(ames))", 
+        "k = 11 #fold", "lim = round(nrow(ames)/k)", "", "for(i in 1:k){", 
+        "  if(i < k){tmp <- ind[((i-1)*lim+1):(i*lim)]", "  }else{tmp <- ind[((i-1)*lim+1):nrow(ames)]}", 
+        "  ", "  test <- ames[tmp, ]", "  train <- ames[-tmp, ]", 
+        "}  "), out.width.px = 624, out.height.px = 384, params.src = "m5, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -545,17 +649,17 @@ learnr:::store_exercise_cache(structure(list(label = "m6", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m6", code = "", opts = list(label = "\"m6\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m6", code = "ind <- sample(nrow(ames), nrow(ames))\nk = 10 #fold\nlim = round(nrow(ames)/k)\ntr <- c()\nts <- c()\n\nfor(i in 1:k){\n  if(i < k){tmp <- ind[((i-1)*lim+1):(i*lim)]\n  }else{tmp <- ind[((i-1)*lim+1):nrow(ames)]}\n  \n  test <- ames[tmp, ]\n  train <- ames[-tmp, ]\n  \n  tr[i] <- mean(train$Sale_Price)\n  ts[i] <- mean(test$Sale_Price)\n} \n\ntr\nts", 
+        opts = list(label = "\"m6\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson6_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson6A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson6_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson6A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -565,10 +669,16 @@ learnr:::store_exercise_cache(structure(list(label = "m6", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m6", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m6, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
-    version = "4"), class = c("r", "tutorial_exercise")))
+        label = "m6", exercise = TRUE, code = c("ind <- sample(nrow(ames), nrow(ames))", 
+        "k = 10 #fold", "lim = round(nrow(ames)/k)", "tr <- c()", 
+        "ts <- c()", "", "for(i in 1:k){", "  if(i < k){tmp <- ind[((i-1)*lim+1):(i*lim)]", 
+        "  }else{tmp <- ind[((i-1)*lim+1):nrow(ames)]}", "  ", 
+        "  test <- ames[tmp, ]", "  train <- ames[-tmp, ]", "  ", 
+        "  tr[i] <- mean(train$Sale_Price)", "  ts[i] <- mean(test$Sale_Price)", 
+        "} ", "", "tr", "ts"), out.width.px = 624, out.height.px = 384, 
+        params.src = "m6, exercise=TRUE", fig.num = 0, exercise.df_print = "paged"), 
+    engine = "r", version = "4"), class = c("r", "tutorial_exercise"
+)))
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
@@ -589,17 +699,17 @@ learnr:::store_exercise_cache(structure(list(label = "m7", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m7", code = "", opts = list(label = "\"m7\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m7", code = "bexam <- rnorm(1000)\n\nx <- sample(bexam, replace = TRUE)\nlength(unique(x))", 
+        opts = list(label = "\"m7\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson6_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson6A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson6_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson6A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -609,9 +719,10 @@ learnr:::store_exercise_cache(structure(list(label = "m7", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m7", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m7, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m7", exercise = TRUE, code = c("bexam <- rnorm(1000)", 
+        "", "x <- sample(bexam, replace = TRUE)", "length(unique(x))"
+        ), out.width.px = 624, out.height.px = 384, params.src = "m7, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -633,17 +744,17 @@ learnr:::store_exercise_cache(structure(list(label = "m8", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m8", code = "", opts = list(label = "\"m8\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m8", code = "k = 10 #fold\nlim = round(nrow(ames)/k)\ntr <- c()\nts <- c()\n\nfor(i in 1:10){\n  ind <- sample(nrow(ames), nrow(ames), replace = TRUE)\n  uind <- unique(ind)\n  \n  test <- ames[uind, ]\n  train <- ames[-uind, ]\n  \n  tr[i] <- mean(train$Sale_Price)\n  ts[i] <- mean(test$Sale_Price)\n} \n\ntr\nts", 
+        opts = list(label = "\"m8\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson6_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson6A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson6_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson6A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -653,9 +764,14 @@ learnr:::store_exercise_cache(structure(list(label = "m8", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m8", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m8, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m8", exercise = TRUE, code = c("k = 10 #fold", 
+        "lim = round(nrow(ames)/k)", "tr <- c()", "ts <- c()", 
+        "", "for(i in 1:10){", "  ind <- sample(nrow(ames), nrow(ames), replace = TRUE)", 
+        "  uind <- unique(ind)", "  ", "  test <- ames[uind, ]", 
+        "  train <- ames[-uind, ]", "  ", "  tr[i] <- mean(train$Sale_Price)", 
+        "  ts[i] <- mean(test$Sale_Price)", "} ", "", "tr", "ts"
+        ), out.width.px = 624, out.height.px = 384, params.src = "m8, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
 </p>

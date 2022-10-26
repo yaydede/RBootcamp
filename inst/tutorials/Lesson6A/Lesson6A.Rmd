@@ -35,9 +35,9 @@ knitr::opts_chunk$set(error = TRUE)
 Russian Roulette is a game played with a revolver and a single bullet. Write an R script which simulates the game of Russian Roulette, returning “CLICK” 5 out of 6 times, and “BANG” 1 out of 6 times.
 
 ```{r m0, exercise=TRUE}
-
+sample(c("BANG", "click"), size=1, prob=c(1/6, 5/6))
 ```
-
+  
 ## Shuffling
 
 Shuffling means reordering or rearranging the data. We can shuffle the rows in the dataframe by using `sample()` function. By providing indexing to the dataframe the required task can be easily achieved.
@@ -45,7 +45,13 @@ Shuffling means reordering or rearranging the data. We can shuffle the rows in t
 Shuffle the data `ames` using `set.seed(321)` and assign it to `df1`.
 
 ```{r m1, exercise=TRUE}
+head(ames[1:10,1:4])
 
+set.seed(321)
+ind <- sample(nrow(ames), nrow(ames))
+df1 <- ames[ind, ]
+
+head(df1[1:10,1:4])
 ```
 
 ## Split
@@ -53,7 +59,12 @@ Shuffle the data `ames` using `set.seed(321)` and assign it to `df1`.
 Create two subsets from `ames`, training (`train`) and test (`test`) sets, with 80%-20% split (`set.seed(345)`). Don't forget to shuffle. Check their dimensions.
 
 ```{r m2, exercise=TRUE}
-
+set.seed(345)
+ind <- sample(nrow(ames), nrow(ames)*.80)
+train <- ames[ind,]
+test <- ames[-ind,]
+dim(train)
+dim(test)
 ```
 
 ## k-fold CV
@@ -64,7 +75,16 @@ k-folds of equal sizes.
 Create a loop that splits `ames` 10 parts with the same number of shuffled rows (10%). Contain them in a list called `CV`. Hint: You need to initialize an empty list before the loop. Check Google.
 
 ```{r m3, exercise=TRUE}
+ind <- sample(nrow(ames), nrow(ames))
+k = 10 #fold
+lim = round(nrow(ames)/k)
 
+CV <- vector(mode = "list", length = k)
+
+for(i in 1:k){
+  tmp <- ind[((i-1)*lim+1):(i*lim)]
+  CV[[i]] <- ames[tmp, ]
+}  
 
 ```
 
@@ -81,7 +101,20 @@ So last 4 observations will be missed. With this data it wouldn't be a big deal,
 Hint: use `if/else`
 
 ```{r m4, exercise=TRUE}
+ind <- sample(nrow(ames), nrow(ames))
+k = 11 #fold
+lim = round(nrow(ames)/k)
 
+CV2 <- vector(mode = "list", length = k)
+
+for(i in 1:k){
+  if(i < k){tmp <- ind[((i-1)*lim+1):(i*lim)]
+  }else{tmp <- ind[((i-1)*lim+1):nrow(ames)]}
+  
+  CV2[[i]] <- ames[tmp, ]
+}  
+
+sum(sapply(CV2, function(x) nrow(x)))
 ```
 
 ## Using 10-fold CV
@@ -93,7 +126,17 @@ Now use the same loop and create temporary 10% test and 90% train sets with rota
 You do not need to save the sets.
 
 ```{r m5, exercise=TRUE}
+ind <- sample(nrow(ames), nrow(ames))
+k = 11 #fold
+lim = round(nrow(ames)/k)
 
+for(i in 1:k){
+  if(i < k){tmp <- ind[((i-1)*lim+1):(i*lim)]
+  }else{tmp <- ind[((i-1)*lim+1):nrow(ames)]}
+  
+  test <- ames[tmp, ]
+  train <- ames[-tmp, ]
+}  
 ```
 
 ## Using `test` & `train`
@@ -101,7 +144,25 @@ You do not need to save the sets.
 Calculate the average `Sale_Price` using test and train sets in the 10-fold loop and save the results.  
 
 ```{r m6, exercise=TRUE}
+ind <- sample(nrow(ames), nrow(ames))
+k = 10 #fold
+lim = round(nrow(ames)/k)
+tr <- c()
+ts <- c()
 
+for(i in 1:k){
+  if(i < k){tmp <- ind[((i-1)*lim+1):(i*lim)]
+  }else{tmp <- ind[((i-1)*lim+1):nrow(ames)]}
+  
+  test <- ames[tmp, ]
+  train <- ames[-tmp, ]
+  
+  tr[i] <- mean(train$Sale_Price)
+  ts[i] <- mean(test$Sale_Price)
+} 
+
+tr
+ts
 ```
 
 ## Bootstrapping
@@ -109,7 +170,10 @@ Calculate the average `Sale_Price` using test and train sets in the 10-fold loop
 Create a vector, `bexam`, with 1000 numbers drawn from a standard normal distribution. Create a bootstrapping sample from `bexam` and identify the number of unique observations in it.  Try multiple times.
 
 ```{r m7, exercise=TRUE}
+bexam <- rnorm(1000)
 
+x <- sample(bexam, replace = TRUE)
+length(unique(x))
 ```
 
 Since Bootstrap randomly selects samples from the original dataset **with replacement**, some data points in the original dataset may not show up in the Bootstrapped datasets.  These data points are called out-of-bag samples (OOB).  And our example shows that the size of OOOB is about 35% 
@@ -117,5 +181,22 @@ Since Bootstrap randomly selects samples from the original dataset **with replac
 Calculate the average `Sale_Price` using test and train sets in 10 bootstrap loops and save the results.
 
 ```{r m8, exercise=TRUE}
+k = 10 #fold
+lim = round(nrow(ames)/k)
+tr <- c()
+ts <- c()
 
+for(i in 1:10){
+  ind <- sample(nrow(ames), nrow(ames), replace = TRUE)
+  uind <- unique(ind)
+  
+  test <- ames[uind, ]
+  train <- ames[-uind, ]
+  
+  tr[i] <- mean(train$Sale_Price)
+  ts[i] <- mean(test$Sale_Price)
+} 
+
+tr
+ts
 ```

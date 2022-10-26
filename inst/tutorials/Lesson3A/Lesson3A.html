@@ -130,12 +130,25 @@ Delays (Report October_2021_1173B_21-994). Assign it to
 Explore the data</p>
 <div class="tutorial-exercise" data-label="m1" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>?squid1</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Provide a visual correlation matrix. If you see any issue try to
 identify the reason and address it</p>
 <div class="tutorial-exercise" data-label="m2" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>S &lt;- cor(squid1)
+corrplot::corrplot(S)
+
+# Remove &quot;sex&quot;
+# S &lt;- cor(squid1[, -&quot;sex&quot;])
+# corrplot::corrplot(S)
+# This gives: Error in -&quot;sex&quot; : invalid argument to unary operator
+
+# We should index it
+ind &lt;- which(names(squid1) == &quot;sex&quot;)
+S &lt;- cor(squid1[, -ind])
+corrplot::corrplot(S)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Plot <code>weight</code> (on the Y axis) vs <code>DML</code>. Search
@@ -150,6 +163,17 @@ Google and play with different formatting parameters.</p>
 </ol>
 <div class="tutorial-exercise" data-label="m3" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>plot(squid1$DML, squid1$weight)
+plot(squid1$DML, squid1$weight,
+     lwd = 0.75,
+     col = &quot;green&quot;,
+     xlab = &quot;DML&quot;,
+     ylab = &quot;Weight&quot;,
+     main = &quot;Title&quot;,
+     cex.axis = 1.5,
+     pch = 0,
+     bty = &quot;l&quot;,
+     xlim = c(0,500), ylim = c(0,1000))</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Search <code>par()</code> on Google make the background of the plot
@@ -157,24 +181,44 @@ data-diagnostics="1" data-startover="1" data-lines="0">
 0)</p>
 <div class="tutorial-exercise" data-label="m3a" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>par(bg = &quot;lightblue&quot;, xaxs = &quot;i&quot;, yaxs = &quot;i&quot;)
+plot(squid1$DML, squid1$weight, xlim = c(0,500), ylim = c(0,1000))</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Now, use the same plot and make the colors different by
 <code>maturity.stage</code> :</p>
 <div class="tutorial-exercise" data-label="m4" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>plot(squid1$DML, squid1$weight, col = squid1$maturity.stage)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Add a legend at (y=800, x = 100)by using <code>legend()</code>
 reflecting the meaning of each color (copy/paste previous codes)</p>
 <div class="tutorial-exercise" data-label="m5" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>plot(squid1$DML, squid1$weight, col = squid1$maturity.stage)
+leg_cols &lt;- squid1$maturity.stage
+leg_sym &lt;- c(16, 16, 16, 16, 16)
+leg_lab &lt;- c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;)
+
+legend(x = 100, y = 800, col = leg_cols, pch = leg_sym, 
+        legend = leg_lab, bty = &quot;n&quot;, 
+        title = &quot;Nitrogen level&quot;)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Add a text, “1 = immature, 5 = mature”, by using <code>text()</code>
 at (y=520, x = 150) after you copy/paste the previous codes</p>
 <div class="tutorial-exercise" data-label="m6" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>plot(squid1$DML, squid1$weight, col = squid1$maturity.stage)
+text(x = 150, y = 520, label = &quot;1 = immature, 5 = mature&quot;, cex = 1)
+leg_cols &lt;- squid1$maturity.stage
+leg_sym &lt;- c(16, 16, 16, 16, 16)
+leg_lab &lt;- c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;)
+
+legend(x = 100, y = 800, col = leg_cols, pch = leg_sym, 
+        legend = leg_lab, bty = &quot;n&quot;, 
+        title = &quot;Nitrogen level&quot;)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Create histograms for <code>DML</code>, <code>weight</code>,
@@ -184,6 +228,12 @@ with proper titles. And put a common title. Here is the <a
 href="https://stackoverflow.com/questions/14660372/common-main-title-of-a-figure-panel-compiled-with-parmfrow">help</a></p>
 <div class="tutorial-exercise" data-label="m7" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>par(mfrow = c(2,2))
+hist(squid1$DML, main=&quot;&quot;, xlab = &quot;DML&quot;)
+hist(squid1$weight, main=&quot;&quot;, xlab = &quot;weight&quot;)
+hist(squid1$nid.length, main=&quot;&quot;, xlab = &quot;length nidamental gland&quot;)
+hist(squid1$ovary.weight, main=&quot;&quot;, xlab = &quot;ovary weight&quot;)
+mtext(&quot;Distribution of selected features&quot;, side = 3, line = -2, outer = TRUE)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 <p>Note that you can export your plot(s) as pdf, jpeg, png file(s) to
@@ -193,6 +243,14 @@ your output directory by using <code>pdf()</code>, <code>jpeg()</code>,
 Check it if the pdf file is cretaed or not.</p>
 <div class="tutorial-exercise" data-label="m8" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>pdf(&#39;~/Dropbox/Documents/Courses/MBAN/RBootcamps/ex4_hist.pdf&#39;) # Change the path
+par(mfrow = c(2,2))
+hist(squid1$DML, main=&quot;&quot;, xlab = &quot;DML&quot;)
+hist(squid1$weight, main=&quot;&quot;, xlab = &quot;weight&quot;)
+hist(squid1$nid.length, main=&quot;&quot;, xlab = &quot;length nidamental gland&quot;)
+hist(squid1$ovary.weight, main=&quot;&quot;, xlab = &quot;ovary weight&quot;)
+mtext(&quot;Distribution of selected features&quot;, side = 3, line = -2, outer = TRUE)
+dev.off()</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
 </div>
@@ -278,17 +336,17 @@ learnr:::store_exercise_cache(structure(list(label = "m1", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m1", code = "", opts = list(label = "\"m1\"", 
+    list(label = "m1", code = "?squid1", opts = list(label = "\"m1\"", 
         exercise = "TRUE"), engine = "r")), code_check = NULL, 
     error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
     options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson3_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson3A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson3_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson3A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -298,9 +356,9 @@ learnr:::store_exercise_cache(structure(list(label = "m1", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m1", exercise = TRUE, code = "", out.width.px = 624, 
+        label = "m1", exercise = TRUE, code = "?squid1", out.width.px = 624, 
         out.height.px = 384, params.src = "m1, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -322,17 +380,17 @@ learnr:::store_exercise_cache(structure(list(label = "m2", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m2", code = "", opts = list(label = "\"m2\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m2", code = "S <- cor(squid1)\ncorrplot::corrplot(S)\n\n# Remove \"sex\"\n# S <- cor(squid1[, -\"sex\"])\n# corrplot::corrplot(S)\n# This gives: Error in -\"sex\" : invalid argument to unary operator\n\n# We should index it\nind <- which(names(squid1) == \"sex\")\nS <- cor(squid1[, -ind])\ncorrplot::corrplot(S)", 
+        opts = list(label = "\"m2\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson3_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson3A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson3_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson3A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -342,9 +400,13 @@ learnr:::store_exercise_cache(structure(list(label = "m2", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m2", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m2, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m2", exercise = TRUE, code = c("S <- cor(squid1)", 
+        "corrplot::corrplot(S)", "", "# Remove \"sex\"", "# S <- cor(squid1[, -\"sex\"])", 
+        "# corrplot::corrplot(S)", "# This gives: Error in -\"sex\" : invalid argument to unary operator", 
+        "", "# We should index it", "ind <- which(names(squid1) == \"sex\")", 
+        "S <- cor(squid1[, -ind])", "corrplot::corrplot(S)"), 
+        out.width.px = 624, out.height.px = 384, params.src = "m2, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -366,17 +428,17 @@ learnr:::store_exercise_cache(structure(list(label = "m3", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m3", code = "", opts = list(label = "\"m3\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m3", code = "plot(squid1$DML, squid1$weight)\nplot(squid1$DML, squid1$weight,\n     lwd = 0.75,\n     col = \"green\",\n     xlab = \"DML\",\n     ylab = \"Weight\",\n     main = \"Title\",\n     cex.axis = 1.5,\n     pch = 0,\n     bty = \"l\",\n     xlim = c(0,500), ylim = c(0,1000))", 
+        opts = list(label = "\"m3\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson3_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson3A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson3_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson3A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -386,9 +448,13 @@ learnr:::store_exercise_cache(structure(list(label = "m3", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m3", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m3, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m3", exercise = TRUE, code = c("plot(squid1$DML, squid1$weight)", 
+        "plot(squid1$DML, squid1$weight,", "     lwd = 0.75,", 
+        "     col = \"green\",", "     xlab = \"DML\",", "     ylab = \"Weight\",", 
+        "     main = \"Title\",", "     cex.axis = 1.5,", "     pch = 0,", 
+        "     bty = \"l\",", "     xlim = c(0,500), ylim = c(0,1000))"
+        ), out.width.px = 624, out.height.px = 384, params.src = "m3, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -410,17 +476,17 @@ learnr:::store_exercise_cache(structure(list(label = "m3a", global_setup = struc
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m3a", code = "", opts = list(label = "\"m3a\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m3a", code = "par(bg = \"lightblue\", xaxs = \"i\", yaxs = \"i\")\nplot(squid1$DML, squid1$weight, xlim = c(0,500), ylim = c(0,1000))", 
+        opts = list(label = "\"m3a\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson3_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson3A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson3_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson3A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -430,9 +496,10 @@ learnr:::store_exercise_cache(structure(list(label = "m3a", global_setup = struc
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m3a", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m3a, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m3a", exercise = TRUE, code = c("par(bg = \"lightblue\", xaxs = \"i\", yaxs = \"i\")", 
+        "plot(squid1$DML, squid1$weight, xlim = c(0,500), ylim = c(0,1000))"
+        ), out.width.px = 624, out.height.px = 384, params.src = "m3a, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -454,17 +521,17 @@ learnr:::store_exercise_cache(structure(list(label = "m4", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m4", code = "", opts = list(label = "\"m4\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m4", code = "plot(squid1$DML, squid1$weight, col = squid1$maturity.stage)", 
+        opts = list(label = "\"m4\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson3_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson3A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson3_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson3A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -474,9 +541,9 @@ learnr:::store_exercise_cache(structure(list(label = "m4", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m4", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m4, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m4", exercise = TRUE, code = "plot(squid1$DML, squid1$weight, col = squid1$maturity.stage)", 
+        out.width.px = 624, out.height.px = 384, params.src = "m4, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -498,17 +565,17 @@ learnr:::store_exercise_cache(structure(list(label = "m5", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m5", code = "", opts = list(label = "\"m5\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m5", code = "plot(squid1$DML, squid1$weight, col = squid1$maturity.stage)\nleg_cols <- squid1$maturity.stage\nleg_sym <- c(16, 16, 16, 16, 16)\nleg_lab <- c(\"1\", \"2\", \"3\", \"4\", \"5\")\n\nlegend(x = 100, y = 800, col = leg_cols, pch = leg_sym, \n        legend = leg_lab, bty = \"n\", \n        title = \"Nitrogen level\")", 
+        opts = list(label = "\"m5\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson3_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson3A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson3_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson3A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -518,9 +585,13 @@ learnr:::store_exercise_cache(structure(list(label = "m5", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m5", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m5, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m5", exercise = TRUE, code = c("plot(squid1$DML, squid1$weight, col = squid1$maturity.stage)", 
+        "leg_cols <- squid1$maturity.stage", "leg_sym <- c(16, 16, 16, 16, 16)", 
+        "leg_lab <- c(\"1\", \"2\", \"3\", \"4\", \"5\")", "", 
+        "legend(x = 100, y = 800, col = leg_cols, pch = leg_sym, ", 
+        "        legend = leg_lab, bty = \"n\", ", "        title = \"Nitrogen level\")"
+        ), out.width.px = 624, out.height.px = 384, params.src = "m5, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -542,17 +613,17 @@ learnr:::store_exercise_cache(structure(list(label = "m6", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m6", code = "", opts = list(label = "\"m6\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m6", code = "plot(squid1$DML, squid1$weight, col = squid1$maturity.stage)\ntext(x = 150, y = 520, label = \"1 = immature, 5 = mature\", cex = 1)\nleg_cols <- squid1$maturity.stage\nleg_sym <- c(16, 16, 16, 16, 16)\nleg_lab <- c(\"1\", \"2\", \"3\", \"4\", \"5\")\n\nlegend(x = 100, y = 800, col = leg_cols, pch = leg_sym, \n        legend = leg_lab, bty = \"n\", \n        title = \"Nitrogen level\")", 
+        opts = list(label = "\"m6\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson3_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson3A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson3_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson3A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -562,9 +633,14 @@ learnr:::store_exercise_cache(structure(list(label = "m6", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m6", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m6, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m6", exercise = TRUE, code = c("plot(squid1$DML, squid1$weight, col = squid1$maturity.stage)", 
+        "text(x = 150, y = 520, label = \"1 = immature, 5 = mature\", cex = 1)", 
+        "leg_cols <- squid1$maturity.stage", "leg_sym <- c(16, 16, 16, 16, 16)", 
+        "leg_lab <- c(\"1\", \"2\", \"3\", \"4\", \"5\")", "", 
+        "legend(x = 100, y = 800, col = leg_cols, pch = leg_sym, ", 
+        "        legend = leg_lab, bty = \"n\", ", "        title = \"Nitrogen level\")"
+        ), out.width.px = 624, out.height.px = 384, params.src = "m6, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -586,17 +662,17 @@ learnr:::store_exercise_cache(structure(list(label = "m7", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m7", code = "", opts = list(label = "\"m7\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m7", code = "par(mfrow = c(2,2))\nhist(squid1$DML, main=\"\", xlab = \"DML\")\nhist(squid1$weight, main=\"\", xlab = \"weight\")\nhist(squid1$nid.length, main=\"\", xlab = \"length nidamental gland\")\nhist(squid1$ovary.weight, main=\"\", xlab = \"ovary weight\")\nmtext(\"Distribution of selected features\", side = 3, line = -2, outer = TRUE)", 
+        opts = list(label = "\"m7\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson3_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson3A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson3_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson3A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -606,9 +682,13 @@ learnr:::store_exercise_cache(structure(list(label = "m7", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m7", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m7, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
+        label = "m7", exercise = TRUE, code = c("par(mfrow = c(2,2))", 
+        "hist(squid1$DML, main=\"\", xlab = \"DML\")", "hist(squid1$weight, main=\"\", xlab = \"weight\")", 
+        "hist(squid1$nid.length, main=\"\", xlab = \"length nidamental gland\")", 
+        "hist(squid1$ovary.weight, main=\"\", xlab = \"ovary weight\")", 
+        "mtext(\"Distribution of selected features\", side = 3, line = -2, outer = TRUE)"
+        ), out.width.px = 624, out.height.px = 384, params.src = "m7, exercise=TRUE", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
  
@@ -630,17 +710,17 @@ learnr:::store_exercise_cache(structure(list(label = "m8", global_setup = struct
 "      type = \"info\",", "      location = \"append\"", "    )", 
 "  }", ")", "knitr::opts_chunk$set(error = TRUE)"), chunk_opts = list(
     label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "m8", code = "", opts = list(label = "\"m8\"", 
-        exercise = "TRUE"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+    list(label = "m8", code = "pdf('~/Dropbox/Documents/Courses/MBAN/RBootcamps/ex4_hist.pdf') # Change the path\npar(mfrow = c(2,2))\nhist(squid1$DML, main=\"\", xlab = \"DML\")\nhist(squid1$weight, main=\"\", xlab = \"weight\")\nhist(squid1$nid.length, main=\"\", xlab = \"length nidamental gland\")\nhist(squid1$ovary.weight, main=\"\", xlab = \"ovary weight\")\nmtext(\"Distribution of selected features\", side = 3, line = -2, outer = TRUE)\ndev.off()", 
+        opts = list(label = "\"m8\"", exercise = "TRUE"), engine = "r")), 
+    code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson3_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson3A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson3_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson3A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -650,10 +730,16 @@ learnr:::store_exercise_cache(structure(list(label = "m8", global_setup = struct
         message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 600, exercise.checker = "function (check_code, ...) \n{\n    list(message = eval(parse(text = check_code)), correct = logical(0), \n        type = \"info\", location = \"append\")\n}", 
-        label = "m8", exercise = TRUE, code = "", out.width.px = 624, 
-        out.height.px = 384, params.src = "m8, exercise=TRUE", 
-        fig.num = 0L, exercise.df_print = "paged"), engine = "r", 
-    version = "4"), class = c("r", "tutorial_exercise")))
+        label = "m8", exercise = TRUE, code = c("pdf('~/Dropbox/Documents/Courses/MBAN/RBootcamps/ex4_hist.pdf') # Change the path", 
+        "par(mfrow = c(2,2))", "hist(squid1$DML, main=\"\", xlab = \"DML\")", 
+        "hist(squid1$weight, main=\"\", xlab = \"weight\")", 
+        "hist(squid1$nid.length, main=\"\", xlab = \"length nidamental gland\")", 
+        "hist(squid1$ovary.weight, main=\"\", xlab = \"ovary weight\")", 
+        "mtext(\"Distribution of selected features\", side = 3, line = -2, outer = TRUE)", 
+        "dev.off()"), out.width.px = 624, out.height.px = 384, 
+        params.src = "m8, exercise=TRUE", fig.num = 0, exercise.df_print = "paged"), 
+    engine = "r", version = "4"), class = c("r", "tutorial_exercise"
+)))
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
@@ -681,10 +767,10 @@ learnr:::store_exercise_cache(structure(list(label = "m9", global_setup = struct
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
         background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "Lesson3_cache/html/", cache.vars = NULL, 
+        cache.path = "Lesson3A_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "Lesson3_files/figure-html/", 
+        fig.align = "default", fig.path = "Lesson3A_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 

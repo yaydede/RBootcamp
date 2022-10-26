@@ -34,25 +34,60 @@ knitr::opts_chunk$set(error = TRUE)
 
 R stores matrices (and arrays) in a similar way as vectors, but with the attribute called dimension. A matrix is an array that has two dimensions. Data in a matrix are organized into rows and columns. 
 
-1. Create 3 vectors each has 5 numbers randomly selected from 1, 2,... ,10.  Name each vector properly
+1. Create 3 vectors each has 5 numbers randomly selected from 1, 2,... ,10.  Name each vector properly.
 2. Create row matrix from these 3 vectors, called it `A`
 3. Create column matrix from these 3 vectors, called it `B`
 4. Calculate means of each row and column of `A`.  Assign them separate vectors.
 5. Assign `V1, V2, ...` to `B` as column names, check it    
 
 ```{r m1, exercise=TRUE}
+#1
+x <- sample(1:10, 5)
+y <- sample(1:10, 5)
+z <- sample(1:10, 5)
+
+#2
+A <- rbind(x, y, z)
+A
+
+#3
+B <- cbind(x, y, z)
+B
+
+#4
+m <- colMeans(A)
+r <- rowMeans(A)
+m
+r
+
+#5
+colnames(B) <- c("V1", "V2", "V3")
+B
 
 ```
 
 ## Subsetting matrix
 
-1. Create a 5x5 matrix, `X` sampled from 1:10 with replacement (`set.seed(50)`)
+1. Create a 5x5 matrix, `X`, sampled from 1:10 with replacement (`set.seed(50)`)
 2. Create a 5x2 matrix, `Y` by selecting the 2nd and the 5th rows from `X`.
-3. What are the numbers in row 2 and columns 3 and 5
+3. What are the numbers in row 2 and columns 3 and 5 in `X`
 4. Select the 2nd column from `X` as a matrix, which is called a "column vector" in linear algebra
 
 ```{r m3, exercise=TRUE}
+#1
+set.seed(50)
+X <- matrix(sample(1:10, 25, replace = TRUE), 5, 5)
+X
 
+#2
+Y <- cbind(X[2,], X[5,])
+Y
+
+#3
+X[2, c(3,5)]
+
+#4
+X[, 2, drop = FALSE]
 ```
 
 1. What are the numbers in a row when the number in column 3 is 1?
@@ -65,7 +100,16 @@ X <- matrix(sample(1:10, 25, replace = T), 5,5)
 ```
 
 ```{r m4, exercise=TRUE}
+#1
+X[X[,3]==1,]
 
+#2
+X[X==10] <- 0
+X
+
+#3
+X[X[,5]==0, 5] <- 11
+X
 ```
 
 1. Find the index (row, column) where 2 is located in `X`.  Hint use `which()`
@@ -77,7 +121,13 @@ X <- matrix(sample(1:10, 25, replace = T), 5,5)
 ```
 
 ```{r m5, exercise=TRUE}
+#1
+ind <- which(X == 2, arr.ind = TRUE)
+ind
 
+#2
+X[ind] <- X[ind]*0.75
+X
 ```
 
 Create a 6 × 10 matrix of random integers chosen from 1, 2,. . . ,10 with replacement.  Call it `aMat` (with `set.seed(75)`)
@@ -86,7 +136,15 @@ Create a 6 × 10 matrix of random integers chosen from 1, 2,. . . ,10 with repla
 2. Which row(s) contain exactly two occurrences of 7, if any? 
 
 ```{r m6, exercise=TRUE}
+set.seed(75)
+aMat <- matrix( sample(10, size=60, replace=T), nr=6)
+aMat
 
+#1
+apply(aMat, 1, function(x) sum(x>4))
+
+#2
+which(apply(aMat, 1, function(x) sum(x==7)==2))
 ```
 
 Write a script to find row and column index of each maximum and minimum values in `M`.
@@ -98,7 +156,8 @@ M
 ```
 
 ```{r m6b, exercise=TRUE}
-
+which(M == max(M), arr.ind=TRUE)
+which(M == min(M), arr.ind=TRUE)
 ```
 
 ## Dataframes
@@ -108,19 +167,24 @@ Dataframes are the most common way to store and interact with data. Data sets fo
 Use `str()`, `dim()`, `head()`, and `summary()` functions to examine the data
 
 ```{r m7, exercise=TRUE}
-
+str(whale)
+dim(whale)
+head(whale)
+summary(whale)
 ```
 
 Extract all the elements of the first 8 rows and the last 4 columns of the `whale` dataframe 
 
 ```{r m8, exercise=TRUE}
-
+nc <- ncol(whale)
+rm <- nc - 4
+whale[1:8, rm:nc]
 ```
 
 Extract rows 9, 11, 25 and all columns except for the last column. 
 
 ```{r m9, exercise=TRUE}
-
+whale[c(9, 11, 25), -ncol(whale)]
 ```
 
 Now, we will extract data based on the following criteria, save the results:
@@ -135,20 +199,42 @@ Now, we will extract data based on the following criteria, save the results:
 8. All rows that do not have a `water.noise` level of "medium"
 
 ```{r m10, exercise=TRUE}
+#1
+whaled <- whale[whale$depth > 1000, ]
+#2
+whaleg <- whale[whale$gradient > 150, ]
+#3
+whaleall <- whale[whale$depth > mean(whale$depth), ]
+#4
+whalelow <- whale[whale$water.noise == "low", ]
+#5
+whalehmay <- whale[whale$water.noise == "high" & whale$month == "May", ]
+#6
+whalesub <- whale[whale$month == "October"
+                  & whale$water.noise == "low"
+                  & whale$gradient > median(whale$gradient), ]
 
+whalelatlong <- whale[whale$latitude > 60
+                        & whale$latitude < 61
+                        & whale$longitude > -6
+                        & whale$longitude < -4, ]
+
+whalenomed <- whale[whale$water.noise != "medium", ]
 ```
 
-There are of course many other approaches. One such approach is to use the `subset()` function (see `?subset`).  Here is an example for #5 given above:
+There are of course many other approaches to handle these selection operations. One such approach is to use the `subset()` function (see `?subset`).  Here is an example for #5 given above:
 
 ```{r m11, exercise=TRUE}
-subset(whale, month == "October" & water.noise == "low" & gradient > median(gradient))
+subset(whale, month == "October"
+       & water.noise == "low"
+       & gradient > median(gradient))
 ```
 
 Use `subset()` to extract data collected in "October" from `latitude`s greater than 61 degrees but only include the columns `month`, `latitude`, `longitude` and `number.whales`.
 
 ```{r m12, exercise=TRUE}
-
+subset(whale, month == "October" & latitude > 61,
+       select = c("month", "latitude", "longitude", "number.whales"))
 ```
 
- 
 

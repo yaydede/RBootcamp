@@ -1,0 +1,162 @@
+---
+title: "Ch's 4 & 5 - Reading/Writing files - Data Visulization"
+author: "**Yigit Aydede - RBootcamp - 2022**"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+library(nycflights13)
+library(Lahman)
+library(RBootcamp)
+library(ggplot2)
+tutorial_options(
+  exercise.timelimit = 600,
+  # A simple checker function that just returns the message in the check chunk
+  exercise.checker = function(check_code, ...) {
+    list(
+      message = eval(parse(text = check_code)),
+      correct = logical(0),
+      type = "info",
+      location = "append"
+    )
+  }
+)
+knitr::opts_chunk$set(error = TRUE)
+```
+
+## Reading files
+
+Execute the following actions in a new R Script
+
+1.  Go to this [page](https://catalog.data.gov/dataset?res_format=CSV&organization=city-of-new-york) and download a CSV file that contains information about School Bus Delays (Report October_2021_1173B_21-994). Assign it to `data1`
+2.  Save it to your project under `Data` folder.
+3.  Write the file your saved in Data folder, write it as `data2.csv`
+
+## Plotting
+
+Use `squid1` and see its details at `?squid1`. Explore the data
+
+```{r m1, exercise=TRUE}
+?squid1
+```
+
+Provide a visual correlation matrix. If you see any issue try to identify the reason and address it
+
+```{r m2, exercise=TRUE}
+S <- cor(squid1)
+corrplot::corrplot(S)
+
+# Remove "sex"
+# S <- cor(squid1[, -"sex"])
+# corrplot::corrplot(S)
+# This gives: Error in -"sex" : invalid argument to unary operator
+
+# We should index it
+ind <- which(names(squid1) == "sex")
+S <- cor(squid1[, -ind])
+corrplot::corrplot(S)
+```
+
+Plot `weight` (on the Y axis) vs `DML`. Search Google and play with different formatting parameters.
+
+1.  Remove the "box" around the plot;
+2.  Give titles to the plot and both axes;
+3.  Change the range of (limits) of y-axis (0-1000) and x-axis (0-500);
+4.  Change the color of y-axis to red;
+5.  Change the circles to square.
+
+```{r m3, exercise=TRUE}
+plot(squid1$DML, squid1$weight)
+plot(squid1$DML, squid1$weight,
+     lwd = 0.75,
+     col = "green",
+     xlab = "DML",
+     ylab = "Weight",
+     main = "Title",
+     cex.axis = 1.5,
+     pch = 0,
+     bty = "l",
+     xlim = c(0,500), ylim = c(0,1000))
+```
+
+Search `par()` on Google make the background of the plot "lightblue" and x and y axes should not intersect at the origin (0, 0)
+
+```{r m3a, exercise=TRUE}
+par(bg = "lightblue", xaxs = "i", yaxs = "i")
+plot(squid1$DML, squid1$weight, xlim = c(0,500), ylim = c(0,1000))
+```
+
+Now, use the same plot and make the colors different by `maturity.stage` :
+
+```{r m4, exercise=TRUE}
+plot(squid1$DML, squid1$weight, col = squid1$maturity.stage)
+```
+
+Add a legend at (y=800, x = 100)by using `legend()` reflecting the meaning of each color (copy/paste previous codes)
+
+```{r m5, exercise=TRUE}
+plot(squid1$DML, squid1$weight, col = squid1$maturity.stage)
+leg_cols <- squid1$maturity.stage
+leg_sym <- c(16, 16, 16, 16, 16)
+leg_lab <- c("1", "2", "3", "4", "5")
+
+legend(x = 100, y = 800, col = leg_cols, pch = leg_sym, 
+        legend = leg_lab, bty = "n", 
+        title = "Nitrogen level")
+```
+
+Add a text, "1 = immature, 5 = mature", by using `text()` at (y=520, x = 150) after you copy/paste the previous codes
+
+```{r m6, exercise=TRUE}
+plot(squid1$DML, squid1$weight, col = squid1$maturity.stage)
+text(x = 150, y = 520, label = "1 = immature, 5 = mature", cex = 1)
+leg_cols <- squid1$maturity.stage
+leg_sym <- c(16, 16, 16, 16, 16)
+leg_lab <- c("1", "2", "3", "4", "5")
+
+legend(x = 100, y = 800, col = leg_cols, pch = leg_sym, 
+        legend = leg_lab, bty = "n", 
+        title = "Nitrogen level")
+```
+
+Create histograms for `DML`, `weight`, `nid.length` and `ovary.weight` on the same plot (2 plots in each row) by using `mfrow()`.  Make the plot nice with proper titles.  And put a common title.  Here is the [help](https://stackoverflow.com/questions/14660372/common-main-title-of-a-figure-panel-compiled-with-parmfrow)
+
+```{r m7, exercise=TRUE}
+par(mfrow = c(2,2))
+hist(squid1$DML, main="", xlab = "DML")
+hist(squid1$weight, main="", xlab = "weight")
+hist(squid1$nid.length, main="", xlab = "length nidamental gland")
+hist(squid1$ovary.weight, main="", xlab = "ovary weight")
+mtext("Distribution of selected features", side = 3, line = -2, outer = TRUE)
+```
+
+Note that you can export your plot(s) as pdf, jpeg, png file(s) to your output directory by using `pdf()`, `jpeg()`, `png()`. Copy/paste the codes in previous chunk for the same 2x2 histogram plot and save it as a pdf file to your assigned path. Check it if the pdf file is cretaed or not. 
+
+```{r m8, exercise=TRUE}
+pdf('~/Dropbox/Documents/Courses/MBAN/RBootcamps/ex4_hist.pdf') # Change the path
+par(mfrow = c(2,2))
+hist(squid1$DML, main="", xlab = "DML")
+hist(squid1$weight, main="", xlab = "weight")
+hist(squid1$nid.length, main="", xlab = "length nidamental gland")
+hist(squid1$ovary.weight, main="", xlab = "ovary weight")
+mtext("Distribution of selected features", side = 3, line = -2, outer = TRUE)
+dev.off()
+```
+
+## `ggplot()`
+
+We will not have exercises for `ggplot` as it's vast and covering a few examples would not be useful. However, we will use a simple "builder" for `ggplot` graphs
+
+Download R package called `esquisse`. This package was designed to help users explore and extract data quickly and a brilliant feature of this package is the `ggplot2 builder` add-in. This add-in opens a GUI interface within RStudio that allows you to interactively explore and visualize your data using the `ggplot2` package. Provide it with a data frame and you can effortlessly create bar graphs, scatter plots, histograms, boxplots and much more. If you want to export to PowerPoint, you can also need to install the packages `officer` and `rvg`
+
+Use `ggplot2 builder` in add-in and experiment multiple plots by using the package `AmesHousing`
+
+```{r m9, exercise=TRUE}
+df <- AmesHousing::make_ames()
+```

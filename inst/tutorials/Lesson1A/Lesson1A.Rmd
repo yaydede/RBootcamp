@@ -56,19 +56,22 @@ Practice the following codes in the script.
 Write the R code required to add two plus two:
 
 ```{r two-plus-two, exercise=TRUE}
-
+2+2
 ```
 
 Calculate $e^x \cos (x)$ at $x=3,3.1,3.2$
 
 ```{r expo, exercise=TRUE}
-
+exp(3)*cos(3)
+exp(3.1)*cos(3.1)
+exp(3.2)*cos(3.2)
 ```
 
 Find the natural log, log to the base 10, log to the base 2, square root and the natural antilog of 12.43. 
 
 ```{r log, exercise=TRUE}
-
+x = 12.43
+(c(log(x), log10(x), log2(x), sqrt(x), exp(x)))
 ```
 
 ## Vectors (Built-in functions)
@@ -82,7 +85,10 @@ The first function we will learn about is the `c()` function, which is short for
 Create a text vector called `Months` with names of the 12 months of the year.
 
 ```{r exp0, exercise=TRUE, exercise.eval=FALSE}
-
+Months <- c("January", "February", "March", "April", "May",
+            "June", "July", "August", "September", "October",
+            "November", "December")
+Months
 ```
 
 Now suppose we have 
@@ -103,17 +109,31 @@ names <- c("a", "b", "c", "d", "e", "f", "g", "h", "i", "n")
 
 1. Calculate the body mass index (BMI) for each child. $\text{BMI} = weight/height^2$.
 2. Combine `weight` and `height` into vector `x_com`,
-3. Combine `eight`, `height`, and `names` into vector `x_all`,
+3. Combine `weight`, `height`, and `names` into vector `x_all`,
 4. Add `age` to `weight` into vector `x_add`
 
 ```{r exp1, exercise=TRUE, exercise.eval=FALSE}
-
+#1
+BMI <- weight/height^2
+BMI
+#2
+x_com <- c(weight, height)
+x_com
+#3
+x_all <- c(x_com, names)
+x_all
+#4
+x_add <- c(age, weight)
+x_add
 ```
 
 Using `height`, calculate the mean, variance, standard deviation and number of elements in our vector. 
 
 ```{r exp2, exercise=TRUE, exercise.eval=FALSE}
-
+mean(height)
+var(height)
+sqrt(var(height))
+length(height)
 ```
 
 ## Patterns
@@ -121,25 +141,30 @@ Using `height`, calculate the mean, variance, standard deviation and number of e
 Create a vector of the values of $e^x \cos (x)$ at $x=3,3.1,3.2, \ldots, 6$
 
 ```{r exp3, exercise=TRUE}
-
+x <- c(3,3.1,3.2)
+exp(x)*cos(x)
 ```
 
 Create a vector $(1,2,3, \ldots, 19,20)$ and assign it to `z`
 
 ```{r exp4, exercise=TRUE}
-
+z <- 1:20
+z
 ```
 
 Create a vector $(4,6,3,4,6,3, \ldots, 4,6,3)$ where there are 10 occurrences of 4. Assign it to `z`
 
 ```{r exp5, exercise=TRUE}
-
+z <- rep(c(4,6,3), 10)
+z
 ```
 
 Calculate the following: $\sum_{i=10}^{100}\left(i^{3}+4 i^{2}\right)$ and assign it to `z`. 
 
 ```{r exp6, exercise=TRUE}
-
+tmp <- 10:100
+z = sum(tmp^3+4*tmp^2)
+z
 ```
 
 ## Character
@@ -147,17 +172,20 @@ Calculate the following: $\sum_{i=10}^{100}\left(i^{3}+4 i^{2}\right)$ and assig
 Concatenate it into a single sentence
 ```{r exp7, exercise=TRUE}
 wr <- c("we have", "dogs", "cats", "and, donkey")
+paste("we have", "dogs", "cats", "and, donkey", sep = " ")
+cat("we have", "dogs", "cats", "and, donkey")
 ```
 
 Use `paste()` to create the following character vectors of length 30 : ("label 1", "label 2", "label 3"). Note that there is a single space between label and the number following and you need to create fist the character vector.
 
 ```{r exp8, exercise=TRUE}
-
+tmp <- paste(rep(c("label 1", "label 2", "label 30"), 30), sep = " ")
+tmp
 ```
 
 ## Sort, rank & order
 
-The following lines created two vectors of random integers which are chosen with replacement from the integers $0, 1, … , 999$. Both vectors have length 250.
+The following lines create two vectors of random integers which are chosen with replacement from the integers $0, 1, … , 999$. Both vectors have length 250.
 
 ```{r}
 set.seed(50)
@@ -175,16 +203,17 @@ yVec <- sample(0:999, 250, replace=TRUE)
 2. Find the order of values in vector `yVec`
 
 ```{r exp9, exercise=TRUE}
-
+sort(xVec, decreasing = TRUE)
+order(yVec)
 ```
 
 ## Decriptives
 
-Let's have 1000 values drawn from a normal distribution (we'll see probability distributions later):
+Let's have 1000 values drawn from a normal distribution:
 
 ```{r}
 set.seed(123)
-h <- rnorm(1000, mean = 5, sd = 3)
+h <- rnorm(1000)
 ```
 
 ```{r exp10-setup}
@@ -194,22 +223,30 @@ h <- rnorm(1000, mean = 5, sd = 3)
 
 1. Find its summary statistics
 2. What's the minimum and maximum values?
-3. Make it a standard normal distribution and assign it to `z`:  subtract its mean from each value and divide them with the standard error
+3. Make it a standard normal distribution:  subtract its mean from each value and divide them with the standard error
 
 ```{r exp10, exercise=TRUE}
-
+summary(h)
+max(h); min(h)
+z <- (h -mean(h))/sqrt(var(h))
+round(mean(z), 3)
+var(z)
 ```
 
 ## Subsetting
 
 If you want to extract particular elements from a vector, the extracted elements will give you a new vector. This process is called vector subsetting
 
-1. Create a text vector called `Months` with names of the 12 months of the year.
+1. Create a character vector called `Months` with names of the 12 months of the year.
 2. Create a numeric vector `Summer`, with Calendar month index positions for the summer months (inclusive, 3 total)
 3. Extract the summer months from `Months` by using `Summer`
 
 ```{r exp11, exercise=TRUE}
-
+Months <- c("January", "February", "March", "April", "May",
+            "June", "July", "August", "September", "October",
+            "November", "December")
+Summer <- 6:8
+Months[Summer]
 ```
 
 Let's have a simple vector with 10 values:
@@ -233,7 +270,26 @@ h <- sample(1:10, replace = TRUE)
 7. Change 2's in `h` by multiplying them with 0.7
 
 ```{r exp12, exercise=TRUE}
-
+#1
+a <- h[c(1, 5, 7)]
+a
+#2
+y <- h > 2
+y
+#3
+b <- h[h!=5]
+b
+#4
+d <- h
+d[d==2] = 0
+d
+#5
+which.max(h)
+#6
+which.min(h)
+#7
+h[h==7] <- h[h==7]*0.7
+h
 ```
 
 We have again the same two vectors:
@@ -246,15 +302,19 @@ yVec <- sample(0:999, 250, replace=TRUE)
 
 ```{r exp13-setup}
 set.seed(50)
-xVec <- sample(0:999, 250, replace=TRUE)
-yVec <- sample(0:999, 250, replace=TRUE)
+xVec <- sample(0:999, 250, replace=T)
+yVec <- sample(0:999, 250, replace=T)
 ```
-  
+
 1. Sort the numbers in the vector `xVec` in the order of increasing values in `yVec`.  
 2. Create the vector $\left(y_2-x_1, \ldots, y_n-x_{n-1}\right).$ 
 
 ```{r exp13, exercise=TRUE}
+#1
+xVec[order(yVec, decreasing = FALSE)]
 
+#2
+yVec[-1] - xVec[-length(xVec)]
 ```
   
 ## Missing values
@@ -272,10 +332,20 @@ x[NAs] <- NA
 2. How many NA's do you have?  Write a code!
 3. `which` values are NA's?
 4. Calculate the mean of `x`
-5. Remove NA's from `x`
+5. Remove NA's from `x` and check it by the same code in (1)
 
 
 ```{r exp14, exercise=TRUE}
-
+#1
+anyNA(x)
+#2
+sum(is.na(x))
+#3
+which(is.na(x))
+#4
+mean(x)
+mean(x, na.rm = TRUE)
+#5
+anyNA(x[-which(is.na(x))])
 ```
 

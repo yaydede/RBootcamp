@@ -47,45 +47,57 @@ Use `squid1` and see its details at `?squid1`.  Explore the data
 
 ```
 
-Provide a visual correlation matrix 
+Provide a visual correlation matrix. If you see any issue try to identify the reason and address it  
 
 ```{r m2, exercise=TRUE}
 
 ```
 
-Plot `weight` (on the Y axis) vs `DML`.  Make the plot "nice"
+Plot `weight` (on the Y axis) vs `DML`. Search Google and play with different formatting parameters.
+
+1.  Remove the "box" around the plot;
+2.  Give titles to the plot and both axes;
+3.  Change the range of (limits) of y-axis (0-1000) and x-axis (0-500);
+4.  Change the color of y-axis to red;
+5.  Change the circles to square.
 
 ```{r m3, exercise=TRUE}
 
 ```
 
-How would you describe this relationship? Is it linear? Try transforming the weight variable with either a natural log 
+Search `par()` on Google make the background of the plot "lightblue" and x and y axes should not intersect at the origin (0, 0)
+
+```{r m3a, exercise=TRUE}
+
+```
+
+Now, use the same plot and make the colors different by `maturity.stage` :
 
 ```{r m4, exercise=TRUE}
 
 ```
 
-Plot two figures `weight` vs `DML` AND `ovary.weight` next to each other
+Add a legend at (y=800, x = 100)by using `legend()` reflecting the meaning of each color (copy/paste previous codes)
 
 ```{r m5, exercise=TRUE}
 
 ```
 
-We have the following histograms for  `DML`, `weight`, `nid.length` and `ovary.weight`. Note that you can export your plot(s) as pdf, jpeg, png file(s) to the output directory by using `pdf()`, `jpeg()`, `png()`.  Check it if it's saved to your assigned path.  Remove the lines so that you can print tehm on the screen.  Make the plot "nice"
+Add a text, "1 = immature, 5 = mature", by using `text()` at (y=520, x = 150) after you copy/paste the previous codes
 
 ```{r m6, exercise=TRUE}
-pdf('~/Dropbox/Documents/Courses/MBAN/RBootcamps/ex4_hist.pdf') # Change it
-par(mfrow = c(2,2))
-hist(squid1$DML)
-hist(squid1$weight)
-hist(squid1$eviscerate.weight)
-hist(squid1$ovary.weight)
-dev.off()
+
 ```
 
-Create a pairs plot for the variables: `DML`, `weight`, `eviscerate.weight`, `ovary.weight`, `nid.length`, and `nid.weight` and save it as png.
+Create histograms for `DML`, `weight`, `nid.length` and `ovary.weight` on the same plot (2 plots in each row) by using `mfrow()`.  Make the plot nice with proper titles.  And put a common title.  Here is the [help](https://stackoverflow.com/questions/14660372/common-main-title-of-a-figure-panel-compiled-with-parmfrow)
 
 ```{r m7, exercise=TRUE}
+
+```
+
+Note that you can export your plot(s) as pdf, jpeg, png file(s) to your output directory by using `pdf()`, `jpeg()`, `png()`. Copy/paste the codes in previous chunk for the same 2x2 histogram plot and save it as a pdf file to your assigned path. Check it if the pdf file is cretaed or not. 
+
+```{r m8, exercise=TRUE}
 
 ```
 
@@ -95,8 +107,8 @@ We will not have exercises for `ggplot` as it's vast and covering a few examples
 
 Download R package called `esquisse`. This package was designed to help users explore and extract data quickly and a brilliant feature of this package is the `ggplot2 builder` add-in.  This add-in opens a GUI interface within RStudio that allows you to interactively explore and visualize your data using the `ggplot2` package. Provide it with a data frame and you can effortlessly create bar graphs, scatter plots, histograms, boxplots and much more.  If you want to export to PowerPoint, you can  also need to install the packages `officer` and `rvg`
 
-Use `ggplot2 builder` in add-in and experiemtn multiple plots by using the package `AmesHousing
+Use `ggplot2 builder` in add-in and experiment multiple plots by using the package `AmesHousing`
 
-```{r m8, exercise=TRUE}
+```{r m9, exercise=TRUE}
 df <- AmesHousing::make_ames()
 ```
