@@ -4,7 +4,7 @@
 \name{RBootcamp-package}
 \alias{RBootcamp}
 \alias{RBootcamp-package}
-\title{RBootcamp: MBAN R Bootcamp Package}
+\title{RBootcamp: Package for R Bootcamp Book - https://yaydede.github.io/Bootcamp_book/}
 \description{
 Data, Tutorials, and other materials.
 }
